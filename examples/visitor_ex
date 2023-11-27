@@ -1,0 +1,132 @@
+#!/bin/bash
+#
+# A simple example to demo implementation of an expression calc.  (Not
+# entirely an indented use case of the library.)
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../gobash
+
+
+function Val() {
+        local -r val="${1}"
+
+        make_ "$FUNCNAME" \
+              "val" "${val}"
+}
+
+function Val_accept() {
+        local val="${1}"
+        $val val
+}
+
+function AddExpr() {
+        local -r l="${1}"
+        local -r r="${2}"
+
+        make_ "$FUNCNAME" \
+              "l" "${l}" \
+              "r" "${r}"
+}
+
+function AddExpr_accept() {
+        local -r e="${1}"
+        local -r v="${2}"
+
+        $v visit_add "$e"
+}
+
+function MulExpr() {
+        local -r l="${1}"
+        local -r r="${2}"
+
+        make_ "$FUNCNAME" \
+              "l" "${l}" \
+              "r" "${r}"
+}
+
+function MulExpr_accept() {
+        local -r e="${1}"
+        local -r v="${2}"
+
+        $v visit_mul "$e"
+}
+
+function SubExpr() {
+        local -r l="${1}"
+        local -r r="${2}"
+
+        make_ "$FUNCNAME" \
+              "l" "${l}" \
+              "r" "${r}"
+}
+
+function SubExp_accept() {
+        local -r e="${1}"
+        local -r v="${2}"
+
+        $v visit_sub "$e"
+}
+
+function DivExpr() {
+        local -r l="${1}"
+        local -r r="${2}"
+
+        make_ "$FUNCNAME" \
+              "l" "${l}" \
+              "r" "${r}"
+}
+
+function DivExpr_accept() {
+        local -r e="${1}"
+        local -r v="${2}"
+
+        $v visit_div "$e"
+}
+
+function Visitor() {
+        make_ "$FUNCNAME"
+}
+
+function Visitor_visit_add() {
+        local -r v="${1}"
+        local -r e="${2}"
+
+        local lv=$($($e l) accept "$v")
+        local rv=$($($e r) accept "$v")
+        math_calc "${lv} + ${rv}"
+}
+
+function Visitor_visit_mul() {
+        local -r v="${1}"
+        local -r e="${2}"
+
+        local lv=$($($e l) accept "$v")
+        local rv=$($($e r) accept "$v")
+        math_calc "${lv} * ${rv}"
+}
+
+function Visitor_visit_sub() {
+        local -r v="${1}"
+        local -r e="${2}"
+
+        local lv=$($($e l) accept "$v")
+        local rv=$($($e r) accept "$v")
+        math_calc "${lv} - ${rv}"
+}
+
+function Visitor_visit_div() {
+        local -r v="${1}"
+        local -r e="${2}"
+
+        local lv=$($($e l) accept "$v")
+        local rv=$($($e r) accept "$v")
+        math_calc "${lv} / ${rv}"
+}
+
+# (5 + 3) * (10 / 2)
+l=$(AddExpr "$(Val 5)" "$(Val 3)")
+r=$(DivExpr "$(Val 10)" "$(Val 2)")
+root=$(MulExpr "$l" "$r")
+
+v=$(Visitor)
+$root accept "$v"

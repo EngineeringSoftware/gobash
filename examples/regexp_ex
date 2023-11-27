@@ -1,0 +1,36 @@
+#!/bin/bash
+#
+# Illustrates use of the regular expression API.
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../gobash
+
+
+function main() {
+        local regexp
+
+        regexp=$(regexp_compile ".* not [zc]omplex") || \
+                return $EC
+
+        $regexp match_string " not zomplex" || \
+                { echo "Expecting a match."; return $EC; }
+
+        $regexp match_string "something not complex" || \
+                { echo "Expecting a match."; return $EC; }
+
+        local str
+        str=$($regexp find_string "a not zomplex text but still a match")
+        assert_eq "a not zomplex" "${str}" "String does not match."
+
+        regexp=$(regexp_compile "a (.*) b (.*) c") || \
+                return $EC
+
+        local lst
+        lst=$($regexp find_string_submatch "a abc b x c") || \
+                return $EC
+
+        assert_eq "abc" "$($lst get 1)"
+        assert_eq "x" "$($lst get 2)"
+}
+
+main

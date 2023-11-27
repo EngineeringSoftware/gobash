@@ -1,0 +1,23 @@
+#!/bin/bash
+#
+# Example of a text-based spinner.
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../gobash
+
+
+function main() {
+        local -r spinner=$(TextSpinner)
+
+        # Start the spinner (runs in background, but keep in mind it
+        # goes to your stdout).
+        $spinner start
+
+        # Do here any work you wish until things are spinning.
+        sleep 3
+
+        # Stop the spinner.
+        $spinner stop
+}
+
+main

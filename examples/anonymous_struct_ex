@@ -1,0 +1,28 @@
+#!/bin/bash
+#
+# An example that illustrates anonymous struct.
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../gobash
+
+
+# Anonymous structs are created using `amake_` function; this function
+# is the same as `make_`, but does not accept `struct` name.
+p=$(amake_ "x" 3 "y" 5)
+$p x
+# Output: 3
+
+$p y
+# Output: 5
+
+# Anonymous structs can be used at any place including in functions.
+function demo() {
+        local a=$(amake_ "date" "$(date)" "rand" "${RANDOM}")
+        $a to_string
+}
+demo
+# Output (different for you depending on time and random number):
+# {
+#   "date": "Mon 14 Aug 2023 10:22:29 AM CDT",
+#   "rand": "32674"
+# }

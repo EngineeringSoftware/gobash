@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+# util loop example.
+
+# util loop is very much like the while loop, but the loop is executed
+# as long as the condition is false (non-zero value).
+
+function main() {
+        local sum=1
+        until [ ${sum} -eq 1000 ]; do
+                sum=$(( ${sum} + 1 ))
+        done
+        printf "Sum is ${sum}.\n"
+}
+
+main

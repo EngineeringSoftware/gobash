@@ -1,0 +1,43 @@
+#!/bin/bash
+#
+# Example similar to the one in Go documentation
+# (https://pkg.go.dev/sync#example-WaitGroup).
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../gobash
+
+
+function main() {
+        # This function illustrates the way we create and use
+        # WaitGroup. However, this example does not really need
+        # WaitGroup as we wait for all sub processes; we can simply
+        # use wait command at the end of the function to wait for
+        # everything we spawned. The value of this example is to
+        # illustrate the way to create a WaitGroup, and processes to
+        # it, and wait (which would be a nice approach if one has to
+        # wait only for a selected subset of them).
+
+        local -r wg=$(WaitGroup)
+
+        # If values are needed only locally (not passing/returning
+        # to/from functions/processes), we use array structure
+        # available in bash.
+        local -r urls=(
+                "http://www.golang.org/"
+                "http://www.google.com/"
+                "http://www.example.com/"
+        )
+
+        local url
+        for url in ${urls[@]}; do
+                ( curl "${url}" 2>&1 ) &
+
+                # Just like the wait command, it is only legal to wait
+                # for sub processes (i.e., you should not be adding
+                # random values to a WaitGroup).
+                $wg add $!
+        done
+        $wg wait
+}
+
+main

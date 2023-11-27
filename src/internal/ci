@@ -1,0 +1,108 @@
+#!/bin/bash
+#
+# CI integration (GitHub actions at the time of this writing).
+#
+# This script should not depend on anything in the library.
+
+readonly CI_MOD=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+readonly CI_BASH3_URL="https://ftp.gnu.org/gnu/bash/bash-3.2.57.tar.gz"
+readonly CI_BASH4_URL="https://ftp.gnu.org/gnu/bash/bash-4.4.18.tar.gz"
+readonly CI_BASH5_URL="https://ftp.gnu.org/gnu/bash/bash-5.2.15.tar.gz"
+
+
+# ----------
+# Functions.
+
+function ci_rts() {
+        # Basic RTS to skip test runs if no bash file is modified.
+        local -r xbash="${1}"
+
+        # TODO: this function is not compatible with
+        # cancel-in-progress: true. This is the reason we always force
+        # runs on the main branch. (We plan to update this once we
+        # enable storing in cache.)
+
+        # Always run on the main branch.
+        [ "$(git rev-parse --abbrev-ref HEAD)" = "main" ] && return 0
+
+        # Find all bash files.
+        local bf=$(mktemp)
+        "${xbash}" gobash func sys_bash_files > "${bf}"
+
+        # Find the list of modified files.
+        local df=$(mktemp)
+        git diff --name-only HEAD^ > "${df}"
+
+        # Return 0 (files modified) or 1 (no file modified).
+        grep -f "${df}" "${bf}"
+}
+
+function ci_install_bash() {
+        # Install bash.
+        local bversion="${1}"
+        [ -z "${bversion}" ] && return 1
+
+        local var="CI_BASH${bversion}_URL"
+        local url="${!var}"
+        echo "$FUNCNAME ${url}"
+
+        local d
+        d=$(basename "${url}" ".tar.gz") || \
+                { echo "cannot get basename"; return 1; }
+
+        wget "${url}" || \
+                { echo "cannot wget"; return 1; }
+
+        tar xfvz "${d}.tar.gz"
+        ( cd "${d}"
+          ./configure --prefix $(pwd) ) || \
+                { echo "cannot configure"; return 1; }
+
+        ( cd "${d}"
+          make ) || \
+                { echo "cannot make"; return 1; }
+
+        ( cd "${d}"
+          make install ) || \
+                { echo "cannot make install"; return 1; }
+
+        "${d}/bin/bash" --version
+}
+
+function ci_config() {
+        local bversion="${1}"
+        [ -z "${bversion}" ] && return 1
+
+        local xbash="bash"
+        local d=$(find "${CI_MOD}/../.." -name "bash-${bversion}*" -type d)
+        [ -d "${d}" ] && xbash="${d}/bin/bash"
+
+        "${xbash}" gobash func x_config
+}
+
+function ci_test() {
+        local bversion="${1}"
+        [ -z "${bversion}" ] && return 1
+
+        local xbash="bash"
+        local d=$(find "${CI_MOD}/../.." -name "bash-${bversion}*" -type d)
+        [ -d "${d}" ] && xbash="${d}/bin/bash"
+
+        if ci_rts "${xbash}"; then
+                export GOBASH_CI_BASH_VERSION="${bversion}"
+                "${xbash}" gobash test --verbose --paths .
+        else
+                echo "No testing (as no file changed)."
+        fi
+}
+
+function ci_lint() {
+        if ci_rts "bash"; then
+                ./gobash lint --paths .
+        else
+                echo "No lint (as no file changed)."
+        fi
+}
+
+"$@"

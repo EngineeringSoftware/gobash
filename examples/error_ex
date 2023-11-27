@@ -1,0 +1,39 @@
+#!/bin/bash
+#
+# An approach to return a detailed error from a function. This example
+# illustrates the use of ctx.
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../gobash
+
+
+function sum() {
+        # A detailed error messages can be written to context; note
+        # that we can use the default context, in which case we do not
+        # need to pass the first argument.
+        local -r ctx="${1}"
+        local -r a="${2}"
+        local -r b="${3}"
+
+        # When we detect an error, write the message to context.
+        [ -z "${a}" ] && ctx_w $ctx "a was not set" && return $EC
+        [ -z "${b}" ] && ctx_w $ctx "b was not set" && return $EC
+
+        ! is_int "${a}" && ctx_w $ctx "a is not an int" && return $EC
+        ! is_int "${b}" && ctx_w $ctx "b is not an int" && return $EC
+
+        echo "${a} + ${b}" | bc
+}
+
+ctx=$(ctx_make)
+# If something goes wrong, print the context.
+sum "$ctx" || ctx_show $ctx
+# Output:
+# a was not set
+# 19 sum ./error_ex
+# 30 main ./error_ex
+
+val=$(sum "$ctx" 5 10) || \
+        { echo "This should never happen."; }
+echo "${val}"
+# Output: 15

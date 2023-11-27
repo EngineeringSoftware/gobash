@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+# Introduces the `List` struct and several methods on it.
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../gobash
+
+
+# Create a list.
+lst=$(List)
+
+# Add several elements.
+$lst add 4
+$lst add 10
+$lst add 11
+
+# Print length.
+$lst len
+
+# There are a number of methods implemented for the `List`
+# struct. Check the API for details.

@@ -1,0 +1,9 @@
+#!/bin/bash
+#
+# More details for the case statement.
+
+case $(date +%b) in
+"Aug"|"Sep") echo "School time";;
+"Dec") echo "Food time";;
+*) echo "Something else";;
+esac

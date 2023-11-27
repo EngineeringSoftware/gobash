@@ -1,0 +1,54 @@
+#!/bin/bash
+#
+# Linked list implementation (nobody should need to do this ;).
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../gobash
+
+
+function Node() {
+        make_ $FUNCNAME \
+              "val" "${1}" \
+              "next" "${2}"
+}
+
+function Node_to_string() {
+        local -r node="${1}"
+        shift 1 || return $EC
+
+        printf "$($node val)"
+}
+
+function LL() {
+        make_ $FUNCNAME \
+              "head" "$NULL" \
+              "size" 0
+}
+
+function LL_add() {
+        local -r ll="${1}"
+        local -r val="${2}"
+        shift 2 || return $EC
+
+        local -r node=$(Node "$val" "$($ll head)")
+        $ll head "$node"
+        $ll size $(( $($ll size) + 1 ))
+}
+
+function LL_to_string() {
+        local -r ll="${1}"
+        shift 1 || return $EC
+
+        local c=$($ll head)
+        while [ "$c" != "$NULL" ]; do
+                $c to_string
+                printf " -> "
+                c=$($c next)
+        done
+        printf "null \n"
+}
+
+ll=$(LL)
+$ll add 3
+$ll add 5
+$ll to_string

@@ -1,0 +1,109 @@
+#!/bin/bash
+#
+# Example inspired by Equivalent Binary Trees from the Go tutorial
+# (https://go.dev/tour/concurrency/8).
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../gobash
+
+
+function Tree() {
+        local -r val="${1}"
+        local -r left="${2:-$NULL}"
+        local -r right="${3:-$NULL}"
+        shift 1
+
+        [ -z "${val}" ] && return $EC
+
+        make_ $FUNCNAME \
+              "left" "$left" \
+              "val" "$val" \
+              "right" "$right"
+}
+
+function Tree_add() {
+        local -r t="${1}"
+        local -r n="${2}"
+        shift 2
+
+        local prev="$NULL"
+        local curr="$t"
+
+        while ! is_null "$curr"; do
+                prev="$curr"
+                if [ $($curr val) -lt $($n val) ]; then
+                        curr=$($curr right)
+                else
+                        curr=$($curr left)
+                fi
+        done
+
+        if [ $($prev val) -lt $($n val) ]; then
+                $prev right "$n"
+        else
+                $prev left "$n"
+        fi
+}
+
+function _tree_walk() {
+        local -r t="${1}"
+        local -r ch="${2}"
+        shift 2
+
+        $ch send "$($t val)"
+
+        local l=$($t left)
+        if ! is_null "$l"; then
+                _tree_walk "$l" "$ch"
+        fi
+
+        local r=$($t right)
+        if ! is_null "$r"; then
+                _tree_walk "$r" "$ch"
+        fi
+}
+
+function Tree_walk() {
+        local -r t="${1}"
+        local -r ch="${2}"
+        shift 2
+
+        _tree_walk "$t" "$ch"
+        $ch close
+}
+
+function tree_new() {
+        local -i k="${1}"
+        shift 1
+
+        [ -z "${k}" ] && return $EC
+
+        local t=$NULL
+
+        local -i i
+        # Do not use shuf (not in Mac).
+        for i in $(seq 1 10 | awk 'BEGIN {srand();} {print rand(), $0;}' | sort -n | cut -d' ' -f2-); do
+                local val=$(( ${i} * 1000 ))
+                local n=$(Tree "${val}" )
+                if is_null "$t"; then
+                        t="$n"
+                else
+                        $t add "$n"
+                fi
+        done
+
+        echo "$t"
+}
+
+echo "Construct a tree."
+t=$(tree_new 1)
+
+echo "Create a channel and walk a tree."
+ch=$(Chan)
+( $t walk "$ch" ) &
+
+echo "Start receiving data."
+while :; do
+        if ! $ch recv; then break; fi
+done
+wait

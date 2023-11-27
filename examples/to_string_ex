@@ -1,0 +1,38 @@
+#!/bin/bash
+#
+# This example illustrates default `to_string` method and a way to
+# override the default implementation for a struct.
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../gobash
+
+
+function Person() {
+        make_ $FUNCNAME \
+              "name" "$1" \
+              "age" "$2"
+}
+# Each `struct` has a default `to_string` method.
+
+# Create an instance and print.
+p=$(Person "Jessy" 10)
+$p to_string
+
+# Override the default implementation.
+function Person_to_string() {
+        local -r obj="${1}"
+        shift 1
+
+        # Can print anything desired here.
+        echo "I am $($obj name)."
+}
+
+# The following line will invoke the newly introduced `to_string`.
+$p to_string
+
+# Output of this script:
+# {
+#   "name": "Jessy",
+#   "age": "10"
+# }
+# I am Jessy.

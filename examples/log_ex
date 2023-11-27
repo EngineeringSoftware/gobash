@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# Log API usage examples.
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../gobash
+
+
+# Print the location for the log output.
+log_output
+
+# Log info (will appear with "INFO" prefix in the output).
+log_i
+# Log info with more details.
+log_i "Provide more details in a message"
+
+# Log warn (will appear with "WARN" prefix in the output).
+log_w "Provide more details"
+
+# Log error (will appear with "ERROR" prefix in the output).
+log_e "Provide more details"
+
+log_set_output $LOG_STDOUT
+log_i "This will be on stdout"

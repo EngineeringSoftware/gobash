@@ -1,0 +1,55 @@
+#!/bin/bash
+#
+# Example that corresponds to "Concurrent pi" on https://go.dev/play/.
+# License for the corresponding code https://go.dev/LICENSE?m=text.
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../../gobash
+
+
+function bcs() {
+        # Unit function for bc with specific scale.
+        local -r exp="${1}"
+        shift 1
+
+        bc <<< "scale=4; ${exp}"
+}
+
+function pi() {
+        local -r n="${1}"
+        shift 1
+
+        local -r ch=$(Chan)
+        for k in $(seq 0 "${n}"); do
+                ( term "$ch" "${k}" ) &
+        done
+
+        local f="3.0"
+        for k in $(seq 0 "${n}"); do
+                local v=$($ch recv)
+                f=$(bcs "${f} + ${v}")
+        done
+
+        echo "${f}"
+}
+
+function term() {
+        local -r ch="${1}"
+        local -r k="${2}"
+        shift 2
+
+        local -r ke=$(bcs "-1^${k}")
+        local -r k2=$(bcs "2 * ${k} + 2")
+        local -r k3=$(bcs "2 * ${k} + 3")
+        local -r k4=$(bcs "2 * ${k} + 4")
+
+        local val=$(bcs "4 * ${ke} / (${k2} * ${k3} * ${k4})")
+        $ch send "${val}"
+}
+
+function main() {
+        printf "MATH_PI %g\n" $MATH_PI
+        printf "Nilakantha %g\n" $(pi 10)
+}
+
+main

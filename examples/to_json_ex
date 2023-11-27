@@ -1,0 +1,27 @@
+#!/bin/bash
+#
+# This example illustrates default `to_json` method.
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../gobash
+
+
+function Person() {
+        make_ $FUNCNAME \
+              "name" "$1" \
+              "age" "$2"
+}
+# Each `struct` has a default `to_json` method.
+
+# Create an instance and print the instance into `json` format.
+p=$(Person "Jessy" 10)
+$p to_json
+
+# Although one can override the implementation of `to_json`, such
+# changes are not recommended.
+
+# Output of this script:
+# {
+#   "name": "Jessy",
+#   "age": "10"
+# }

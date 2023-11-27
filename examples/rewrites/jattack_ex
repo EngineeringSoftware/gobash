@@ -1,0 +1,118 @@
+#!/bin/bash
+#
+# A rewrite of a part of the following script:
+# https://github.com/EngineeringSoftware/jattack/blob/97b1d660ff264be182a2ee101d6ac7f47781c357/tool/jattack.py.
+# The motivation was to show that an elegant solution can be done in
+# bash that uses the gobash library. The focus of the rewrite was on
+# the `class Args`, as well as functions `generate` and
+# `compile_template`.
+#
+# Note: this script captured one version of the jattack.py script
+# (97b1d66) and it will not be maintained as that script (or the
+# gobash library) evolve.
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. $HOME/projects/gobash/gobash
+
+readonly DOT_DIR="$(pwd)/.jattack"
+
+
+# ----------
+# Functions.
+
+function GenArgs() {
+        make_ $FUNCNAME \
+              clz "" \
+              src "" \
+              n_gen 0 \
+              seed 0 \
+              n_itrs 100000 \
+              jattack_jar "${DIR}/jattack-all.jar" \
+              gen_suffix "Gen" \
+              gen_dir "" \
+              build_dir ""
+}
+
+function GenArgs_check_and_assign() {
+        local -r args="${1}"
+
+        local -r clz="$($args clz)"
+        is_empty "$($args clz)" && \
+                { ctx_w "clz cannot be empty"; return $EC; }
+
+        local src="$($args src)"
+        if is_empty "${src}"; then
+                src="$(pwd)/$(basename ${clz}).java"
+                $args src "${src}"
+        fi
+        [ ! -f "${src}" ] && \
+                { ctx_w "Template not found ${src}"; return $EC; }
+
+        ! is_gt "$($args n_gen)" 0 && \
+                { ctx_w "n_gen has to be positive"; return $EC; }
+
+        ! is_int "$($args seed)" && \
+                { ctx_w "seed has to be an int"; return $EC; }
+
+        local -r tmpl_dir="${DOT_DIR}/${clz}"
+        $args gen_dir "${tmpl_dir}/gen"
+        $args build_dir "${tmpl_dir}/build"
+}
+
+function compile_template() {
+        local -r args="${1}"
+
+        # Clean.
+        local -r build_dir=$($args build_dir)
+        os_remake_dir "${build_dir}"
+
+        javac -cp "$($args jattack_jar)" \
+              "$($args src)" \
+              -d "${build_dir}"
+}
+
+function generate() {
+        local -r args="${1}"
+        shift 1 || return $EC
+
+        # Clean.
+        local -r gen_dir=$($args gen_dir)
+        os_remake_dir "${gen_dir}"
+
+        # Run JAttack.
+        java -javaagent:"$($args jattack_jar)" \
+             -cp "$($args build_dir)" \
+             jattack.driver.Driver \
+             --clzName="$($args clz)" \
+             --srcPath="$($args src)" \
+             --nOutputs="$($args n_gen)" \
+             --nInvocations="$($args n_itrs)" \
+             --seed="$($args seed)" \
+             --outputDir="${gen_dir}" \
+             --outputPostfix="$($args gen_suffix)"
+}
+
+function main() {
+        local flags=$(Flags "JAttack generator.")
+        $flags add "$(Flag clz string 'fully qualified class name of the template')"
+        $flags add "$(Flag n_gen int 'the total number of generated programs')"
+        $flags add "$(Flag src string 'the path to the file with the template')"
+        $flags add "$(Flag seed int 'the random seed used by JAttack during generation')"
+
+        local args=$(GenArgs)
+        $flags parse "$args" "$@" || \
+                { ctx_w "Could not parse"; return $EC; }
+
+        $args check_and_assign || \
+                { ctx_w "Incorrect args"; return $EC; }
+
+        compile_template "$args" || \
+                { ctx_w "failed compilation"; return $EC; }
+
+        generate "$args" || \
+                { ctx_w "failed generation"; return $EC; }
+}
+
+rm -rf "${DOT_DIR}"
+ctx_clear
+main "$@" || ctx_show

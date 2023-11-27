@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# Example that illustrates elements of text-based UI (e.g., menu).
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../gobash
+
+
+function main() {
+        # List of options to offer in a menu.
+        local lst=$(List "red" "green" "blue")
+        # Create a text menu, prompt, and provide list of options.
+        local menu=$(TextMenu "Pick your favorite color." "$lst")
+
+        local res=$(UIResult)
+        # Ask a user to pick an option.
+        $menu show "${res}"
+
+        # Result keeps the selected value.
+        $res val
+}
+
+# Uncomment to run this example.
+# main

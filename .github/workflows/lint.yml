@@ -1,0 +1,18 @@
+name: lint
+run-name: ${{ github.ref_name }} lint
+on: [push]
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  Test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v4
+        # We change the depth to find changed files.
+        with:
+          fetch-depth: 2
+      - run: bash --version
+      - name: Run lint
+        run: ./src/internal/ci ci_lint

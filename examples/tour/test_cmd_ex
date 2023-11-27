@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+# `test` command example.
+#
+# Not compatible with -e.
+
+# `test` is a shell builtin (at least in more recent version) used to
+# check files types and compare values.
+
+test 3 -lt 5
+echo "test: 0 == $?"
+# `man test` for details.
+
+# `[` command is very similar to `test`; the last argument is `]`.
+[ 3 -lt 5 ]
+echo "[: 0 == $?"
+
+# `[[` is an improved version available in bash, which supports
+# regular expressions, etc.
+[[ 3 < 5 ]]
+echo "[[: 0 == $?"

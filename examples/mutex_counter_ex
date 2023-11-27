@@ -1,0 +1,60 @@
+#!/bin/bash
+#
+# Example inspired by mutex-counter.go from the Go tutorial
+# (https://go.dev/tour/concurrency/9).
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../gobash
+
+
+function SafeCounter() {
+        # Including mutex as one of the fields.
+        make_ $FUNCNAME \
+              "mu" "$(Mutex)" \
+              "v" "$(Map)"
+}
+
+function SafeCounter_inc() {
+        local -r c="${1}"
+        local -r key="${2}"
+        shift 2
+
+        # Lock mutex kept in this instance.
+        $($c mu) lock
+
+        $($c v) inc "${key}"
+
+        # Unlock when the work is done.
+        $($c mu) unlock
+}
+
+function SafeCounter_value() {
+        local -r c="${1}"
+        local -r key="${2}"
+        shift 2
+
+        $($c mu) lock
+        local res=$($($c v) get "${key}")
+        $($c mu) unlock
+
+        echo "${res}"
+}
+
+function main() {
+        local c
+        c=$(SafeCounter) || assert_fail
+
+        echo "Run increment in parallel with 10 subshells."
+        for (( i=0; i<10; i++ )); do
+                ( $c inc "somekey" ) &
+        done
+        echo "Wait for subshells to be done."
+        wait || assert_fail
+
+        $c value "somekey"
+}
+
+main
+
+# Output will be:
+# 10

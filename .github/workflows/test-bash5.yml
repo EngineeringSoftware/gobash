@@ -1,0 +1,22 @@
+name: test (bash 5)
+run-name: ${{ github.ref_name }} on bash 5
+on: [push]
+env:
+  bversion: 5
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  Test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v4
+        # We change the depth to find changed files.
+        with:
+          fetch-depth: 2
+      - run: bash --version
+      - name: Print configuration
+        run: ./src/internal/ci ci_config $bversion
+      - name: Run tests
+        run: ./src/internal/ci ci_test $bversion

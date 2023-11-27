@@ -1,0 +1,22 @@
+[
+  {
+    "name": "ase22-ae-r",
+    "zipball_url": "https://api.github.com/repos/EngineeringSoftware/inlinetest/zipball/refs/tags/ase22-ae-r",
+    "tarball_url": "https://api.github.com/repos/EngineeringSoftware/inlinetest/tarball/refs/tags/ase22-ae-r",
+    "commit": {
+      "sha": "87bce8426ff5a68ffd34c3db2274e8c9a83dca36",
+      "url": "https://api.github.com/repos/EngineeringSoftware/inlinetest/commits/87bce8426ff5a68ffd34c3db2274e8c9a83dca36"
+    },
+    "node_id": "REF_kwDOHuLWCLRyZWZzL3RhZ3MvYXNlMjItYWUtcg"
+  },
+  {
+    "name": "ase22-ae",
+    "zipball_url": "https://api.github.com/repos/EngineeringSoftware/inlinetest/zipball/refs/tags/ase22-ae",
+    "tarball_url": "https://api.github.com/repos/EngineeringSoftware/inlinetest/tarball/refs/tags/ase22-ae",
+    "commit": {
+      "sha": "4ad10e253c4d1292c3c8dca0da44f25430980840",
+      "url": "https://api.github.com/repos/EngineeringSoftware/inlinetest/commits/4ad10e253c4d1292c3c8dca0da44f25430980840"
+    },
+    "node_id": "REF_kwDOHuLWCLJyZWZzL3RhZ3MvYXNlMjItYWU"
+  }
+]

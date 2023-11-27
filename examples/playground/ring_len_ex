@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+# Example that corresponds to https://go.dev/play/p/MczNZHltM8W from
+# the go documentation (https://pkg.go.dev/container/ring).
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../../gobash
+
+
+function main() {
+        local r=$(container_Ring 4)
+
+        $r len
+}
+
+main

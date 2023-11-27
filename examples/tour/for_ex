@@ -1,0 +1,27 @@
+#!/bin/bash
+
+function main() {
+        local sum=0
+        local i
+
+        for (( i=0; i<10; i++ )); do
+                sum=$(bc <<< "${sum} + ${i}")
+        done
+        printf "%d\n" "${sum}"
+
+        # Alternative.
+        sum=0
+        for i in $(seq 0 9); do
+                sum=$(bc <<< "${sum} + ${i}")
+        done
+        printf "%d\n" "${sum}"
+
+        # Empty init and post.
+        sum=0
+        for (( ; ${sum}<1000; )); do
+                sum=$(( ${sum} + 1 ))
+        done
+        printf "%d\n" "${sum}"
+}
+
+main

@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+# More info about select loop.
+
+function main() {
+        # Select loop needs a list of values just like a `for` loop,
+        # thus you can provide those values by taking info from a file
+        # (e.g., with `cat`) or providing all elements of an array.
+        local a=( "value" "two" )
+        select val in ${a[@]}; do
+                echo ${val}
+                [ "${val}" = "two" ] && break
+        done
+}
+
+# main

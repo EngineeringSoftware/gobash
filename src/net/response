@@ -1,0 +1,55 @@
+#!/bin/bash
+#
+# https://github.com/EngineeringSoftware/gobash/blob/main/LICENSE
+
+readonly _DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+. ${_DIR}/../lang/p.sh
+. ${_DIR}/../util/p.sh
+. ${_DIR}/request.sh
+. ${_DIR}/response.sh
+
+
+# ----------
+# Functions.
+
+function _response() {
+        local -r handlers="$@"
+
+        local req
+        req=$(request_parse) || \
+                { local ec=$?; $(response_make_bad_request) to_string; return ${ec}; }
+          
+        local -i len
+        len=$($handlers len) || \
+                { return $EC; }
+
+        local selh=${NULL}
+        local -i i
+        for (( i=0; i<${len}; i++ )); do
+                local h=$($handlers get ${i})
+                if [ "$($req path)" = "$($h path)" ]; then
+                        selh="$h"
+                fi
+        done
+
+        if is_null "$selh"; then
+                $(response_make_not_found) to_string
+                return $?
+        fi
+
+        local -r res=$(response_make_ok)
+        ( . $($selh script)
+          $($selh func) "$res" "$req" ) || \
+                { return $EC; }
+
+        $res to_string
+}
+
+# ----------
+# Main.
+
+# TODO: Pass ctx.
+
+_response "$@" || \
+        { $(response_make_internal_server_error) to_string; }

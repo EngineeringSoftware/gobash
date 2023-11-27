@@ -1,0 +1,7 @@
+#!/bin/bash
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../../gobash
+
+
+echo "My favorite number is $(rand_intn 10)"

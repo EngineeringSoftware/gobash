@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+# Example that corresponds to "Hello, World!" on https://go.dev/play/.
+# License for the corresponding code https://go.dev/LICENSE?m=text.
+
+echo "Hello, 世界"
+
+# OR
+
+printf "Hello, 世界\n"

@@ -1,0 +1,29 @@
+#!/bin/bash
+#
+# Illustrates command line flag parsing.
+# Try invoking this script with, e.g., --x 55.
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../gobash
+
+
+data=$(Args)
+
+flags=$(Flags "Tool for interacting with outer space.")
+$flags add "$(Flag x int 'Max value')"
+$flags add "$(Flag z int 'Min value')"
+
+# Print a help message (uncomment).
+# $flags help
+
+ctx=$(ctx_make)
+
+# Parse arguments.
+$flags $ctx parse "$data" "$@" || \
+        { ctx_show $ctx; exit 1; }
+
+# Print parsed values.
+$data to_string
+
+# Use data.
+echo "Values that you provides are x=$($data x) and z=$($data z)"

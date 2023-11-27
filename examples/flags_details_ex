@@ -1,0 +1,73 @@
+#!/bin/bash
+#
+# Command line flag parsing and use of those flags.
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../gobash
+
+
+# Checking if argument values are as expected has to be done by
+# developers explicitly like in this function.
+function check_arguments() {
+        local -r args="${1}"
+        shift 1
+
+        # Just for fun, we require that --ignore is set.
+        if is_false "$($args ignore)"; then
+                echo "'ignore' has to be set."
+                return $EC
+        fi
+}
+
+# The following function is some random computation to illustrate the
+# way code for parsing can be connected to other/existing code.
+function compute_loc() {
+        local -r url="${1}"
+        shift 1
+
+        # Clone the repository into a random dir and get number of
+        # lines of code.
+        local tmpd=$(os_mktemp_dir)
+        echo ${tmpd}
+        git clone ${url} ${tmpd}
+        cloc ${tmpd} | grep 'SUM:' | $X_AWK '{ print $5 }'
+}
+
+function main() {
+        # Create an instance of flags, then add desired flags.
+        flags=$(Flags "Example of parsing arguments.")
+        $flags add "$(Flag ignore $BOOL 'An argument that has to be set for fun.')"
+        $flags add "$(Flag max $INT 'Max number of repos to use.')"
+
+        # Create object that will contain values.
+        local -r args=$(Args)
+        # Create context.
+        local -r ctx=$(ctx_make)
+
+        # Parse then check for errors.
+        $flags $ctx parse "$args" "$@" || \
+                { ctx_show $ctx; $flags help; return $EC; }
+
+        # Invoke a method to check if arguments are valid.
+        check_arguments "$args" || return $EC
+
+        # Code below has access to arguments via the `args` instance.
+
+        local -r repos=$(Map)
+        $repos put "math" "https://github.com/apache/commons-math"
+        $repos put "io" "https://github.com/apache/commons-io"
+
+        local -r keys=$($repos keys)
+
+        local i
+        for (( i=0; i<$($keys len); i++ )); do
+                # We ensure not to exceed the max number of URLs to
+                # process, which can be provided as a command line
+                # argument (--max).
+                [ ${i} = $($args max) ] && break
+                local key=$($keys get $i)
+                compute_loc $($repos get "$key")
+        done
+}
+
+main "$@"

@@ -1,0 +1,19 @@
+#!/bin/bash
+
+function split() {
+        local sum="${1}"
+        shift 1
+
+        x=$(bc <<< "${sum} * 4 / 9")
+        y=$(bc <<< "${sum} - ${x}")
+}
+
+function main() {
+        local x
+        local y
+        split 17
+
+        echo "${x} ${y}"
+}
+
+main

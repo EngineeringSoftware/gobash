@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+# Example with file API.
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../gobash
+
+
+f=$(os_mktemp_file)
+cat << END > "${f}"
+some
+random
+text
+END
+
+file_insert_at "${f}" 1 "insert first"
+file_remove_at "${f}" 2
+cat "${f}"
+
+fi=$(os_stat "${f}")
+$fi size

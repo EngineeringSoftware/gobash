@@ -1,0 +1,25 @@
+#!/bin/bash
+#
+# https://github.com/EngineeringSoftware/gobash/blob/main/LICENSE
+#
+# Installation/include script that should be used with source + curl.
+
+INSTALL_DST="$HOME/.gobash"
+INSTALL_REPO="${INSTALL_DST}/gobash"
+INSTALL_URL="git@github.com:EngineeringSoftware/gobash"
+
+mkdir -p "${INSTALL_DST}" || \
+        { echo "cannot make directory (${INSTALL_DST})"; exit 1; }
+
+if [ ! -d "${INSTALL_REPO}" ]; then
+        git clone \
+            "${INSTALL_URL}" \
+            "${INSTALL_REPO}" > /dev/null 2>&1 || \
+                { echo "could not clone the repo"; exit 1; }
+else
+        ( cd "${INSTALL_REPO}"
+          git pull ) > /dev/null 2>&1  || \
+                { echo "could not pull"; exit 1; }
+fi
+
+. "${INSTALL_REPO}/gobash"

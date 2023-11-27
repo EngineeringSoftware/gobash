@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+# Intro.
+
+# The following lines "import" the entire `gobash` (functions,
+# structs, methods, globals).
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../gobash
+
+
+# You do not need to use anything from `gobash` if you do not need.
+echo "Hello gobash"
+# Output:
+# Hello gobash
+
+# `gobash` does NOT change the interpreter (or anything else on your
+# system). It is a pure shell implementation of a number of functions.

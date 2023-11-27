@@ -1,0 +1,15 @@
+#!/bin/bash
+#
+# User API examples.
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../gobash
+
+
+# Obtain info (User) for the current user.
+u=$(user_current)
+# Print values.
+$u username
+$u uid
+$u gid
+$u home

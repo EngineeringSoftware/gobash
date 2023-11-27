@@ -1,0 +1,20 @@
+#!/bin/bash
+#
+# Example that corresponds to "Sleep" on https://go.dev/play/.
+# License for the corresponding code https://go.dev/LICENSE?m=text.
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../../gobash
+
+
+function main() {
+        local -i i
+        for i in $(seq 0 9); do
+                local dur=$(bc <<< "scale=2; $(rand_intn 1000) / 1000" )
+                printf "Sleeping for %g \n" "${dur}"
+                sleep "${dur}"
+        done
+        printf "Done!\n"
+}
+
+main

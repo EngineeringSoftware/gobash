@@ -1,0 +1,28 @@
+#!/bin/bash
+#
+# Example that corresponds to https://go.dev/play/p/Ow6XFg9kWjG from
+# the go documentation (https://pkg.go.dev/container/ring).
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../../gobash
+
+
+function main() {
+        local r=$(container_Ring 5)
+
+        local n=$($r len)
+
+        local i
+        for (( i=0; i<${n}; i++ )); do
+                $r value "${i}"
+                r=$($r next)
+        done
+
+        local j
+        for (( j=0; j<${n}; j++ )); do
+                r=$($r prev)
+                $r value
+        done
+}
+
+main

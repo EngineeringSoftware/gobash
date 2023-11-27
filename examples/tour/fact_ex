@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+# Factorial example using recursion.
+
+function fact() {
+        local -r n="${1}"
+        shift 1
+
+        [ ${n} -eq 0 ] && echo 1 && return 0
+
+        # Recursion on the next line.
+        bc <<< "${n} * $(fact $(( ${n} - 1 )))"
+}
+
+for i in $(seq 1 10); do
+        fact "${i}"
+done

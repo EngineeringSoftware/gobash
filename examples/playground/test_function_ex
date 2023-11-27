@@ -1,0 +1,60 @@
+#!/bin/bash
+#
+# Example that corresponds to "Test Function" on https://go.dev/play/.
+# License for the corresponding code https://go.dev/LICENSE?m=text.
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../../gobash
+
+
+function last_index() {
+        local -r lst="${1}"
+        local -r x="${2}"
+        shift 2
+
+        local -i i=$($lst len)
+        for (( i-- ; i>0; i-- )); do
+                [ "$($lst get ${i})" = "${x}" ] && echo "${i}" && return 0
+        done
+        echo "-1"
+}
+
+function test_last_index() {
+        local -r tests=$(List)
+
+        local tt
+
+        tt=$(amake_ "list" "$(List 1)" "x" 1 "want" 0)
+        $tests add "$tt"
+
+        tt=$(amake_ "list" "$(List 1 1)" "x" 1 "want" 1)
+        $tests add "$tt"
+
+        tt=$(amake_ "list" "$(List 2 1)" "x" 2 "want" 0)
+        $tests add "$tt"
+
+        tt=$(amake_ "list" "$(List 1 2 1 1)" "x" 2 "want" 1)
+        $tests add "$tt"
+
+        tt=$(amake_ "list" "$(List 1 1 1 2 2 1)" "x" 3 "want" -1)
+        $tests add "$tt"
+
+        tt=$(amake_ "list" "$(List 3 1 2 2 1 1)" "x" 3 "want" 0)
+        $tests add "$tt"
+
+        local ec=0
+        local -i i
+        for (( i=0; i<$($tests len); i++ )); do
+                local tt=$($tests get "${i}")
+                local ix=$(last_index "$($tt list)" "$($tt x)")
+                if [ "${ix}" != "$($tt want)" ]; then
+                        printf "LastIndex(%s, %s) = %s, want %s\n" \
+                               "$($($tt list) to_string | paste -sd' ')" \
+                               "$($tt x)" \
+                               "${ix}" \
+                               "$($tt want)"
+                        ec=1
+                fi
+        done
+        return ${ec}
+}

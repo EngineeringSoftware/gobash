@@ -1,0 +1,10 @@
+#!/bin/bash
+
+function main() {
+        while :; do
+                :
+        done
+}
+
+# Uncomment if you want to be in an infinite loop.
+# main

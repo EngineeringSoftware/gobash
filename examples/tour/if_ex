@@ -1,0 +1,17 @@
+#!/bin/bash
+
+function sqrt() {
+        local x="${1}"
+        shift 1
+
+        if [ ${x} -lt 0 ]; then
+                local v=$(sqrt $(( -${x} )))
+                echo "${v}i"
+                return 0
+        fi
+
+        bc <<< "scale=4; sqrt(${x})"
+}
+
+sqrt 2
+sqrt -4

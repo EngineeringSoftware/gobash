@@ -1,0 +1,21 @@
+#!/bin/bash
+
+global="variable"
+echo "This is a global ${global}"
+
+readonly roglobal="readonly variable"
+echo "This is a global ${roglobal}"
+
+# Setting a readonly variable will print an error.
+# roglobal="new value"
+
+function func() {
+        local x="${1}"
+        local z="${2}"
+        shift 2
+
+        echo "Local variables x=${x} and z=${z}."
+}
+
+func 5 8
+# x and z are not available outside func.

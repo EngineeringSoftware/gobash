@@ -1,0 +1,22 @@
+#!/bin/bash
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../../gobash
+
+
+function sqrt() {
+        local -r x="${1}"
+        shift 1
+
+        local z=1
+        local i
+        while :; do
+                local n=$(math_calc "${z} - (${z} * ${z} - ${x}) / (2 * ${z})")
+                echo "${n}" "${z}"
+                local abs=$(math_calc "${z} - ${n}" | tr -d -)
+                math_lt "${abs}" "0.001" && break
+                z=${n}
+        done
+}
+
+sqrt 2

@@ -1,0 +1,354 @@
+#!/bin/bash
+#
+# https://github.com/EngineeringSoftware/gobash/blob/main/LICENSE
+#
+# Main script.
+
+# Check we are running in bash.
+[ -z "${BASH}" ] && \
+        { echo "gobash supports bash only"; exit 1; }
+
+[ "${BASH_VERSINFO[0]}" -lt 3 ] && \
+        { echo "gobash supports bash 3+"; exit 1; }
+
+if [ -n "${GOBASH_MOD:-}" ]; then return 0; fi
+readonly GOBASH_MOD=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+# Check for the core dependencies.
+. ${GOBASH_MOD}/src/lang/x.sh
+x_enabled || { echo "missing dependencies"; exit 1; }
+
+. ${GOBASH_MOD}/src/p.sh || \
+        { echo "incorrect repo structure"; exit 1; }
+
+
+# ----------
+# Functions.
+
+function _gobash_print_help() {
+        # Print actual help message for the gobash command.
+        local ctx; is_ctx "${1}" && ctx="${1}" && shift
+        [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
+        shift 0 || { ctx_wn $ctx; return $EC; }
+
+        printf "gobash is a bash library (APIs and tools) designed to improve programming experience.\n"
+        printf "\n"
+        printf "Usage: gobash <command> [flags]\n"
+        printf "\n"
+        printf "The commands are:\n"
+        printf "\n"
+
+        local -r thisf="${BASH_SOURCE[0]}"
+
+        local func
+        for func in $(sys_functions_in_file $ctx "${thisf}" | grep '^gobash' | grep -v 'gobash_help' | sort); do
+                local cmd=${func#gobash_*}
+                local doc
+                doc=$(grep -A 1 "function ${func}()" "${thisf}" | \
+                              grep '# ' | \
+                              $X_SED 's/.*# \(.*\)/\1/g') || \
+                        { ctx_w $ctx "cannot get doc for ${func}"; return $EC; }
+                printf "        ${cmd}\t\t${doc}\n"
+        done
+
+        printf "\n"
+        printf "You can use gobash help <command> to learn more about a command.\n"
+        printf "\n"
+}
+
+function _gobash_print_cmd() {
+        # Print help for a command.
+        local ctx; is_ctx "${1}" && ctx="${1}" && shift
+        [ $# -ne 1 ] && { ctx_wn $ctx; return $EC; }
+        local -r cmd="${1}"
+        shift 1 || { ctx_wn $ctx; return $EC; }
+
+        local -r func="_gobash_${cmd}_help"
+        if ! is_function $ctx "${func}"; then
+                ctx_w $ctx "gobash help ${cmd}: unknown help entry"
+                ctx_w $ctx "run 'gobash help'"
+                return $EC
+        else
+                "${func}" $ctx
+        fi
+}
+
+function gobash_help() {
+        # print this help message
+        local ctx; is_ctx "${1}" && ctx="${1}" && shift
+        [ $# -lt 0 -o $# -gt 1 ] && { ctx_wn $ctx; return $EC; }
+        local cmd="${1}"
+        shift 0 || { ctx_wn $ctx; return $EC; }
+
+        local ec=0
+        if [ -z "${cmd}" ]; then
+                _gobash_print_help $ctx || ec=$?
+        else
+                _gobash_print_cmd $ctx "${cmd}" || ec=$?
+        fi
+        return ${ec}
+}
+
+function _gobash_func_help() {
+        # Help message for the 'func' command.
+        local ctx; is_ctx "${1}" && ctx="${1}" && shift
+        [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
+        shift 0 || { ctx_wn $ctx; return $EC; }
+
+        cat << EOF
+usage: gobash func function
+
+Run 'function' from this library on its own.
+This is commonly used when one of the util functions should be invoked
+without any scripts, e.g., 'time_now_millis'.
+EOF
+}
+
+function gobash_func() {
+        # run a single function from this library
+        local ctx; is_ctx "${1}" && ctx="${1}" && shift
+        [ $# -lt 0 ] && { ctx_wn $ctx; return $EC; }
+        shift 0 || { ctx_wn $ctx; return $EC; }
+
+        if [ $# -lt 1 ]; then
+                ctx_w $ctx "gobash: no function given"
+                return 1
+        fi
+
+        # Function is given.
+        local -r func="${1}"
+        shift
+
+        if ! is_function "${func}"; then
+                ctx_w $ctx "gobash: no such function ${func}"
+                return 1
+        fi
+
+        "${func}" $ctx "$@"
+}
+
+function _gobash_test_help() {
+        # Help message for the 'test' command.
+        local ctx; is_ctx "${1}" && ctx="${1}" && shift
+        [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
+        shift 0 || { ctx_wn $ctx; return $EC; }
+
+        cat << EOF
+usage: gobash test flags
+
+Run tests based on the given flags. Running the command without any
+flags will print more details about the expected inputs.
+EOF
+}
+
+function gobash_test() {
+        # run the test tool
+        local ctx; is_ctx "${1}" && ctx="${1}" && shift
+        [ $# -lt 0 ] && { ctx_wn $ctx; return $EC; }
+        shift 0 || { ctx_wn $ctx; return $EC; }
+
+        bunit_main $ctx "$@"
+}
+
+function _gobash_lint_help() {
+        # Help message for the 'lint' command.
+        local ctx; is_ctx "${1}" && ctx="${1}" && shift
+        [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
+        shift 0 || { ctx_wn $ctx; return $EC; }
+
+        cat << EOF
+usage: gobash lint flags
+
+Run linter with the given configuration flags. Running the command without
+any flags will print more details about the expected inputs.
+EOF
+}
+
+function gobash_lint() {
+        # run the lint tool
+        local ctx; is_ctx "${1}" && ctx="${1}" && shift
+        [ $# -lt 0 ] && { ctx_wn $ctx; return $EC; }
+        shift 0 || { ctx_wn $ctx; return $EC; }
+
+        blint_main $ctx "$@"
+}
+
+function _gobash_docgen_help() {
+        # Help message for the 'docgen' command.
+        local ctx; is_ctx "${1}" && ctx="${1}" && shift
+        [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
+        shift 0 || { ctx_wn $ctx; return $EC; }
+
+        cat << EOF
+usage: gobash docgen flags
+
+Run docgen generation tool with the given configuration flags. Running the
+command without any flags will print more details about the expected input.
+EOF
+}
+
+function gobash_docgen() {
+        # run the docgen tool
+        local ctx; is_ctx "${1}" && ctx="${1}" && shift
+        [ $# -lt 0 ] && { ctx_wn $ctx; return $EC; }
+        shift 0 || { ctx_wn $ctx; return $EC; }
+
+        bdoc_main $ctx "$@"
+}
+
+function _gobash_version_help() {
+        local ctx; is_ctx "${1}" && ctx="${1}" && shift
+        [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
+        shift 0 || { ctx_wn $ctx; return $EC; }
+
+        cat << EOF
+usage: gobash version
+
+Print gobash version number.
+EOF
+}
+
+function gobash_version() {
+        # print gobash version
+        local ctx; is_ctx "${1}" && ctx="${1}" && shift
+        [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
+        shift 0 || { ctx_wn $ctx; return $EC; }
+
+        printf "gobash version %s\n" "$(sys_version $ctx)"
+}
+
+function _gobash_run_help() {
+        # Help message for the 'run' command.
+        local ctx; is_ctx "${1}" && ctx="${1}" && shift
+        [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
+        shift 0 || { ctx_wn $ctx; return $EC; }
+
+        cat << EOF
+usage: gobash run script [arguments]
+
+Run the given bash script with this library included. If this
+approach is used, the script does not need to explicitly include
+the gobash library. All 'arguments' are passed, unchanged, to
+to script itself.
+EOF
+}
+
+function gobash_run() {
+        # run bash script with gobash library included
+        local ctx; is_ctx "${1}" && ctx="${1}" && shift
+        [ $# -lt 0 ] && { ctx_wn $ctx; return $EC; }
+        shift 0 || { ctx_wn $ctx; return $EC; }
+
+        if [ $# -lt 1 ]; then
+                printf "gobash: no script listed\n"
+                return 1
+        fi
+
+        local -r script="${1}"
+        shift
+        if ! is_file $ctx "${script}"; then
+                printf "${script}: no such file\n"
+                return 1
+        fi
+
+        ( if filepath_is_abs $ctx "${script}"; then
+                  . "${script}" "$@" || exit $?
+          else
+                  . "./${script}" "$@" || exit $?
+          fi
+        )
+        local ec=$?
+
+        return "${ec}"
+}
+
+function gobash_ctx() {
+        # print details about a context
+        local ctx; is_ctx "${1}" && ctx="${1}" && shift
+        [ $# -gt 1 ] && { ctx_wn $ctx; return $EC; }
+        local -r ctx="${1}"
+        shift 0 || { ctx_wn $ctx; return $EC; }
+
+        ctx_stack $ctx
+}
+
+function _gobash_ctx_help() {
+        # Help message for the ctx command.
+        local ctx; is_ctx "${1}" && ctx="${1}" && shift
+        [ $# -lt 0 ] && { ctx_wn $ctx; return $EC; }
+        shift 0 || { ctx_wn $ctx; return $EC; }
+
+        cat << EOF
+usage: gobash ctx [context]
+
+Print the given context (or the global context if one is not
+explicitly given).
+EOF
+}
+
+function gobash_gc() {
+        # remove any artifacts created in prior runs
+        local ctx; is_ctx "${1}" && ctx="${1}" && shift
+        [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
+        shift 0 || { ctx_wn $ctx; return $EC; }
+
+        unsafe_gc
+}
+
+function _gobash_gc_help() {
+        # Help message for the gc command.
+        local ctx; is_ctx "${1}" && ctx="${1}" && shift
+        [ $# -lt 0 ] && { ctx_wn $ctx; return $EC; }
+        shift 0 || { ctx_wn $ctx; return $EC; }
+
+        cat << EOF
+usage: gobash gc
+
+Remove artifacts created in any run that used the
+gobash library in the past (either via gobash script or
+by importing the library). This command should not be
+used while some other process might be using the library.
+Also, all the artifacts are per gobash instance/clone,
+i.e., if there are multiple gobash clones only the one
+that contains the invoked gobash script is cleaned.
+EOF
+}
+
+function main() {
+        # Main entry to gobash.
+        local ctx; is_ctx "${1}" && ctx="${1}" && shift
+        [ $# -lt 0 ] && { ctx_wn $ctx; return $EC; }
+        shift 0 || { ctx_wn $ctx; return $EC; }
+
+        local ec=0
+
+        # GC might remove context as well, so this has to come later.
+        [ -z "${ctx}" ] && ctx=$(ctx_make)
+
+        if [ $# -eq 0 ]; then
+                gobash_help $ctx || \
+                        { ec=$?; ctx_w $ctx "help command error"; }
+        elif is_function $ctx "gobash_${1}"; then
+                local -r func="${1}"
+                shift
+                "gobash_${func}" $ctx "$@" || \
+                        { ec=$?; ctx_w $ctx "gobash: ${func} command error"; }
+        else
+                ec=2
+                ctx_w $ctx "gobash ${1}: unknown command"
+                ctx_w $ctx "run 'gobash help' to see the list of commands"
+        fi
+
+        if [ ${ec} -ne 0 ]; then
+                ctx_show $ctx
+        fi
+
+        return ${ec}
+}
+
+# ----------
+# Main.
+
+if [[ "${0}" = *"gobash" ]]; then
+        main "$@" || exit $?
+fi

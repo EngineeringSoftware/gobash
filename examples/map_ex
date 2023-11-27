@@ -1,0 +1,25 @@
+#!/bin/bash
+#
+# Introduces the `Map` struct and several methods on it.
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../gobash
+
+
+# Create a map.
+map=$(Map)
+
+# Add some mappings.
+$map put "a" 40
+$map put "b" 45
+$map put "c" 70
+
+# Print value for a given key.
+$map get "b"
+# 45
+
+$map get "d"
+# null
+
+# Print the length.
+$map len

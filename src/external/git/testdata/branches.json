@@ -1,0 +1,44 @@
+[
+  {
+    "name": "junit5-features",
+    "commit": {
+      "sha": "bbe2867513c690765116200c3e603c2e13dfd199",
+      "url": "https://api.github.com/repos/EngineeringSoftware/inlinetest/commits/bbe2867513c690765116200c3e603c2e13dfd199"
+    },
+    "protected": false,
+    "protection": {
+      "enabled": false,
+      "required_status_checks": {
+        "enforcement_level": "off",
+        "contexts": [
+
+        ],
+        "checks": [
+
+        ]
+      }
+    },
+    "protection_url": "https://api.github.com/repos/EngineeringSoftware/inlinetest/branches/junit5-features/protection"
+  },
+  {
+    "name": "main",
+    "commit": {
+      "sha": "ef380ea266b2c7b2d2e18c9b02ceb27e2f2e65e8",
+      "url": "https://api.github.com/repos/EngineeringSoftware/inlinetest/commits/ef380ea266b2c7b2d2e18c9b02ceb27e2f2e65e8"
+    },
+    "protected": false,
+    "protection": {
+      "enabled": false,
+      "required_status_checks": {
+        "enforcement_level": "off",
+        "contexts": [
+
+        ],
+        "checks": [
+
+        ]
+      }
+    },
+    "protection_url": "https://api.github.com/repos/EngineeringSoftware/inlinetest/branches/main/protection"
+  }
+]

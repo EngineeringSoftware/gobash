@@ -1,0 +1,49 @@
+#!/bin/bash
+#
+# This example illustrates a way to implement a simple web server.
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../gobash
+
+
+# A handle function that will be invoked when user asks for /date.
+function handle_date() {
+        local -r res="${1}"
+        local -r req="${2}"
+        shift 2
+
+        $res write "Sending this date back: $(date)"
+}
+
+function main() {
+        # Address and port to listen on.
+        local -r address="127.0.0.1"
+        local -r -i port=9003
+
+        # Create an Http instance.
+        local -r http=$(Http "${address}" "${port}")
+
+        # The next line adds a handler for /date. The first argument
+        # is `path` to be handled. The second argument is the script
+        # that contains the function that will handle the request; the
+        # function name is given as the third argument. (Providing the
+        # second script is needed, because handling is done in a
+        # subshell, so we need to know what script to run in addition
+        # to the function.)
+        $http handle_func "/date" "${DIR}/$(basename ${BASH_SOURCE})" "handle_date"
+
+        # Start listening and serving (creates a sub process) and wait
+        # for the sub process to finish.
+        $http listen_and_serve_and_wait
+}
+
+if [[ "${0}" == *"web_server_ex" ]]; then
+        http_enabled || \
+                { echo "http is not enabled"; exit 0; }
+        main "$@"
+fi
+
+# Once you start this script, you can go to another terminal and curl
+# (or any other way you like):
+# curl -v http://127.0.0.1:9003/date # 200 OK
+# curl -v http://127.0.0.1:9003/none # 404 Not Found

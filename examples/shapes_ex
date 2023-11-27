@@ -1,0 +1,98 @@
+#!/bin/bash
+#
+# An example that illustrates `methods`.  The example introduces
+# `structs` for Circle, Square, and Rectangle, as well as a
+# `methods` for each of them for computing area.
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../gobash
+
+
+function Circle() {
+        [ $# -ne 1 ] && return $EC
+        local -r r="${1}"
+        shift 1
+
+        make_ $FUNCNAME \
+              "r" "${r}"
+        # We do not need to return this explicitly (because the
+        # default output is the result of the latest command, but
+        # being explicit is good in some cases).
+        # return $?
+}
+
+function Circle_area() {
+        local -r c="${1}"
+        shift 1
+
+        local result
+        result=$(echo "$MATH_PI * $($c r) * $($c r)" | bc)
+        echo ${result}
+        return 0
+}
+
+function Square() {
+        [ $# -ne 1 ] && return $EC
+        local -r a="${1}"
+        shift 1
+
+        make_ $FUNCNAME \
+              "a" "${a}"
+}
+
+function Square_area() {
+        local -r obj="${1}"
+        shift 1
+
+        local result
+        result=$(( $($obj "a") * $($obj "a") ))
+        echo ${result}
+        return 0
+}
+
+function Rectangle() {
+        [ $# -ne 2 ] && return $EC
+        local -r a="${1}"
+        local -r b="${2}"
+        shift 2
+
+        make_ $FUNCNAME \
+              "a" "${a}" \
+              "b" "${b}"
+}
+
+function Rectangle_area() {
+        local -r obj="${1}"
+        shift 1
+
+        local result
+        result=$(( $($obj "a") * $($obj "b") ))
+        echo ${result}
+        return 0
+}
+
+function main() {
+        lst=$(List)
+
+        c=$(Circle 4)
+        $lst add "$c"
+
+        s=$(Square 4)
+        $lst add "$s"
+
+        r=$(Rectangle 2 2)
+        $lst add "$r"
+
+        assert_eq $($lst len) 3
+
+        local total=0
+        local i
+        for (( i=0; i<$($lst len); i++ )); do
+                local el=$($lst get ${i})
+                total=$(echo "$($el area) + ${total}" | bc -l)
+        done
+        printf "Total area: %g\n" ${total}
+        assert_has_prefix "${total}" "70"
+}
+
+main

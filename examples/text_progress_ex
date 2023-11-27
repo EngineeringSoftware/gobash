@@ -1,0 +1,30 @@
+#!/bin/bash
+#
+# Illustrates text-based progress bar.
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../gobash
+
+
+function main() {
+        # In this example, we will go over all the files in this
+        # directory and collect their sizes. We will output the
+        # progress in terms of processed files.
+
+        local num_files=$(find "${DIR}" -maxdepth 1 -name "*_ex" | wc -l)
+        local -r bar=$(TextProgress "${num_files}")
+
+        $bar start
+        local lst=$(List)
+        local f
+        for f in $(find "${DIR}" -maxdepth 1 -name "*_ex"); do
+                $bar inc
+                local nl=$(wc -l "${f}" | cut -f1 -d' ')
+                $lst add "${nl}"
+        done
+        $bar stop
+
+        $lst len
+}
+
+main

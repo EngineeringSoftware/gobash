@@ -1,0 +1,32 @@
+#!/bin/bash
+#
+# Example with string API.
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../gobash
+
+
+function main() {
+        strings_to_lower "Something"
+        # Output: something
+
+        strings_to_upper "something"
+        # Output: SOMETHING
+
+        strings_len "something"
+        # Output: 9
+
+        strings_repeat 'c' 10
+        # Output: cccccccccc
+
+        strings_has_prefix "this is string" "this" && echo "true"
+        # Output: true
+
+        strings_rev "this"
+        # Output: siht
+
+        strings_lstrip "    what"
+        # Output: what
+}
+
+main

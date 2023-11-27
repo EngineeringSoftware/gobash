@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+# Case statement example.
+
+# Case statement enables you to select one of the options based on the
+# given value (or expression that evaluates to a value). This
+# statement is similar to switch statement in other programming
+# languages. In bash, only one case is selected (first one that
+# matches) and execution continuous after the case statement (similar
+# to Go). The default case (which is optional) is "*".
+
+case $(date +%b) in
+"Aug") echo "School is starting";;
+"Sep") echo "Labor day";;
+*) echo "Not one of the supported months";;
+esac

@@ -1,0 +1,186 @@
+#!/bin/bash
+#
+# A rewrite of the following script:
+# https://github.com/apache/flink/blob/536e58354c8b5862d1703918a3dfd11e5928e063/flink-end-to-end-tests/flink-tpcds-test/tpcds-tool/data_generator.sh.
+# The motivation was to show bash code when using flag parsing and
+# collections.
+#
+# Note: this script captured one version of the data_generator.sh
+# (d1f1243) script and it will not be maintained as that script (or
+# the gobash library) evolve.
+
+. $HOME/projects/gobash/gobash
+
+readonly PREFIX="https://raw.githubusercontent.com/ververica/tpc-ds-generators"
+readonly PREFIX_MASTER="${PREFIX}/master/generators"
+readonly PREFIX_SHA="${PREFIX}/f5d6c11681637908ce15d697ae683676a5383641/generators"
+readonly TPCDS_IDX_URL="${PREFIX_SHA}/tpcds.idx"
+
+
+# ----------
+# Functions.
+
+function retry_times_with_backoff() {
+        local -r retries="${1}"
+        local -r backoff="${2}"
+        shift 2 || return $EC
+
+        local i
+        for i in $(seq 1 "${retries}"); do
+                "$@" && return 0
+                log_i "command: $@ failed. retrying..."
+                sleep "${backoff}"
+        done
+        return $EC
+}
+
+function RemoteBin() {
+        make_ $FUNCNAME \
+              "file_name" "${1}" \
+              "url" "${2}" \
+              "md5" "${3}"
+}
+
+function build_remote_binaries() {
+        local -r urls="${1}"
+
+        local u
+
+        u=$(RemoteBin "dsdgen_linux" \
+                      "${PREFIX_SHA}/dsdgen_linux" \
+                      "299216f04d490a154f632b0b9b842241")
+        $urls put "${OS_LINUX}" "${u}"
+
+        u=$(RemoteBin "dsdgen_linux" \
+                      "${PREFIX_MASTER}/dsdgen_linux_aarch64" \
+                      "faf26047d0bea5017b99e6f53ceaf5e5")
+        $urls put "${OS_LINUX}aarch64" "${u}"
+
+        u=$(RemoteBin "dsdgen_macos" \
+                      "${PREFIX_SHA}/dsdgen_macos" \
+                      "a1019fc63e43324decac1b68d14ff4da")
+        $urls put "${OS_MAC}" "${u}"
+
+        u=$(RemoteBin "tpcds.idx" \
+                      "${PREFIX_SHA}/tpcds.idx" \
+                      "376152c9aa150c59a386b148f954c47d")
+        $urls put "tpcds" "${u}"
+}
+
+function parse_and_check() {
+        local -r args="${1}"
+        shift 1 || return $EC
+
+        local -r flags=$(Flags "TPC-DS data generator.")
+        $flags add "$(Flag generator_dir string 'Dir for the generator')"
+        $flags add "$(Flag scale_factor int 'Scale factor')"
+        $flags add "$(Flag data_dir string 'Dir for generated data')"
+
+        $flags parse "$args" "$@" || \
+                { ctx_w "could not parse args"; return $EC; }
+
+        is_empty "$($args generator_dir)" && \
+                { ctx_w "generator_dir cannot be empty"; return $EC; }
+
+        is_empty "$($args data_dir)" && \
+                { ctx_w "data_dir cannot be empty"; return $EC; }
+
+        return 0
+}
+
+function download_and_validate() {
+        local -r dest_dir="${1}"
+        local -r bin="${2}"
+
+        local -r file_name=$($bin file_name)
+        local -r url=$($bin url)
+        local -r dest_file="${dest_dir}/${file_name}"
+
+        curl -o "${dest_file}" "${url}" > /dev/null 2>&1 || \
+                { ctx_w "could not curl"; return $EC; }
+
+        local expected_md5=$($bin md5)
+        local actual_md5=$($X_MD5 "${dest_file}" | cut -f1 -d' ')
+
+        # Check and clean.
+        if [ "${actual_md5}" != "${expected_md5}" ]; then
+                ctx_w "incorrect md5 sum"
+                rm -f "${dest_file}"
+                return $EC
+        fi
+}
+
+function main() {
+        local -r args=$(Args)
+        parse_and_check "$args" "$@" || \
+                { ctx_w "cannot parse and check"; return $EC; }
+
+        log_set_output "$LOG_STDOUT"
+        log_i "current OS: $(os_name)"
+        log_i "download data generator from GitHub ..."
+
+        local -r bins=$(Map)
+        build_remote_binaries "$bins" || \
+                { ctx_w "could not build map"; return $EC; }
+
+        local -r dest_dir=$($args generator_dir)
+        local key=$(os_name)
+        [ "${arch}" = "$(os_arch)" ] && key="${key}aarch64"
+        local -r bin=$($bins get "${key}")
+
+        # Prepare dest directory.
+        os_remake_dir "${dest_dir}" > /dev/null
+
+        retry_times_with_backoff 3 5 download_and_validate \
+                "${dest_dir}" \
+                "${bin}" || \
+                { ctx_w "could not download and validate"; return $EC; }
+
+        retry_times_with_backoff 3 5 download_and_validate \
+                "${dest_dir}" \
+                "$($bins get tpcds)" || \
+                { ctx_w "could not get tpcds"; return $EC; }
+
+        local -r data_dir=$($args data_dir)
+        local -r scale_factor=$($args scale_factor)
+
+        log_i "generating TPC-DS qualification data"
+        os_remake_dir "${data_dir}" > /dev/null
+
+        local -r file_name=$($bin file_name)
+        chmod +x "${dest_dir}/${file_name}"
+        ( cd "${dest_dir}"
+          "./${file_name}" \
+            -SCALE "${scale_factor}" \
+            -FORCE Y \
+            -DIR "${data_dir}"
+        ) || { ctx_w "data generation failed"; return $EC; }
+
+        log_i "generate TPC-DS qualification data success"
+}
+
+ctx_clear
+main "$@" || ctx_show
+
+# Command to run this script.
+# ./s --generator_dir "$(pwd)/GEN" --data_dir "$(pwd)/OUT" --scale_factor 1
+
+# Below is code that was used to invoke the original script.
+
+# export FLINK_DIR=$(pwd)
+# export FLINK_LOG_DIR=$(pwd)/LOG
+# export END_TO_END_DIR=$(pwd)/flink-end-to-end-tests
+
+# GEN=$(pwd)/GEN
+# rm -rf "${GEN}"
+# mkdir "${GEN}"
+
+# OUT=$(pwd)/OUT
+# rm -rf "${OUT}"
+# mkdir "${OUT}"
+
+# ./flink-end-to-end-tests/flink-tpcds-test/tpcds-tool/data_generator.sh \
+#         "${GEN}" \
+#         1 \
+#         "${OUT}" \
+#         $(pwd)/flink-end-to-end-tests/test-scripts

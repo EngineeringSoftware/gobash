@@ -1,0 +1,29 @@
+#!/bin/bash
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../../gobash
+
+
+function pow() {
+        local x="${1}"
+        local n="${2}"
+        local lim="${3}"
+        shift 3
+
+        local v=$(math_pow "${x}" "${n}")
+        if math_lt "${v}" "${lim}"; then
+                echo "${v}"
+                return 0
+        else
+                printf "%g >= %g\n" "${v}" "${lim}"
+        fi
+        
+        echo "${lim}"
+}
+
+function main() {
+        pow 3 2 10
+        pow 3 3 20
+}
+
+main

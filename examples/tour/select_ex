@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+# Introduces select loop.
+
+# Select loop is a handy for creating simple command menus.
+
+function main() {
+        local val
+        # `val` will be set to the value selected by the user. If a
+        # user selects number outside the range, `val` will be empty.
+        select val in "apple" "pear" "watermellon"; do
+                [ "${val}" = "pear" ] && break
+        done
+}
+
+# Here, you will be in an infinite loop until you select "pear".
+#main

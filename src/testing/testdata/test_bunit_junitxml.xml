@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+  <testsuite name="bunit"
+    errors="0"
+    failures="0"
+    skipped="0"
+    tests="2"
+    time=""
+    timestamp=""
+    hostname="HOST">
+      <testcase classname="bunit_test.sh"
+        name="z_test_x_one"
+        time="">
+      </testcase>
+      <testcase classname="bunit_test.sh"
+        name="z_test_x_two"
+        time="">
+      </testcase>
+  </testsuite>
+</testsuites>

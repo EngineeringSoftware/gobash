@@ -1,0 +1,79 @@
+#!/bin/bash
+#
+# Illustrates `Result` to return value and error from a function.
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../gobash
+
+
+function sum() {
+        # One way to return a value is by passing an "output" argument
+        # (an instance of `Result`) to a function, which will be
+        # populated in the function.
+        local -r res="${1}"
+        local -r a="${2}"
+        local -r b="${3}"
+
+        # Check all the arguments.
+        [ -z "${res}" ] && ctx_w 'No arguments' && return $EC
+
+        # When we detect an error, we write into the default context.
+        [ -z "${a}" ] && ctx_w 'a was not set' && return $EC
+        [ -z "${b}" ] && ctx_w 'b was not set' && return $EC
+
+        ! is_int "${a}" && ctx_w 'a is not an int' && return $EC
+        ! is_int "${b}" && ctx_w 'b is not an int' && return $EC
+
+        # Set the value of the result.
+        $res val $(( ${a} + ${b} ))
+        return 0
+}
+
+ctx_clear
+# Not providing any argument.
+sum || ctx_show
+# Output:
+# No arguments
+# 18 sum ./result_ex
+# 37 main ./result_ex
+
+ctx_clear
+# Providing result but no other argument.
+res=$(Result)
+sum "$res" || ctx_show
+# Output:
+# a was not set
+# 21 sum ./result_ex
+# 43 main ./result_ex
+
+ctx_clear
+# Providing result and one argument.
+res=$(Result)
+sum "$res" 5 || ctx_show
+# Output:
+# b was not set
+# 22 sum ./result_ex
+# 52 main ./result_ex
+
+ctx_clear
+# Providing both arguments but wrong type.
+res=$(Result)
+sum "$res" "a" "b" || ctx_show
+# Output:
+# a is not an int
+# 24 sum ./result_ex
+# 61 main ./result_ex
+
+ctx_clear
+# Providing all arguments with correct types.
+res=$(Result)
+sum "$res" 10 5 || \
+        { echo "This should never happen."; }
+
+# Get the value and then print it.
+echo $($res val)
+# Output: 15
+
+# If there is no error to_string for `Result` print the value.
+$res to_string
+# Output: 15

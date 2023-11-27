@@ -1,0 +1,18 @@
+#!/bin/bash
+#
+# This example shows a way to communicate among processes via channels.
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../gobash
+
+
+# Create a channel for communication.
+ch=$(Chan)
+
+# Spaw some processes that will be sending messages.
+( $ch send 55 ) &
+( $ch send 57 ) &
+
+# Recive messages (and print).
+$ch recv
+$ch recv

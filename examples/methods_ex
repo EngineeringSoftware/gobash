@@ -1,0 +1,36 @@
+#!/bin/bash
+#
+# Introduces `methods` and their association with structs.
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../gobash
+
+
+function Request() {
+        local -r url="${1}"
+        shift 1
+
+        make_ $FUNCNAME \
+              "url" "${url}"
+}
+
+# Adding a method (named `curl`) for the `struct` `Request`. Note that
+# the method name has to be prefixed by the name of the struct.
+function Request_curl() {
+        # The first argument of each method is an instance on which
+        # the method was invoked (think of it as `this` or
+        # `self`). Subsequent arguments (if any) are given to the
+        # method at the invocation time.
+        local -r req="${1}"
+        shift 1
+
+        # Body of the method can be anything.
+        # Exit code from this method will be propagated to the caller.        
+        curl "$($req url)" 2>&1
+}
+
+# Create an instance.
+req=$(Request "https://www.google.com")
+
+# Invoke a method on the instance.
+$req curl

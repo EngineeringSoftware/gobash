@@ -1,0 +1,10 @@
+#!/bin/bash
+
+function fun()
+{
+        :
+}
+
+function fun2() {
+        :
+}

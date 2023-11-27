@@ -1,0 +1,59 @@
+#!/bin/bash
+#
+# This example illustrates a way to use `whiptail` via a bash
+# API. `whiptail` is very nice for simple dialogs/windows, but
+# providing input and capturing output is not always
+# pleasant. Provided API simplifies that handling.
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../gobash
+
+clear || \
+        { echo "Your terminal lacks the ability to clear the screen or position the cursor";
+          exit 0; }
+
+
+# Create a Message box and show it.
+box=$(WTMsgBox "Info that more examples are coming.")
+$box show
+
+# Create an Input box, capture the input and show it.
+box=$(WTInputBox "Please describe how much you like it.")
+res=$(UIResult)
+$box show "$res"
+$res to_string
+
+# Prepare a list for a Menu.
+lst=$(List)
+$lst add "Run"
+$lst add "Delete this example"
+
+# Create a Menu, capture the selected item, and print the item.
+res=$(UIResult)
+box=$(WTMenu "Actions" "$lst")
+$box show "$res"
+$res to_string
+
+# Prepare a list for a Checklist.
+lst=$(List)
+$lst add "root"
+$lst add "etc"
+$lst add "bin"
+
+# Create a Checklist, capture the selected items, and print the items.
+box=$(WTChecklist "Directories" "$lst")
+res=$(UIResult)
+$box show "$res"
+$($res val) to_string
+
+# Prepare a list for a Radiolist.
+lst=$(List)
+$lst add "root"
+$lst add "etc"
+$lst add "bin"
+
+# Create a Radiolist, capture the selected item, and print the item.
+box=$(WTRadiolist "Directory" "$lst")
+res=$(UIResult)
+$box show "$res"
+$res to_string

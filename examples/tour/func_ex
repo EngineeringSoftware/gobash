@@ -1,0 +1,11 @@
+#!/bin/bash
+
+function add() {
+        local -r x="${1}"
+        local -r y="${2}"
+        shift 2
+
+        bc <<< "${x} + ${y}"
+}
+
+add 42 14

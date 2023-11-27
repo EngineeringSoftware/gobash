@@ -1,0 +1,41 @@
+#!/bin/bash
+#
+# An example that illustrates `structs` and `constructors`.
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../gobash
+
+
+# `struct` and `constructor` are one. In any future example, we will
+# only use `struct` in text (but we really mean both at once).
+function Request() {
+        # Normal function arguments in bash.
+        local -r url="${1}"
+        shift 1
+
+        # `make_` invocation differentiates a struct from other
+        # functions. `make_` allocates an instance. The first
+        # argument is the struct name (think of it as a type). struct
+        # name can be anything, but we will always use $FUNCNAME
+        # (which is Request in this example). Name is important when
+        # associating methods with a struct (and we love
+        # $FUNCNAME). The arguments that follow are pairs of a field
+        # name and value.
+        make_ $FUNCNAME \
+              "url" "${url}"
+}
+
+# Creating a `Request` instance is trivial.
+req=$(Request "https://www.google.com")
+
+# We can print the value of a field.
+$req url
+
+# We can also update the value.
+$req url "https://www.google.com/maps"
+# Print again.
+$req url
+
+# Output of this script will be:
+# https://www.google.com
+# https://www.google.com/maps

@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+# Example that corresponds to "Clear Screen" on https://go.dev/play/.
+# License for the corresponding code https://go.dev/LICENSE?m=text.
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../../gobash
+
+
+function main() {
+        local -r col=30
+
+        local -i i
+        for i in $(seq 0 "${col}"); do
+                printf "\033c[$(strings_repeat = ${i})>]"
+                sleep 0.1
+        done
+        printf " Done!\n"
+}
+
+main
