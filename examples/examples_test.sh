@@ -82,10 +82,10 @@ function test_examples_web_server_ex() {
 }
 readonly -f test_examples_web_server_ex
 
-function test_examples_channel_ex() {
+function test_examples_chan_ex() {
         _exet "$FUNCNAME"
 }
-readonly -f test_examples_channel_ex
+readonly -f test_examples_chan_ex
 
 function test_examples_hello_world_ex() {
         _exet "$FUNCNAME"
