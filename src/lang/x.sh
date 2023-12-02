@@ -19,6 +19,7 @@ readonly X_JQ="jq"
 readonly X_CUT="cut"
 readonly X_MD5=$(which md5 || which md5sum)
 readonly X_SLEEP="sleep"
+readonly X_BC="bc"
 
 readonly X_DATE="date"
 readonly X_CAT="cat"
@@ -61,6 +62,7 @@ function x_enabled() {
         _x_check "${X_JQ}" || return 1
         _x_check "${X_CUT}" || return 1
         _x_check "${X_MD5}" || return 1
+        _x_check "${X_BC}" || return 1
 }
 
 function x_bash_version() {
@@ -114,6 +116,13 @@ function x_cut_version() {
                 "no version for ${X_CUT}"
 }
 
+function x_bc_version() {
+        # Print bc version
+
+        "${X_BC}" --version 2>&1 | head -n 1 || \
+                "no version for ${X_BC}"
+}
+
 function x_config() {
         # Print system configuration.
 
@@ -124,4 +133,5 @@ function x_config() {
         x_sed_version
         x_jq_version
         x_cut_version
+        x_bc_version
 }
