@@ -1,6 +1,6 @@
 name: test (macOS)
 run-name: ${{ github.ref_name }} on macOS
-on: [push]
+on: [push, pull_request]
 env:
   bversion: 3
 concurrency:
