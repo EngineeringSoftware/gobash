@@ -1,6 +1,6 @@
 name: test (bash 3)
 run-name: ${{ github.ref_name }} on bash 3
-on: [push]
+on: [push, pull_request]
 env:
   bversion: 3
 concurrency:
