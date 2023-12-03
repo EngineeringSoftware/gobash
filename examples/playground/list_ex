@@ -1,0 +1,34 @@
+#!/bin/bash
+#
+# Example that corresponds to https://go.dev/play/p/9JuKIGdWlpF from
+# the go documentation.
+
+readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+. ${DIR}/../../gobash
+
+
+function main() {
+        local l
+        l=$(container_List) || \
+                { ctx_w "cannot make a list"; return $EC; }
+
+        local e4
+        e4=$($l push_back 4) || \
+                { ctx_w "cannot push 4"; return $EC; }
+
+        local e1
+        e1=$($l push_front 1) || \
+                { ctx_w "cannot push 1"; return $EC; }
+
+        $l insert_before 3 "$e4" > /dev/null || return $EC
+        $l insert_after 2 "$e1" > /dev/null || return $EC
+
+        local e=$($l front)
+        while [ "$e" != "$NULL" ]; do
+                echo "$($e value)"
+                e=$($e next) || return $EC
+        done
+}
+
+ctx_clear
+main || ctx_show
