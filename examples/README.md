@@ -59,6 +59,7 @@ playground. Note that not each example uses/needs `gobash`.
 * [`ring_next_ex`](/examples/playground/ring_next_ex)
 * [`ring_prev_ex`](/examples/playground/ring_prev_ex)
 * [`ring_unlink_ex`](/examples/playground/ring_unlink_ex)
+* [`list_ex`](/examples/playground/list_ex)
 
 ### Rewrites
 

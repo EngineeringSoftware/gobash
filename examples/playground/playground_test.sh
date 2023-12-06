@@ -84,3 +84,8 @@ function test_playground_ring_unlink_ex() {
         _exet "$FUNCNAME"
 }
 readonly -f test_playground_ring_unlink_ex
+
+function test_playground_list_ex() {
+        _exet "$FUNCNAME"
+}
+readonly -f test_playground_list_ex

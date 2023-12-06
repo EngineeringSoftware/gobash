@@ -5,7 +5,8 @@
 # Doubly linked list.
 #
 # This directly corresponds to https://pkg.go.dev/container/list
-# (src/container/list/list.go).
+# (src/container/list/list.go). Therefore, please check documentation
+# for list.go for any method of interest.
 
 if [ -n "${CONTAINER_LIST_MOD:-}" ]; then return 0; fi
 readonly CONTAINER_LIST_MOD=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
@@ -23,7 +24,8 @@ function container_Element() {
         [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
         shift 0 || { ctx_wn $ctx; return $EC; }
 
-        make_ "$FUNCNAME" \
+        make_ $ctx \
+              "$FUNCNAME" \
               "value" "$NULL" \
               "_next" "$NULL" \
               "_prev" "$NULL" \
@@ -37,13 +39,20 @@ function container_Element_next() {
         local -r e="${1}"
         shift 1 || { ctx_wn $ctx; return $EC; }
 
-        local -r l=$($e _list)
-        is_null "$l" && echo "$NULL" && return 0
+        [ -z "$e" ] && { ctx_w $ctx "e cannot be empty"; return $EC; }
+        is_null $ctx "$e" && { ctx_w $ctx "e cannot be null"; return $EC; }
 
-        local -r p=$($e _next)
-        local -r r=$($l _root)
+        local l
+        l=$($e $ctx _list) || { ctx_w $ctx "cannot get list"; return $EC; }
+        is_null $ctx "$l" && echo "$NULL" && return 0
+
+        local p
+        p=$($e $ctx _next) || { ctx_w $ctx "cannot get next"; return $EC; }
+
+        local r
+        r=$($l $ctx _root) || { ctx_w $ctx "cannot get root"; return $EC; }
+
         [ "$p" = "$r" ] && echo "$NULL" && return 0
-
         echo "$p"
 }
 
@@ -54,13 +63,20 @@ function container_Element_prev() {
         local -r e="${1}"
         shift 1 || { ctx_wn $ctx; return $EC; }
 
-        local -r l=$($e _list)
-        is_null "$l" && return "$NULL"
+        [ -z "$e" ] && { ctx_w $ctx "e cannot be empty"; return $EC; }
+        is_null $ctx "$e" && { ctx_w $ctx "e cannot be null"; return $EC; }
 
-        local -r p=$($e _prev)
-        local -r r=$($l _root)
-        [ "$p" = "$r" ] && return "$NULL"
+        local l
+        l=$($e $ctx _list) || { ctx_w $ctx "cannot get list"; return $EC; }
+        is_null $ctx "$l" && return "$NULL"
 
+        local p
+        p=$($e $ctx _prev) || { ctx_w $ctx "cannot get prev"; return $EC; }
+
+        local r
+        r=$($l $ctx _root) || { ctx_w $ctx "cannot get root"; return $EC; }
+
+        [ "$p" = "$r" ] && echo "$NULL" && return 0
         echo "$p"
 }
 
@@ -70,12 +86,15 @@ function container_List() {
         [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
         shift 0 || { ctx_wn $ctx; return $EC; }
 
+        local e
+        e=$(container_Element $ctx) || return $EC
+
         local l
-        l=$(make_ "$FUNCNAME" \
-                  "_root" "$(container_Element)" \
+        l=$(make_ $ctx "$FUNCNAME" \
+                  "_root" "$e" \
                   "_len" 0) || return $EC
 
-        $l init
+        $l $ctx init
 }
 
 function container_List_init() {
@@ -85,9 +104,15 @@ function container_List_init() {
         local -r l="${1}"
         shift 1 || { ctx_wn $ctx; return $EC; }
 
-        local -r r=$($l _root)
-        $r _next "$r"
-        $r _prev "$r"
+        [ -z "$l" ] && return $EC
+        is_null $ctx "$l" && return $EC
+
+        local r
+        r=$($l $ctx _root) || { ctx_w $ctx "cannot get root"; return $EC; }
+
+        $r $ctx _next "$r" || { ctx_w $ctx "cannot set next"; return $EC; }
+        $r $ctx _prev "$r" || { ctx_w $ctx "cannot set prev"; return $EC; }
+        $l $ctx _len 0 || { ctx_w $ctx "cannot set len"; return $EC; }
 
         echo "$l"
 }
@@ -99,7 +124,10 @@ function container_List_len() {
         local -r l="${1}"
         shift 1 || { ctx_wn $ctx; return $EC; }
 
-        $l _len
+        [ -z "$l" ] && return $EC
+        is_null $ctx "$l" && return $EC
+
+        $l $ctx _len
 }
 
 function container_List_front() {
@@ -109,11 +137,19 @@ function container_List_front() {
         local -r l="${1}"
         shift 1 || { ctx_wn $ctx; return $EC; }
 
-        local -r len=$($l _len)
+        [ -z "$l" ] && return $EC
+        is_null $ctx "$l" && return $EC
+
+        local len
+        len=$($l $ctx _len) || { ctx_w $ctx "cannot get len"; return $EC; }
         [ "${len}" -eq 0 ] && echo "$NULL" && return 0
 
-        local -r r=$($l _root)
-        echo "$($r _next)"
+        local r
+        r=$($l $ctx _root) || { ctx_w $ctx "cannot get root"; return $EC; }
+
+        local n
+        n=$($r $ctx _next) || { ctx_w $ctx "cannot get next"; return $EC; }
+        echo "$n"
 }
 
 function container_List_back() {
@@ -123,11 +159,19 @@ function container_List_back() {
         local -r l="${1}"
         shift 1 || { ctx_wn $ctx; return $EC; }
 
-        local -r len=$($l _len)
+        [ -z "$l" ] && return $EC
+        is_null $ctx "$l" && return $EC
+
+        local len
+        len=$($l $ctx _len) || { ctx_w $ctx "cannot get len"; return $EC; }
         [ "${len}" -eq 0 ] && echo "$NULL" && return 0
 
-        local -r r=$($l _root)
-        echo "$($r _prev)"
+        local r
+        r=$($l $ctx _root) || { ctx_w $ctx "cannot get root"; return $EC; }
+
+        local p
+        p=$($r $ctx _prev) || { ctx_w $ctx "cannot get prev"; return $EC; }
+        echo "$p"
 }
 
 function _container_List_lazy_init() {
@@ -137,8 +181,14 @@ function _container_List_lazy_init() {
         local -r l="${1}"
         shift 1 || { ctx_wn $ctx; return $EC; }
 
-        if [ "$($($l _root) _next)" = "$NULL" ]; then
-                $l init
+        [ -z "$l" ] && return $EC
+        is_null $ctx "$l" && return $EC
+
+        local r
+        r=$($l $ctx _root) || { ctx_w $ctx "cannot get root"; return $EC; }
+
+        if [ "$($r $ctx _next)" = "$NULL" ]; then
+                $l $ctx init || { ctx_w $ctx "cannot init"; return $EC; }
         fi
 }
 
@@ -151,12 +201,26 @@ function _container_List_insert() {
         local -r at="${3}"
         shift 3 || { ctx_wn $ctx; return $EC; }
 
-        $e _prev "$at"
-        $e _next "$($at _next)"
-        $($e _prev) _next "$e"
-        $($e _next) _prev "$e"
-        $e _list "$l"
-        $l _len "$(( $($l _len) + 1 ))"
+        [ -z "$l" ] && return $EC
+        is_null $ctx "$l" && return $EC
+        is_null $ctx "$e" && return $EC
+        is_null $ctx "$at" && return $EC
+
+        $e $ctx _prev "$at" || { ctx_w $ctx "cannot set prev"; return $EC; }
+
+        $e $ctx _next "$($at $ctx _next)" || \
+                { ctx_w $ctx "cannot set next"; return $EC; }
+
+        $($e $ctx _prev) $ctx _next "$e" || \
+                { ctx_w $ctx "cannot set next"; return $EC; }
+
+        $($e $ctx _next) $ctx _prev "$e" || \
+                { ctx_w $ctx "cannot set prev"; return $EC; }
+
+        $e $ctx _list "$l" || { ctx_w $ctx "cannot set list"; return $EC; }
+
+        $l $ctx _len "$(( $($l $ctx _len) + 1 ))" || \
+                { ctx_w $ctx "cannot set len"; return $EC; }
 
         echo "$e"
 }
@@ -170,9 +234,18 @@ function _container_List_insert_value() {
         local -r at="${3}"
         shift 3 || { ctx_wn $ctx; return $EC; }
 
-        local -r e=$(container_Element)
-        $e value "$v"
-        _container_List_insert "$l" "$e" "$at"
+        [ -z "$l" ] && return $EC
+        is_null $ctx "$l" && return $EC
+        is_null $ctx "$at" && return $EC
+
+        local e
+        e=$(container_Element $ctx) || \
+                { ctx_w $ctx "cannot make an element"; return $EC; }
+
+        $e $ctx value "$v" || { ctx_w $ctx "cannot set value"; return $EC; }
+
+        _container_List_insert $ctx "$l" "$e" "$at" || \
+                { ctx_w $ctx "cannot insert element"; return $EC; }
 }
 
 function _container_List_remove() {
@@ -183,12 +256,15 @@ function _container_List_remove() {
         local -r e="${2}"
         shift 2 || { ctx_wn $ctx; return $EC; }
 
-        $($e _prev) _next "$($e _next)"
-        $($e _next) _prev "$($e _prev)"
-        $e _next "$NULL"
-        $e _prev "$NULL"
-        $e _list "$NULL"
-        $l _len "$(( $($l _len) - 1 ))"
+        [ -z "$l" ] && return $EC
+        is_null $ctx "$l" && return $EC
+
+        $($e $ctx _prev) $ctx _next "$($e $ctx _next)"
+        $($e $ctx _next) $ctx _prev "$($e $ctx _prev)"
+        $e $ctx _next "$NULL"
+        $e $ctx _prev "$NULL"
+        $e $ctx _list "$NULL"
+        $l $ctx _len "$(( $($l $ctx _len) - 1 ))"
 }
 
 function _container_List_move() {
@@ -200,15 +276,18 @@ function _container_List_move() {
         local -r at="${3}"
         shift 3 || { ctx_wn $ctx; return $EC; }
 
+        [ -z "$l" ] && return $EC
+        is_null $ctx "$l" && return $EC
+
         [ "$e" = "$at" ] && return 0
 
-        $($e _prev) _next "$($e _next)"
-        $($e _next) _prev "$($e _prev)"
+        $($e $ctx _prev) $ctx _next "$($e $ctx _next)"
+        $($e $ctx _next) $ctx _prev "$($e $ctx _prev)"
 
-        $e _prev "$at"
-        $e _next "$($at _next)"
-        $($e _prev) _next "$e"
-        $($e _next) _prev "$e"
+        $e $ctx _prev "$at"
+        $e $ctx _next "$($at _next)"
+        $($e $ctx _prev) $ctx _next "$e"
+        $($e $ctx _next) $ctx _prev "$e"
 }
 
 function container_List_remove() {
@@ -219,10 +298,15 @@ function container_List_remove() {
         local -r e="${2}"
         shift 2 || { ctx_wn $ctx; return $EC; }
 
-        if [ "$($e _list)" = "$l" ]; then
-                _container_List_remove "$l" "$e"
+        [ -z "$l" ] && return $EC
+        is_null $ctx "$l" && return $EC
+        is_null $ctx "$e" && return $EC
+
+        if [ "$($e $ctx _list)" = "$l" ]; then
+                _container_List_remove $ctx "$l" "$e" || \
+                        { ctx_w $ctx "cannot remove"; return $EC; }
         fi
-        echo "$($e value)"
+        echo "$($e $ctx value)"
 }
 
 function container_List_push_front() {
@@ -233,10 +317,15 @@ function container_List_push_front() {
         local -r v="${2}"
         shift 2 || { ctx_wn $ctx; return $EC; }
 
-        _container_List_lazy_init "$l"
+        [ -z "$l" ] && return $EC
+        is_null $ctx "$l" && return $EC
 
-        local -r r=$($l _root)
-        _container_List_insert_value "$l" "$v" "$r"
+        _container_List_lazy_init $ctx "$l" || \
+                { ctx_w $ctx "cannot lazy init"; return $EC; }
+
+        local -r r=$($l $ctx _root)
+        _container_List_insert_value $ctx "$l" "$v" "$r" || \
+                { ctx_w $ctx "cannot insert value"; return $EC; }
 }
 
 function container_List_push_back() {
@@ -247,10 +336,15 @@ function container_List_push_back() {
         local -r v="${2}"
         shift 2 || { ctx_wn $ctx; return $EC; }
 
-        _container_List_lazy_init "$l"
+        [ -z "$l" ] && return $EC
+        is_null $ctx "$l" && return $EC
 
-        local -r r=$($l _root)
-        _container_List_insert_value "$l" "$v" "$($r _prev)"
+        _container_List_lazy_init $ctx "$l" || \
+                { ctx_w $ctx "cannot lazy init"; return $EC; }
+
+        local -r r=$($l $ctx _root)
+        _container_List_insert_value $ctx "$l" "$v" "$($r $ctx _prev)" || \
+                { ctx_w $ctx "cannot insert value"; return $EC; }
 }
 
 function container_List_insert_before() {
@@ -262,9 +356,14 @@ function container_List_insert_before() {
         local -r mark="${3}"
         shift 3 || { ctx_wn $ctx; return $EC; }
 
-        [ "$($mark _list)" != "$l" ] && echo "$NULL" && return 0
+        [ -z "$l" ] && return $EC
+        is_null $ctx "$l" && return $EC
+        is_null $ctx "$mark" && return $EC
 
-        _container_List_insert_value "$l" "$v" "$($mark _prev)"
+        [ "$($mark $ctx _list)" != "$l" ] && echo "$NULL" && return 0
+
+        _container_List_insert_value $ctx "$l" "$v" "$($mark $ctx _prev)" || \
+                { ctx_w $ctx "cannot insert value"; return $EC; }
 }
 
 function container_List_insert_after() {
@@ -276,9 +375,14 @@ function container_List_insert_after() {
         local -r mark="${3}"
         shift 3 || { ctx_wn $ctx; return $EC; }
 
-        [ "$($mark _list)" != "$l" ] && echo "$NULL" && return 0
+        [ -z "$l" ] && return $EC
+        is_null $ctx "$l" && return $EC
+        is_null $ctx "$mark" && return $EC
 
-        _container_List_insert_value "$l" "$v" "$mark"
+        [ "$($mark $ctx _list)" != "$l" ] && echo "$NULL" && return 0
+
+        _container_List_insert_value $ctx "$l" "$v" "$mark" || \
+                { ctx_w $ctx "cannot insert value"; return $EC; }
 }
 
 function container_List_move_to_front() {
@@ -289,8 +393,14 @@ function container_List_move_to_front() {
         local -r e="${2}"
         shift 2 || { ctx_wn $ctx; return $EC; }
 
-        [ "$($e _list)" != "$l" ] && return 0
-        $l move "$e" "$($l _root)"
+        [ -z "$l" ] && return $EC
+        is_null $ctx "$l" && { ctx_w $ctx "list cannot be null"; return $EC; }
+        is_null $ctx "$e" && { ctx_w $ctx "element cannot be null"; return $EC; }
+
+        [ "$($e $ctx _list)" != "$l" ] && return 0
+
+        _container_List_move $ctx "$l" "$e" "$($l $ctx _root)" || \
+                { ctx_w $ctx "cannot move"; return $EC; }
 }
 
 function container_List_move_to_back() {
@@ -301,9 +411,14 @@ function container_List_move_to_back() {
         local -r e="${2}"
         shift 2 || { ctx_wn $ctx; return $EC; }
 
-        [ "$($e _list)" != "$l" ] && return 0
+        [ -z "$l" ] && return $EC
+        is_null $ctx "$l" && return $EC
+        is_null $ctx "$e" && return $EC
 
-        $l move "$e" "$($($l _root) _prev)"
+        [ "$($e $ctx _list)" != "$l" ] && return 0
+
+        _container_List_move $ctx "$l" "$e" "$($($l $ctx _root) $ctx _prev)" || \
+                { ctx_w $ctx "cannot move"; return $EC; }
 }
 
 function container_List_move_before() {
@@ -315,11 +430,17 @@ function container_List_move_before() {
         local -r mark="${3}"
         shift 3 || { ctx_wn $ctx; return $EC; }
 
-        [ "$e" = "$mark" ] && return 0
-        [ "$($e _list)" != "$l" ] && return 0
-        [ "$($mark _list)" != "$l" ] && return 0
+        [ -z "$l" ] && return $EC
+        is_null $ctx "$l" && return $EC
+        is_null $ctx "$e" && return $EC
+        is_null $ctx "$mark" && return $EC
 
-        $l move "$e" "$($mark _prev)"
+        [ "$e" = "$mark" ] && return 0
+        [ "$($e $ctx _list)" != "$l" ] && return 0
+        [ "$($mark $ctx _list)" != "$l" ] && return 0
+
+        _container_List_move $ctx "$l" "$e" "$($mark $ctx _prev)" || \
+                { ctx_w $ctx "cannot move"; return $EC; }
 }
 
 function container_List_move_after() {
@@ -331,11 +452,17 @@ function container_List_move_after() {
         local -r mark="${3}"
         shift 3 || { ctx_wn $ctx; return $EC; }
 
-        [ "$e" = "$mark" ] && return 0
-        [ "$($e _list)" != "$l" ] && return 0
-        [ "$($mark _list)" != "$l" ] && return 0
+        [ -z "$l" ] && return $EC
+        is_null $ctx "$l" && return $EC
+        is_null $ctx "$e" && return $EC
+        is_null $ctx "$mark" && return $EC
 
-        $l move "$e" "$mark"
+        [ "$e" = "$mark" ] && return 0
+        [ "$($e $ctx _list)" != "$l" ] && return 0
+        [ "$($mark $ctx _list)" != "$l" ] && return 0
+
+        _container_List_move $ctx "$l" "$e" "$mark" || \
+                { ctx_w $ctx "cannot move"; return $EC; }
 }
 
 function container_List_push_back_list() {
@@ -346,13 +473,23 @@ function container_List_push_back_list() {
         local -r other="${2}"
         shift 2 || { ctx_wn $ctx; return $EC; }
 
-        _container_List_lazy_init "$l"
+        [ -z "$l" ] && return $EC
+        is_null $ctx "$l" && return $EC
+        is_null $ctx "$other" && return $EC
 
-        local i=$($other _len)
-        local e=$($other front)
+        _container_List_lazy_init $ctx "$l" || \
+                { ctx_w $ctx "cannot lazy init"; return $EC; }
+
+        local i
+        i=$($other $ctx _len) || { ctx_w $ctx "cannot get len"; return $EC; }
+
+        local e
+        e=$($other $ctx front) || { ctx_w $ctx "cannot get front"; return $EC; }
+
         for (( ; i>0; i-- )); do
-                _container_List_insert_value "$l" "$($e value)" "$($($l _root) _prev)"
-                e=$($e next)
+                _container_List_insert_value $ctx "$l" "$($e value)" "$($($l _root) _prev)" || \
+                        { ctx_w $ctx "cannot insert value"; return $EC; }
+                e=$($e $ctx next) || { ctx_w $ctx "cannot get next"; return $EC; }
         done
 }
 
@@ -364,12 +501,22 @@ function container_List_push_front_list() {
         local -r other="${2}"
         shift 2 || { ctx_wn $ctx; return $EC; }
 
-        _container_List_lazy_init "$l"
+        [ -z "$l" ] && return $EC
+        is_null $ctx "$l" && return $EC
+        is_null $ctx "$other" && return $EC
 
-        local i=$($other _len)
-        local e=$($other back)
+        _container_List_lazy_init $ctx "$l" || \
+                { ctx_w $ctx "cannot lazy init"; return $EC; }
+
+        local i
+        i=$($other $ctx _len) || { ctx_w $ctx "cannot get len"; return $EC; }
+
+        local e
+        e=$($other $ctx back) || { ctx_w $ctx "cannot get back"; return $EC; }
+
         for (( ; i>0; i-- )); do
-                _container_List_insert_value "$l" "$($e value)" "$($l _root)"
-                e=$($e prev)
+                _container_List_insert_value $ctx "$l" "$($e value)" "$($l _root)" || \
+                        { ctx_w $ctx "cannot insert value"; return $EC; }
+                e=$($e $ctx prev) || { ctx_w $ctx "cannot get prev"; return $EC; }
         done
 }
