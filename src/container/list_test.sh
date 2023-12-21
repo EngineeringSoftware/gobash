@@ -101,6 +101,15 @@ function test_container_list_remove() {
 }
 readonly -f test_container_list_remove
 
+function test_container_list_remove_error() {
+        local l
+        l=$(container_List)
+        $l remove "$NULL" && assert_fail
+
+        return 0
+}
+readonly -f test_container_list_remove_error
+
 function test_container_list_insert_before() {
         local l
         l=$(container_List) || assert_fail
@@ -120,6 +129,16 @@ function test_container_list_insert_before() {
         [ "${v}" = 10 ] || assert_fail
 }
 readonly -f test_container_list_insert_before
+
+function test_container_list_insert_before_error() {
+        local l
+        l=$(container_List)
+
+        $l insert_before 10 "$NULL" && assert_fail
+
+        return 0
+}
+readonly -f test_container_list_insert_before_error
 
 function test_container_list_insert_after() {
         local l
@@ -141,6 +160,16 @@ function test_container_list_insert_after() {
 }
 readonly -f test_container_list_insert_after
 
+function test_container_list_insert_after_error() {
+        local l
+        l=$(container_List)
+
+        $l insert_after 10 "$NULL" && assert_fail
+
+        return 0
+}
+readonly -f test_container_list_insert_after_error
+
 function test_container_list_move_to_front() {
         local l
         l=$(container_List)
@@ -160,6 +189,16 @@ function test_container_list_move_to_front() {
 }
 readonly -f test_container_list_move_to_front
 
+function test_container_list_move_to_front_error() {
+        local l
+        l=$(container_List)
+
+        $l move_to_front "$NULL" && assert_fail
+
+        return 0
+}
+readonly -f test_container_list_move_to_front_error
+
 function test_container_list_move_to_back() {
         local l
         l=$(container_List)
@@ -178,6 +217,16 @@ function test_container_list_move_to_back() {
         [ "${v}" = 10 ] || assert_fail "was ${v}"
 }
 readonly -f test_container_list_move_to_back
+
+function test_container_list_move_to_back_error() {
+        local l
+        l=$(container_List)
+
+        $l move_to_back "$NULL" && assert_fail
+
+        return 0
+}
+readonly -f test_container_list_move_to_back_error
 
 function test_container_list_move_before() {
         local l
@@ -205,6 +254,16 @@ function test_container_list_move_before() {
 }
 readonly -f test_container_list_move_before
 
+function test_container_list_move_before_error() {
+        local l
+        l=$(container_List)
+
+        $l move_before "$NULL" "$NULL" && assert_fail
+
+        return 0
+}
+readonly -f test_container_list_move_before_error
+
 function test_container_list_move_after() {
         local l
         l=$(container_List)
@@ -230,6 +289,16 @@ function test_container_list_move_after() {
         [ "${v}" = 10 ] || assert_fail
 }
 readonly -f test_container_list_move_after
+
+function test_container_list_move_after_error() {
+        local l
+        l=$(container_List)
+
+        $l move_after "$NULL" "$NULL"
+
+        return 0
+}
+readonly -f test_container_list_move_after_error
 
 function test_container_list_push_back_list() {
         local l1
@@ -258,6 +327,16 @@ function test_container_list_push_back_list() {
 }
 readonly -f test_container_list_push_back_list
 
+function test_container_list_push_back_list_error() {
+        local l1
+        l1=$(container_List)
+
+        $l1 push_back_list "$NULL" && assert_fail
+
+        return 0
+}
+readonly -f test_container_list_push_back_list_error
+
 function test_container_list_push_front_list() {
         local l1
         l1=$(container_List)
@@ -284,3 +363,13 @@ function test_container_list_push_front_list() {
         [ "${v}" -eq 3 ] || assert_fail
 }
 readonly -f test_container_list_push_front_list
+
+function test_container_list_push_front_list_error() {
+        local l1
+        l1=$(container_List)
+
+        $l1 push_front_list "$NULL" && assert_fail
+
+        return 0
+}
+readonly -f test_container_list_push_front_list_error
