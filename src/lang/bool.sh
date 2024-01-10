@@ -9,6 +9,7 @@ readonly BOOL_MOD=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 . ${BOOL_MOD}/bash.sh
 . ${BOOL_MOD}/core.sh
+. ${BOOL_MOD}/os.sh
 
 
 # ----------
@@ -254,4 +255,26 @@ function is_bash5() {
         shift 0 || { ctx_wn $ctx; return $EC; }
 
         [ $(bash_version_major $ctx) = "5" ]
+}
+
+function is_linux() {
+        # Return true/0 if linux.
+        local ctx; is_ctx "${1}" && ctx="${1}" && shift
+        [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
+        shift 0 || { ctx_wn $ctx; return $EC; }
+
+        local name
+        name=$(os_name $ctx)
+        [ "${name}" = "${OS_LINUX}" ]
+}
+
+function is_mac() {
+        # Return true/0 if mac.
+        local ctx; is_ctx "${1}" && ctx="${1}" && shift
+        [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
+        shift 0 || { ctx_wn $ctx; return $EC; }
+
+        local name
+        name=$(os_name $ctx)
+        [ "${name}" = "${OS_MAC}" ]
 }

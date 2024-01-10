@@ -10,6 +10,7 @@ readonly LANG_PACKAGE=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 . ${LANG_PACKAGE}/core.sh
 . ${LANG_PACKAGE}/unsafe.sh
 . ${LANG_PACKAGE}/os.sh
+. ${LANG_PACKAGE}/runtime.sh
 . ${LANG_PACKAGE}/sys.sh
 . ${LANG_PACKAGE}/make.sh
 . ${LANG_PACKAGE}/log.sh
