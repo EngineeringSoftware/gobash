@@ -411,7 +411,6 @@ make_and_print
 # }
 ```
 
-
 ### Methods
 
 Adding a method to a struct is done by implementing a function that is

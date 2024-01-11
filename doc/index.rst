@@ -1,20 +1,28 @@
-.. gobash documentation master file, created by
-   sphinx-quickstart on Thu Jan 11 13:58:09 2024.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
 
-Welcome to gobash's documentation!
-==================================
+Welcome to gobash
+=================
+
+gobash library is a set of bash functions that improve programming
+experience in bash (by providing collections, languages features,
+APIs, testing package, command line flag parsing, etc.) without
+modifying the shell interpreter(s). It works with any bash version (on
+Linux and Mac). Parts of the API are matching those in Go.
+
+gobash is publicly available on `GitHub
+<https://github.com/EngineeringSoftware/gobash>`_ under the `BSD 3
+license
+<https://github.com/EngineeringSoftware/gobash/blob/main/LICENSE>`_.
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-
+   language
+   collections
+   testing
 
 Indices and tables
 ==================
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
