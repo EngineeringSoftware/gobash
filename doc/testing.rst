@@ -123,13 +123,14 @@ test.
 Asserting Results
 -----------------
 
-gobash includes a number of assertion functions
-([assert.sh](/src/lang/assert.sh)) that can be conveniently used in
-tests. If an assertion fails, a stack trace is printed, and `exit 1`
-is executed. (Note that a failing assertion stops only the current
-test, and not the entire test run, because each test is run in a
-subshell.) In the library itself, we do not use `assert` functions to
-ensure compatibility with `set -e` option in bash.
+gobash includes a number of assertion functions (`assert.sh
+<https://github.com/EngineeringSoftware/gobash/blob/main/src/lang/assert.sh>`_)
+that can be conveniently used in tests. If an assertion fails, a stack
+trace is printed, and `exit 1` is executed. (Note that a failing
+assertion stops only the current test, and not the entire test run,
+because each test is run in a subshell.) In the library itself, we do
+not use `assert` functions to ensure compatibility with `set -e`
+option in bash.
 
 .. code-block:: bash
 

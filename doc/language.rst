@@ -355,8 +355,8 @@ Now a caller can check for an error.
 
 One exception to the rule above (when it comes to zero/non-zero
 values) is that functions that return boolean values return `$TRUE`
-(0) and `$FALSE` (1). Check the function in
-[bool.sh](/src/lang/bool.sh) for several examples.
+(0) and `$FALSE` (1). Check the function in `bool.sh
+<https://github.com/EngineeringSoftware/gobash/blob/main/src/lang/bool.sh>`_.
 
 Sometimes a more descriptive error message is more appropriate. In
 those cases, we use `context` arguments.  A context argument is used
