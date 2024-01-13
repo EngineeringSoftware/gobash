@@ -6,11 +6,11 @@
 [![test (mac)](https://github.com/EngineeringSoftware/gobash/actions/workflows/test-mac.yml/badge.svg)](https://github.com/EngineeringSoftware/gobash/actions/workflows/test-mac.yml)
 [![lint](https://github.com/EngineeringSoftware/gobash/actions/workflows/lint.yml/badge.svg)](https://github.com/EngineeringSoftware/gobash/actions/workflows/lint.yml)
 
-`gobash` library is a set of functions that improve programming
-experience in `bash` (by providing collections, languages features,
-APIs, testing package, command line flag parsing, etc.)  without
-modifying the shell interpreter(s).  It works with any bash version
-(on Linux and Mac).  Parts of the API are matching those in Go.
+`gobash` is a set of functions that improve programming experience in
+`bash` (by providing collections, languages features, APIs, testing
+package, command line flag parsing, etc.)  without modifying the shell
+interpreter(s).  It works with any bash version (on Linux and Mac).
+Parts of the API are matching those in Go.
 
 If you cannot wait to see code, here is a quick example (but check
 later sections for a lot more):
@@ -411,7 +411,6 @@ make_and_print
 # }
 ```
 
-
 ### Methods
 
 Adding a method to a struct is done by implementing a function that is
@@ -753,9 +752,9 @@ $ $p to_string
 # }
 ```
 
-One of the (obvious) implications is that you can now write scripts
-that accept objects, and those scripts can be invoked from your
-terminal with objects made in the terminal process.
+One of the implications is that you can now write scripts that accept
+objects, and those scripts can be invoked from your terminal with
+objects made in the terminal process.
 
 Consider the script below (`ai`). (This is the same example we used
 in an earlier section to illustrate inter-process communication.)
@@ -980,9 +979,9 @@ improving the performance, but we might wait for a couple of users.
 
 ## Dependencies
 
-`gobash` uses several binaries widely avaialble on Unix. Although
-things keep changing, the list likely includes `jq`, `sed`, `grep`,
-`awk`, `date`.
+`gobash` uses several bash builtins, GNU coreutils, and binaries
+widely avaialble on Unix. Although the repository keep changing, the
+list probably includes `jq`, `sed`, `grep`, `awk`, `date`.
 
 
 ## Versioning
