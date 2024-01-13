@@ -152,7 +152,7 @@ There are a number of other examples that illustrate gobash in the
 <https://github.com/EngineeringSoftware/gobash/tree/main/examples/README.md>`_.
 If you like learning by examples, that is the best place to go next.
 If you prefer to read higher level doc, then check
-:ref:`language-features`.
+:doc:`language`.
 
 .. toctree::
    :maxdepth: 2

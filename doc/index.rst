@@ -49,6 +49,8 @@ available `here
    :maxdepth: 2
    :caption: Contents:
 
+   motivation
+   design
    get-started
    language
    collections

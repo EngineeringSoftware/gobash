@@ -125,7 +125,7 @@ in parallel `()&` vs. `go`, dealing with errors via exit codes,
 keeping API naming alike). Definitely not saying you should program in
 `gobash` instead of Go, but if you do end up writing a few lines in
 `bash` then they could look similar or give a similar feel like those
--you write in Go. We will see how much that holds.
+you write in Go. We will see how much that holds.
 
 ### Design
 

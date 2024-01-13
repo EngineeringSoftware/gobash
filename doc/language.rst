@@ -1,4 +1,3 @@
-.. _language-features:
 
 Language Features
 =================
