@@ -49,6 +49,7 @@ available `here
    :maxdepth: 2
    :caption: Contents:
 
+   get-started
    language
    collections
    process-communication
