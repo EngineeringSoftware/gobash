@@ -752,9 +752,9 @@ $ $p to_string
 # }
 ```
 
-One of the (obvious) implications is that you can now write scripts
-that accept objects, and those scripts can be invoked from your
-terminal with objects made in the terminal process.
+One of the implications is that you can now write scripts that accept
+objects, and those scripts can be invoked from your terminal with
+objects made in the terminal process.
 
 Consider the script below (`ai`). (This is the same example we used
 in an earlier section to illustrate inter-process communication.)

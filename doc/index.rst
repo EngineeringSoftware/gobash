@@ -51,6 +51,8 @@ available `here
 
    language
    collections
+   process-communication
+   interactive-mode
    testing
 
 Indices and tables
