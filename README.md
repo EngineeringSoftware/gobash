@@ -6,11 +6,11 @@
 [![test (mac)](https://github.com/EngineeringSoftware/gobash/actions/workflows/test-mac.yml/badge.svg)](https://github.com/EngineeringSoftware/gobash/actions/workflows/test-mac.yml)
 [![lint](https://github.com/EngineeringSoftware/gobash/actions/workflows/lint.yml/badge.svg)](https://github.com/EngineeringSoftware/gobash/actions/workflows/lint.yml)
 
-`gobash` library is a set of functions that improve programming
-experience in `bash` (by providing collections, languages features,
-APIs, testing package, command line flag parsing, etc.)  without
-modifying the shell interpreter(s).  It works with any bash version
-(on Linux and Mac).  Parts of the API are matching those in Go.
+`gobash` is a set of functions that improve programming experience in
+`bash` (by providing collections, languages features, APIs, testing
+package, command line flag parsing, etc.)  without modifying the shell
+interpreter(s).  It works with any bash version (on Linux and Mac).
+Parts of the API are matching those in Go.
 
 If you cannot wait to see code, here is a quick example (but check
 later sections for a lot more):
