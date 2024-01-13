@@ -979,9 +979,9 @@ improving the performance, but we might wait for a couple of users.
 
 ## Dependencies
 
-`gobash` uses several binaries widely avaialble on Unix. Although
-things keep changing, the list likely includes `jq`, `sed`, `grep`,
-`awk`, `date`.
+`gobash` uses several bash builtins, GNU coreutils, and binaries
+widely avaialble on Unix. Although the repository keep changing, the
+list probably includes `jq`, `sed`, `grep`, `awk`, `date`.
 
 
 ## Versioning

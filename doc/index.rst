@@ -54,6 +54,8 @@ available `here
    process-communication
    interactive-mode
    testing
+   command-line-flags
+   next
 
 Indices and tables
 ==================
