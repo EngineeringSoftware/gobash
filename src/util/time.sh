@@ -27,13 +27,31 @@ function time_now_millis() {
         fi
 }
 
-function time_now_day() {
-        # Current day (as a number: 1-Mon, ... 7-Sun).
+function time_now_week_day() {
+        # Current day of the week (as a number: 1-Mon, ... 7-Sun).
         local ctx; is_ctx "${1}" && ctx="${1}" && shift
         [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
         shift 0 || { ctx_wn $ctx; return $EC; }
 
         $X_DATE +%u
+}
+
+function time_now_week_day_str() {
+        # Current day of the week (as a string: Monday, ... Sunday).
+        local ctx; is_ctx "${1}" && ctx="${1}" && shift
+        [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
+        shift 0 || { ctx_wn $ctx; return $EC; }
+
+        $X_DATE +%A
+}
+
+function time_now_month_day() {
+        # Current day of the month.
+        local ctx; is_ctx "${1}" && ctx="${1}" && shift
+        [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
+        shift 0 || { ctx_wn $ctx; return $EC; }
+
+        $X_DATE +%e
 }
 
 function time_now_year() {
@@ -52,6 +70,15 @@ function time_now_month() {
         shift 0 || { ctx_wn $ctx; return $EC; }
 
         $X_DATE +%m
+}
+
+function time_now_month_str() {
+        # Current month (as a full string, e.g., January).
+        local ctx; is_ctx "${1}" && ctx="${1}" && shift
+        [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
+        shift 0 || { ctx_wn $ctx; return $EC; }
+
+        $X_DATE +%B
 }
 
 function time_now_iso8601() {
