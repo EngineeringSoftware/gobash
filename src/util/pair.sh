@@ -36,13 +36,17 @@ function Pair() {
     echo "${pr}"
 }
 
-function Pair_swap() {
+function Pair_swap_args() {
     # Swap two elements in the pair.
     local ctx; is_ctx "${1}" && ctx="${1}" && shift
     [ $# -ne 1 ] && { ctx_wn $ctx; return $EC; }
 
     local pr="${1}"
-    local temp=$($pr first);
-    $pr first $($pr second);
-    $pr second $temp;
+
+    if [[ ! -z $($pr first) ]] && [[ ! -z $($pr second) ]];
+    then
+        local tmp=$($pr first);
+        $pr first $($pr second);
+        $pr second $tmp;
+    fi;
 }
