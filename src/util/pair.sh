@@ -22,13 +22,16 @@ function Pair() {
     local pr=$(make_ $ctx "${FUNCNAME}") || \
         { ctx_w "cannot make ${FUNCNAME}"; return $EC; }
 
-    if [ $# -eq 2 ] 
-    then
-        pr=$(make_ $ctx \
-            "${FUNCNAME}" \
-            "first" "${1}" \
-            "second" "${2}")
-    fi;
+    pr=$(make_ $ctx \
+        "${FUNCNAME}" \
+        "first" "${NULL}" \
+        "second" "${NULL}")
 
+    if [ ! -z "${1}" ]; then
+        $pr first "${1}"
+    fi;
+    if [ ! -z "${2}" ]; then
+        $pr second "${2}"
+    fi;
     echo "${pr}"
 }
