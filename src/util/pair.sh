@@ -35,3 +35,14 @@ function Pair() {
     fi;
     echo "${pr}"
 }
+
+function Pair_swap() {
+    # Swap two elements in the pair.
+    local ctx; is_ctx "${1}" && ctx="${1}" && shift
+    [ $# -ne 1 ] && { ctx_wn $ctx; return $EC; }
+
+    local pr="${1}"
+    local temp=$($pr first);
+    $pr first $($pr second);
+    $pr second $temp;
+}
