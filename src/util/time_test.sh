@@ -49,14 +49,14 @@ function test_time_now_week_day_str() {
 }
 readonly -f test_time_now_week_day_str
 
-function time_now_month_day() {
+function test_time_now_month_day() {
         local day
         day=$(time_now_week_day) || \
                 assert_fail
         assert_gt "${day}" 0
         assert_lt "${day}" 32
 }
-readonly -f time_now_month_day
+readonly -f test_time_now_month_day
 
 function test_time_now_year() {
         local year
