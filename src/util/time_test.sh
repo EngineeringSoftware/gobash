@@ -51,7 +51,7 @@ readonly -f test_time_now_week_day_str
 
 function test_time_now_month_day() {
         local day
-        day=$(time_now_week_day) || \
+        day=$(time_now_month_day) || \
                 assert_fail
         assert_gt "${day}" 0
         assert_lt "${day}" 32
