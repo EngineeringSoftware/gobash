@@ -15,32 +15,6 @@ Parts of the API are matching those in Go.
 For more information about gobash, see the main documentation page:
 http://gobash.org.
 
-If you cannot wait to see code, here is a quick example (but check
-later sections for a lot more):
-
-```
-#!/bin/bash
-
-# Import the library.
-source /dev/stdin <<< "$(curl https://raw.githubusercontent.com/EngineeringSoftware/gobash/master/hsabog 2>/dev/null)"
-
-# Create a communication channel.
-ch=$(Chan)
-# Send a message (blocking call) in a sub process.
-( lst=$(List 2 3 5); $ch send "$lst" ) & 
-
-# Receive the message (blocking call) in the main process.
-lst=$($ch recv)
-
-$lst to_string
-# Output:
-# [
-#   "2",
-#   "3",
-#   "5"
-# ]
-```
-
 If you love learning by example, take a look at the [examples
 page](/examples/README.md).  A quick demo of the very basic concepts
 using a toy example is available [here](/doc/gobash.gif).
