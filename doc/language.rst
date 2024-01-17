@@ -3,7 +3,8 @@ Language Features
 =================
 
 gobash introduces several programming language constructs via bash
-functions.  It does not modify bash itself.
+functions and wrapping existing binaries (e.g., ``jq``).  It does not
+modify bash itself.
 
 As a result of the gobash design, you can introduce it step by step,
 as you do not need to modify any of the existing code you have.
@@ -12,7 +13,7 @@ Basic Terminology
 -----------------
 
 A `package` corresponds to a single directory and a `module`
-corresponds to a single `.sh` file.
+corresponds to a single ``.sh`` file.
 
 Thus, we define a `program` as a set of packages with one or more
 modules each.
@@ -24,8 +25,8 @@ gobash is a set of functions and a few global variables.
 
 There are several `keywords`, which means a set of functions that a
 user should avoid redefining. Below is the current list of keywords;
-to get the list of all functions in `gobash` you can run `./gobash
-func sys_functions` (or use `grep` over the repository).
+to get the list of all functions in gobash you can run ``./gobash func
+sys_functions`` (or use ``grep`` over the repository).
 
 .. code-block:: bash
 
@@ -47,7 +48,7 @@ should be aware of:
     FLOAT # float type used in some APIs
     STRING # string type used in some APIs
 
-Finally, gobash uses the file descriptor `3` in some functions.
+Finally, gobash uses the file descriptor ``3`` in some functions.
 
 Structs
 -------
@@ -65,15 +66,15 @@ constructor is automatically the name of the `struct` as well.
                   "age" "$2"
     }
 
-You can think of the `Person` function as both defining a struct and
+You can think of the ``Person`` function as both defining a struct and
 providing a constructor (although it is more the latter). Note that
 the constructor function can perform any other work, e.g., check the
 validity of arguments.
 
-The first argument to `make_` provides the name of the struct. While
+The first argument to ``make_`` provides the name of the struct. While
 one can play with generating these names (or replacing with some other
 structs), in the most common scenarios, the first argument we set to
-be the name of the constructor (i.e., `$FUNCNAME`).
+be the name of the constructor (i.e., ``$FUNCNAME``).
 
 Objects
 -------
@@ -139,15 +140,15 @@ Methods
 -------
 
 Adding a method to a struct is done by implementing a function that is
-prefixed by the struct name followed by `_` followed by the method
-name. For example, if we have a struct `Str`, we can add a method
-`compute` by writing a function `Str_compute`.
+prefixed by the struct name followed by ``_`` followed by the method
+name. For example, if we have a struct ``Str``, we can add a method
+``compute`` by writing a function ``Str_compute``.
 
 The first argument of each method is the object on which the method is
-called (this is similar to `this` and `self` in other programming
+called (this is similar to ``this`` and ``self`` in other programming
 languages).
 
-In the example below, we introduce a new struct (`Circle`) and add a
+In the example below, we introduce a new struct (``Circle``) and add a
 method that computes its total area.
 
 .. code-block:: bash
@@ -169,7 +170,7 @@ method that computes its total area.
     }
 
 Invoking a method is similar to other programming languages. Below, we
-create an instance of a `Circle` and compute the total area.
+create an instance of a ``Circle`` and compute the total area.
 
 .. code-block:: bash
 
@@ -179,17 +180,17 @@ create an instance of a `Circle` and compute the total area.
 To String
 ---------
 
-gobash provides a default `to_string` method for each struct. The
+gobash provides a default ``to_string`` method for each struct. The
 default implementation outputs the object in the json format. One can
-decide to override the default behavior by implementing `to_string`
+decide to override the default behavior by implementing ``to_string``
 method for a specific struct.
 
-The example below shows the default `to_string` output for the
-`Person` struct (introduced earlier in this document) and then
-implements a more specific `to_string` method.
+The example below shows the default ``to_string`` output for the
+``Person`` struct (introduced earlier in this document) and then
+implements a more specific ``to_string`` method.
 
 In the snippet below, we construct one object and use the default
-`to_string` method.
+``to_string`` method.
 
 .. code-block:: bash
 
@@ -197,7 +198,7 @@ In the snippet below, we construct one object and use the default
     $p to_string
 
 As a result we get output in the json format, which can be convenient
-for further processing (e.g., using `jq`).
+for further processing (e.g., using ``jq``).
 
 .. code-block:: json
 
@@ -206,8 +207,8 @@ for further processing (e.g., using `jq`).
         "age": "10"
     }
 
-In the snippet below, we implement a `to_string` method for the
-`Person` struct. Specifically, we output a simple string that prints
+In the snippet below, we implement a ``to_string`` method for the
+``Person`` struct. Specifically, we output a simple string that prints
 only the name of the person.
 
 .. code-block:: bash
@@ -225,12 +226,12 @@ Return Value
 ------------
 
 This section is about returning data from a function to its caller.
-(The next section talks about error handling and the `return`
+(The next section talks about error handling and the ``return``
 statement.)
 
 gobash uses primarily three approaches to return data from a function.
 
-First, simple functions use `echo` to return desired value or an
+First, simple functions use ``echo`` to return desired value or an
 object. In the next code snippet, we return a point that has values of
 coordinates double of the given point.
 
@@ -291,9 +292,9 @@ but this time we pass the object, which we set inside the body.
     point_double "$d" "$p"
     $d to_string
 
-Third, we use an instance of the `Result` struct as an out argument,
-which can carry a value (`val`). Basically, this is a specialized form
-of the second case.
+Third, we use an instance of the ``Result`` struct as an out argument,
+which can carry a value (``val``). Basically, this is a specialized
+form of the second case.
 
 .. code-block:: bash
 
@@ -325,9 +326,9 @@ Error Handling
 --------------
 
 Each function should return exit code: zero if the execution went well
-and non-zero if there was an issue detected. (While `return $?` in
+and non-zero if there was an issue detected. (While ``return $?`` in
 many cases at the end of a function is not needed, we sometimes use
-them explicitly.) gobash uses `return $EC` for indicating an issue
+them explicitly.) gobash uses ``return $EC`` for indicating an issue
 inside functions from the library. Any function invocation should
 ideally check for errors. An example below shows a basic case of
 checking argument types and returning and error in case of an
@@ -354,15 +355,15 @@ Now a caller can check for an error.
     p=$(Point 3 4) || echo "error"
 
 One exception to the rule above (when it comes to zero/non-zero
-values) is that functions that return boolean values return `$TRUE`
-(0) and `$FALSE` (1). Check the function in `bool.sh
+values) is that functions that return boolean values return ``$TRUE``
+(0) and ``$FALSE`` (1). Check the function in `bool.sh
 <https://github.com/EngineeringSoftware/gobash/blob/main/src/lang/bool.sh>`_.
 
 Sometimes a more descriptive error message is more appropriate. In
 those cases, we use `context` arguments.  A context argument is used
 to store and carry information about errors and stacktrace (at the
-time of an error).  Each function in gobash accepts context (`ctx`) as
-the first argument; if one is not given, then the global context is
+time of an error).  Each function in gobash accepts context (``ctx``)
+as the first argument; if one is not given, then the global context is
 used to store errors and stacktraces. In the example below, we use the
 global context. (We provide more examples with context in the examples
 directory.)

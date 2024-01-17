@@ -2,8 +2,8 @@
 Inter-process Communication
 ===========================
 
-Starting a new process or a sub process is trivial in `shell`.  The
-design of `gobash` enables easy sharing of objects and process
+Starting a new process or a sub process is trivial in shell. The
+design of gobash enables easy sharing of objects and process
 communication. An object can be used in a sub shell or it can be
 passed to a different process. We illustrate the former case below.
 
@@ -19,7 +19,7 @@ passed to a different process. We illustrate the former case below.
     wait
     $ai val
 
-In this example, we create an object (`AtomicInt`) that is used in
+In this example, we create an object (``AtomicInt``) that is used in
 three sub shells. Once all sub shells finish their work, we print the
 final value.
 
