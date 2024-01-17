@@ -13,7 +13,7 @@ interpreter(s).  It works with any bash version (on Linux and Mac).
 Parts of the API are matching those in Go.
 
 For more information about gobash, see the main documentation page:
-gobash.org.
+http://gobash.org.
 
 If you cannot wait to see code, here is a quick example (but check
 later sections for a lot more):
