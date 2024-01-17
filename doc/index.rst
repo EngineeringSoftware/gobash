@@ -1,6 +1,6 @@
 
-Welcome to gobash
-=================
+gobash documentation
+====================
 
 gobash is a set of bash functions that improve programming experience
 in bash (by providing collections, languages features, APIs, testing
@@ -9,8 +9,8 @@ interpreter(s). It works with any bash version (on Linux and
 Mac). Parts of the API are matching those in Go.
 
 gobash is publicly available on `GitHub
-<https://github.com/EngineeringSoftware/gobash>`_ under the `BSD 3
-license
+<https://github.com/EngineeringSoftware/gobash>`_ under the
+`BSD-3-Clause license
 <https://github.com/EngineeringSoftware/gobash/blob/main/LICENSE>`_.
 
 Here is a quick example that uses gobash (but check later sections for

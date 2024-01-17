@@ -2,11 +2,11 @@
 Collections
 ===========
 
-gobash introduces two key collections: `List` and `Map`. Both
+gobash introduces two key collections: ``List`` and ``Map``. Both
 collections include a number of methods that can be convenient for
 everyday development.
 
-In the example below, we use an instance of a `List` to keep URLs of
+In the example below, we use an instance of a ``List`` to keep URLs of
 several GitHub projects and then close each of those projects in a
 loop.
 
@@ -32,9 +32,9 @@ loop.
 
 .. note::
 
-   Equality in `gobash` is done based on object identity. Future
-   changes could consider using `eq` methods to check for equality
-   (similar to other programming languages).
+   Equality in gobash is done based on object identity. Future changes
+   could consider using ``eq`` methods to check for equality (similar
+   to other programming languages).
 
 .. toctree::
    :maxdepth: 2

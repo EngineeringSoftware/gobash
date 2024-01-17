@@ -11,11 +11,11 @@ Writing Tests
 
 It is great having tests for each function. We keep test files in the
 same package as the corresponding source files. Test files have to
-have suffix `_test.sh`.  Although not required, it is expected that
-for every file, e.g., `matrix.sh`, there would be a corresponding test
-file, e.g., `matrix_test.sh`.
+have suffix ``_test.sh``. Although not required, it is expected that
+for every file, e.g., ``matrix.sh``, there would be a corresponding
+test file, e.g., ``matrix_test.sh``.
 
-Each test is a function that starts with `function test_`.  These
+Each test is a function that starts with ``function test_``.  These
 functions have to be at the beginning of lines.
 
 .. code-block:: bash
@@ -38,8 +38,8 @@ functions have to be at the beginning of lines.
 Test function names in the gobash repository are formed with the
 following convention:
 
-* `function test_` at the beginning (required)
-* name of the module being tested (e.g., `strings`)
+* ``function test_`` at the beginning (required)
+* name of the module being tested (e.g., ``strings``)
 * name of the function being tested OR meaningful description if more than a single function is targeted
 
 Below are some examples from this repo.
@@ -80,9 +80,9 @@ Accessing Test Metadata
 -----------------------
 
 The first (and only) argument passed to each test function (test for
-short) is an object (an instance of the `TestT` struct), which carries
-metadata about the test itself and can be used by the developers to
-set test status (more on this in later sections).
+short) is an object (an instance of the ``TestT`` struct), which
+carries metadata about the test itself and can be used by the
+developers to set test status (more on this in later sections).
 
 .. code-block:: bash
 
@@ -95,14 +95,14 @@ Skipping Tests
 --------------
 
 Using a test metadata object, one can skip a test by invoking the
-`skip` method. An optional message can be given as well, which will be
-shown during test result reporting.
+``skip`` method. An optional message can be given as well, which will
+be shown during test result reporting.
 
 In the example below, we show a test that is skipped in case
 dependencies for the library being tested are not
-available. Specifically, when testing the `whiptail` package, we check
-that dependencies for that package are available (by invoking
-`whiptail_enabled`). If dependencies are not available, we skip the
+available. Specifically, when testing the ``whiptail`` package, we
+check that dependencies for that package are available (by invoking
+``whiptail_enabled``). If dependencies are not available, we skip the
 test.
 
 .. code-block:: bash
@@ -126,10 +126,10 @@ Asserting Results
 gobash includes a number of assertion functions (`assert.sh
 <https://github.com/EngineeringSoftware/gobash/blob/main/src/lang/assert.sh>`_)
 that can be conveniently used in tests. If an assertion fails, a stack
-trace is printed, and `exit 1` is executed. (Note that a failing
+trace is printed, and ``exit 1`` is executed. (Note that a failing
 assertion stops only the current test, and not the entire test run,
 because each test is run in a subshell.) In the library itself, we do
-not use `assert` functions to ensure compatibility with `set -e`
+not use ``assert`` functions to ensure compatibility with ``set -e``
 option in bash.
 
 .. code-block:: bash
@@ -156,10 +156,10 @@ specific to gobash, as we simply rely on bash dynamic nature and
 ability to replace any function (in a specific scope).
 
 Below is an example of mocking that we use during testing of the
-`whiptail` API. To avoid opening any window during testing (and
-invoking `whiptail`), we implement a mock function that will be
-invoked from `show`. The mock function simply returns a result that we
-desire.
+``whiptail`` API. To avoid opening any window during testing (and
+invoking ``whiptail``), we implement a mock function that will be
+invoked from ``show``. The mock function simply returns a result that
+we desire.
 
 .. code-block:: bash
 
@@ -185,16 +185,16 @@ desire.
 Running Tests
 -------------
 
-`gobash test` command can be used for running tests.
+``gobash test`` command can be used for running tests.
 
 .. code-block:: bash
 
     ./gobash test # arguments as you wish
 
-Below is the help message for `gobash test`, which is printed when
+Below is the help message for ``gobash test``, which is printed when
 running the framework without any arguments.  (While we strive to keep
 this doc up-to-date, the latest help message is best obtained by
-running `gobash test`.)
+running ``gobash test``.)
 
 .. code-block:: bash
 
@@ -216,8 +216,8 @@ directory.
 
 .. note::
 
-   Given value to `paths` is used as a name pattern of a `find`
-   command to find files with tests.
+   Given value to the ``paths`` flag is used as a name pattern of a
+   ``find`` command to find files with tests.
 
 Run all available in the given file (the file does not need to be in
 the current working directory.):
@@ -240,8 +240,8 @@ Run selected tests available in the given file:
 
 .. note::
 
-   Given value to `tests` is used as a value for a `grep` command to
-   filter tests of interest to run.
+   Given value to the ``tests`` flag is used as a value for a ``grep``
+   command to filter tests of interest to run.
 
 .. toctree::
    :maxdepth: 2

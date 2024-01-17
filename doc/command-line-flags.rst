@@ -3,9 +3,9 @@ Command Line Flags
 ==================
 
 gobash can simplify parsing command line flags. In the next example,
-we illustrate parsing using the `flags` package. Specifically, we
-create `Flags` with desired documentation and add two flags. Each flag
-has to include name, type (int, bool, float, or string), and
+we illustrate parsing using the ``flags`` package. Specifically, we
+create ``Flags`` with desired documentation and add two flags. Each
+flag has to include name, type (int, bool, float, or string), and
 documentation.
 
 .. code-block:: bash
