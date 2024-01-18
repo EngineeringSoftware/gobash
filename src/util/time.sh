@@ -27,7 +27,7 @@ function time_now_millis() {
         fi
 }
 
-function time_now_week_day() {
+function time_now_day_of_week() {
         # Current day of the week (as a number: 1-Mon, ... 7-Sun).
         local ctx; is_ctx "${1}" && ctx="${1}" && shift
         [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
@@ -36,7 +36,7 @@ function time_now_week_day() {
         $X_DATE +%u
 }
 
-function time_now_week_day_str() {
+function time_now_day_of_week_str() {
         # Current day of the week (as a string: Monday, ... Sunday).
         local ctx; is_ctx "${1}" && ctx="${1}" && shift
         [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
@@ -45,7 +45,7 @@ function time_now_week_day_str() {
         $X_DATE +%A
 }
 
-function time_now_month_day() {
+function time_now_day_of_month() {
         # Current day of the month.
         local ctx; is_ctx "${1}" && ctx="${1}" && shift
         [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
