@@ -22,18 +22,18 @@ function test_now_millis() {
 }
 readonly -f test_now_millis
 
-function test_time_now_week_day() {
+function test_time_now_day_of_week() {
         local day
-        day=$(time_now_week_day) || \
+        day=$(time_now_day_of_week) || \
                 assert_fail
         assert_gt "${day}" 0
         assert_lt "${day}" 8
 }
-readonly -f test_time_now_week_day
+readonly -f test_time_now_day_of_week
 
-function test_time_now_week_day_str() {
+function test_time_now_day_of_week_str() {
         local day
-        day=$(time_now_week_day_str) || \
+        day=$(time_now_day_of_week_str) || \
                 assert_fail
 
         case "${day}" in
@@ -47,16 +47,16 @@ function test_time_now_week_day_str() {
         *) assert_fail "non-existing day of the week";;
         esac
 }
-readonly -f test_time_now_week_day_str
+readonly -f test_time_now_day_of_week_str
 
-function test_time_now_month_day() {
+function test_time_now_day_of_month() {
         local day
-        day=$(time_now_month_day) || \
+        day=$(time_now_day_of_month) || \
                 assert_fail
         assert_gt "${day}" 0
         assert_lt "${day}" 32
 }
-readonly -f test_time_now_month_day
+readonly -f test_time_now_day_of_month
 
 function test_time_now_year() {
         local year
