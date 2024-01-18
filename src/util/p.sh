@@ -18,3 +18,4 @@ readonly UTIL_PACKAGE=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 . ${UTIL_PACKAGE}/flags.sh
 . ${UTIL_PACKAGE}/complex.sh
 . ${UTIL_PACKAGE}/user.sh
+. ${UTIL_PACKAGE}/pair.sh
