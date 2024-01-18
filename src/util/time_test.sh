@@ -22,14 +22,41 @@ function test_now_millis() {
 }
 readonly -f test_now_millis
 
-function test_time_now_day() {
+function test_time_now_week_day() {
         local day
-        day=$(time_now_day) || \
+        day=$(time_now_week_day) || \
                 assert_fail
         assert_gt "${day}" 0
         assert_lt "${day}" 8
 }
-readonly -f test_time_now_day
+readonly -f test_time_now_week_day
+
+function test_time_now_week_day_str() {
+        local day
+        day=$(time_now_week_day_str) || \
+                assert_fail
+
+        case "${day}" in
+        "Monday"|"monday") ;;
+        "Tuesday"|"tuesday") ;;
+        "Wednesday"|"wednesday") ;;
+        "Thursday"|"thursday") ;;
+        "Friday"|"friday") ;;
+        "Saturday"|"saturday") ;;
+        "Sunday"|"sunday") ;;
+        *) assert_fail "non-existing day of the week";;
+        esac
+}
+readonly -f test_time_now_week_day_str
+
+function test_time_now_month_day() {
+        local day
+        day=$(time_now_month_day) || \
+                assert_fail
+        assert_gt "${day}" 0
+        assert_lt "${day}" 32
+}
+readonly -f test_time_now_month_day
 
 function test_time_now_year() {
         local year
@@ -46,6 +73,29 @@ function test_time_now_month() {
         assert_eq "$($X_DATE +%m)" "${month}"
 }
 readonly -f test_time_now_month
+
+function test_time_now_month_str() {
+        local month
+        month=$(time_now_month_str) || \
+                assert_fail
+                
+        case "${month}" in
+        "Jan"|"January") ;;
+        "Feb"|"February") ;;
+        "Mar"|"March") ;;
+        "Apr"|"April") ;;
+        "May") ;;
+        "Jun"|"June") ;;
+        "Jul"|"July") ;;
+        "Aug"|"August") ;;
+        "Sep"|"September") ;;
+        "Oct"|"October") ;;
+        "Nov"|"November") ;;
+        "Dec"|"December") ;;
+        *) assert_fail "non-existent month";;
+        esac
+}
+readonly -f test_time_now_month_str
 
 function test_time_duration() {
         function _f() {
