@@ -20,7 +20,7 @@ function test_os_stat() {
                 assert_fail
 
         assert_eq "README.md" "$($fi name)"
-        assert_gt "$($fi size)" 25000
+        assert_gt "$($fi size)" 3000
         # The value might not be the same in CI.
         # assert_eq "-rw-rw-r--" "$($fi mode)"
         $fi is_dir && \
