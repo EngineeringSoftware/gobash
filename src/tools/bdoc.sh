@@ -41,13 +41,24 @@ function _bdoc_file() {
         local assigns=$(strings_repeat "=" "${n}")
 
         cat << END
-
 ${path}
 ${assigns}
 
 ${brief}
 
 END
+
+        local fun
+        for fun in $(sys_functions_in_file "${pathf}"); do
+                [[ "${fun}" = "_"* ]] && continue
+                echo ".. py:function:: ${fun}"
+                echo
+                echo $(sys_function_doc "${pathf}" "${fun}")
+                echo
+                # TODO: add return and types.
+                #:return: ...
+                #:rtype: ...
+        done
 }
 
 function bdoc_main() {
