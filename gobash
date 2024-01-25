@@ -173,22 +173,22 @@ function gobash_lint() {
         blint_main $ctx "$@"
 }
 
-function _gobash_docgen_help() {
-        # Help message for the 'docgen' command.
+function _gobash_sphinx_help() {
+        # Help message for the 'sphinx' command.
         local ctx; is_ctx "${1}" && ctx="${1}" && shift
         [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
         shift 0 || { ctx_wn $ctx; return $EC; }
 
         cat << EOF
-usage: gobash docgen flags
+usage: gobash sphinx flags
 
-Run docgen generation tool with the given configuration flags. Running the
+Run sphinx generation tool with the given configuration flags. Running the
 command without any flags will print more details about the expected input.
 EOF
 }
 
-function gobash_docgen() {
-        # run the docgen tool
+function gobash_sphinx() {
+        # run the sphinx generation tool
         local ctx; is_ctx "${1}" && ctx="${1}" && shift
         [ $# -lt 0 ] && { ctx_wn $ctx; return $EC; }
         shift 0 || { ctx_wn $ctx; return $EC; }

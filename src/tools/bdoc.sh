@@ -28,51 +28,70 @@ function bdoc_enabled() {
 function _bdoc_file() {
         # Generate doc for a single file.
         local ctx; is_ctx "${1}" && ctx="${1}" && shift
-        [ $# -ne 2 ] && { ctx_wn $ctx; return $EC; }
+        [ $# -ne 1 ] && { ctx_wn $ctx; return $EC; }
         local -r pathf="${1}"
-        local -r name="${2}"
-        shift 2 || { ctx_wn $ctx; return $EC; }
+        shift 1 || { ctx_wn $ctx; return $EC; }
 
         local -r brief=$(head -n 5 "${pathf}" | \
                                  tail -n 1 | \
                                  $X_SED 's/.*#\(.*\)/\1/g')
 
+        local path=${pathf#"$(sys_repo_path)/src/"*}
+        local n=$(strings_len "${path}")
+        local assigns=$(strings_repeat "=" "${n}")
+
         cat << END
-/**
- * @file ${name}.h
- * @brief${brief}
- */
+
+${path}
+${assigns}
+
+${brief}
 
 END
 }
 
 function bdoc_main() {
-        # Generate documentation for a directory using doxygen.
+        # Generate documentation for gobash in the Sphinx format.
         local ctx; is_ctx "${1}" && ctx="${1}" && shift
         [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
         shift 0 || { ctx_wn $ctx; return $EC; }
 
-        local -r d=$(os_mktemp_dir)
-        echo ${d}
-        for f in $(find "$(sys_repo_path)" -name "*.sh" | grep -v '_test.sh'); do
-                local name=$(basename "${f}" .sh)
-                _bdoc_file "${f}" "${name}" > "${d}/${name}.h"
+        local -r docd="$(sys_repo_path)/doc"
+        [ ! -d "${docd}" ] && \
+                { ctx_w $ctx "doc dir does not exist"; return $EC; }
+
+        local apid
+        apid=$(os_remake_dir "${docd}/apis") || return $EC
+
+        local content=""
+        local f
+        # TODO: pick files from flags.
+        for f in $(find "$(sys_repo_path)/src" -name "*.sh" | grep -v '_test.sh'); do
+                local package_file=${f#"$(sys_repo_path)/src/"*}
+                #echo ${package_file}
+                local package="${package_file%/*}"
+                local file=$(echo "${package_file}" | awk -F"/" '{print $NF}')
+                [ "${file}" = "p.sh" ] && continue
+
+                local name=$(basename "${file}" .sh)
+                local rstf="${package//\//_}_${name}.rst"
+
+                echo "${f}"
+                _bdoc_file "${f}" > "${apid}/${rstf}" || return $EC
+                content+=$'\n'"   apis/${rstf}"
         done
 
-        cp "${BDOC_MOD}/../../README.md" "${d}"
-        ( cd "${d}"
-          # Generate a template config file.
-          doxygen -g
+        # Make api.rst file.
+        cat << END > "${docd}/api.rst"
+API
+===
 
-          # Set project name.
-          $X_SED -i 's/PROJECT_NAME.*=.*/PROJECT_NAME = "gobash"/g' Doxyfile
+.. toctree::
+   :maxdepth: 2
+   :caption: Packages:
 
-          # Include README file.
-          # $X_SED -i 's/USE_MDFILE_AS_MAINPAGE =.*/INPUT += README.md\nUSE_MDFILE_AS_MAINPAGE = README.md/g' Doxyfile
+   ${content}
 
-          # Do not generate latex.
-          $X_SED -i 's/GENERATE_LATEX.*= YES/GENERATE_LATEX = NO/g' Doxyfile
-
-          # Generate doc.
-          doxygen )
+END
+        
 }
