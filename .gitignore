@@ -2,3 +2,6 @@
 *~
 .objects/
 doc/_build
+
+# Auto generated in CI.
+doc/apis/

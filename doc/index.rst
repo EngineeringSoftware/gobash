@@ -59,6 +59,7 @@ available `here
    testing
    command-line-flags
    next
+   api
 
 Indices and tables
 ==================

@@ -16,12 +16,12 @@ readonly BDOC_TEST_MOD=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 function test_bdoc_file() {
         local -r tmpf=$(os_mktemp_file)
-        _bdoc_file "${BDOC_TEST_MOD}/bdoc.sh" "bdoc" > "${tmpf}"
+        _bdoc_file "${BDOC_TEST_MOD}/bdoc.sh" > "${tmpf}"
 
-        grep '@file bdoc.h' "${tmpf}" || \
+        grep 'Document generation tool.' "${tmpf}" || \
                 assert_fail
 
-        grep '@brief Document generation tool.' "${tmpf}" || \
+        grep 'bdoc_main' "${tmpf}" || \
                 assert_fail
 }
 readonly -f test_bdoc_file

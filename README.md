@@ -15,6 +15,9 @@ Parts of the API are matching those in Go.
 For more information about gobash, see the main documentation page:
 http://gobash.org.
 
+API documentation is available
+[here](https://engineeringsoftware.github.io/gobash/api.html).
+
 If you love learning by example, take a look at the [examples
 page](/examples/README.md).  A quick demo of the very basic concepts
 using a toy example is available [here](/doc/gobash.gif).
