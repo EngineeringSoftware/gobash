@@ -32,9 +32,10 @@ function _bdoc_file() {
         local -r pathf="${1}"
         shift 1 || { ctx_wn $ctx; return $EC; }
 
-        local -r brief=$(head -n 5 "${pathf}" | \
-                                 tail -n 1 | \
-                                 $X_SED 's/.*#\(.*\)/\1/g')
+        local brief=$(head -n 5 "${pathf}" | \
+                              tail -n 1 | \
+                              $X_SED 's/.*#\(.*\)/\1/g')
+        brief=$(strings_strip "${brief}")
 
         local path=${pathf#"$(sys_repo_path)/src/"*}
         local n=$(strings_len "${path}")
