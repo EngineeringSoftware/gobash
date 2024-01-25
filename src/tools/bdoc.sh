@@ -79,7 +79,6 @@ function bdoc_main() {
         # TODO: pick files from flags.
         for f in $(find "$(sys_repo_path)/src" -name "*.sh" | grep -v '_test.sh'); do
                 local package_file=${f#"$(sys_repo_path)/src/"*}
-                #echo ${package_file}
                 local package="${package_file%/*}"
                 local file=$(echo "${package_file}" | awk -F"/" '{print $NF}')
                 [ "${file}" = "p.sh" ] && continue
@@ -87,7 +86,6 @@ function bdoc_main() {
                 local name=$(basename "${file}" .sh)
                 local rstf="${package//\//_}_${name}.rst"
 
-                echo "${f}"
                 _bdoc_file "${f}" > "${apid}/${rstf}" || return $EC
                 content+=$'\n'"   apis/${rstf}"
         done
