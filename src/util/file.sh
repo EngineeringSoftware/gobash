@@ -172,3 +172,23 @@ function file_squeeze_blank_lines() {
         cat -s "${path}" > "${tmpf}"
         mv "${tmpf}" "${path}"
 }
+
+function file_prefix_each_line() {
+        # Prefix each line in a file with a string.
+        local ctx; is_ctx "${1}" && ctx="${1}" && shift
+        [ $# -ne 2 ] && { ctx_wn $ctx; return $EC; }
+        local -r path="${1}"
+        local -r str="${2}"
+        shift 2 || { ctx_wn $ctx; return $EC; }
+
+        [ -z "${path}" ] && { ctx_wa $ctx "path"; return $EC; }
+        [ ! -f "${path}" ] && { ctx_wa $ctx "path"; return $EC; }
+        [ -z "${str}" ] && { ctx_wa $ctx "str"; return $EC; }
+
+        local -r os=$(os_name)
+        if [ "${os}" = "${OS_MAC}" ]; then        
+                $X_SED -i '' 's/^/'"${str}"'/' "${path}" || return $EC
+        else
+                $X_SED -i 's/^/'"${str}"'/' "${path}" || return $EC
+        fi
+}
