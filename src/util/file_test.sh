@@ -179,3 +179,20 @@ END
                 assert_fail
 }
 readonly -f test_file_squeeze_blank_lines
+
+function test_file_prefix_each_line() {
+        local tmpf=$(os_mktemp_file)
+
+        cat << END > "${tmpf}"
+one
+two
+
+three
+END
+        file_prefix_each_line "${tmpf}" "abc"
+
+        local n=$(grep '^abc' "${tmpf}" | wc -l)
+        [ "${n}" -ne 4 ] && return $EC
+        return 0
+}
+readonly -f test_file_prefix_each_line

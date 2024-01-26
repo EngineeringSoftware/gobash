@@ -41,21 +41,23 @@ function _bdoc_file() {
         local n=$(strings_len "${path}")
         local assigns=$(strings_repeat "=" "${n}")
 
-        cat << END
-${path}
-${assigns}
-
-${brief}
-
-END
+        echo "${path}"
+        echo "${assigns}"
+        echo
+        echo "${brief}"
+        echo
 
         local fun
         for fun in $(sys_functions_in_file "${pathf}"); do
                 [[ "${fun}" = "_"* ]] && continue
                 echo ".. py:function:: ${fun}"
                 echo
-                sys_function_doc "${pathf}" "${fun}" || \
+
+                local tmpf=$(os_mktemp_file)
+                sys_function_doc "${pathf}" "${fun}" > "${tmpf}" || \
                         { ctx_w $ctx "cannot get doc for ${fun}"; return $EC; }
+                file_prefix_each_line "${tmpf}" "   "
+                $X_CAT "${tmpf}"
                 echo
         done
 }
@@ -76,10 +78,10 @@ function bdoc_main() {
         local content=""
         local f
         # TODO: pick files from flags.
-        for f in $(find "$(sys_repo_path)/src" -name "*.sh" | grep -v '_test.sh'); do
+        for f in $(find "$(sys_repo_path)/src" -name "*.sh" | $X_GREP -v '_test.sh'); do
                 local package_file=${f#"$(sys_repo_path)/src/"*}
                 local package="${package_file%/*}"
-                local file=$(echo "${package_file}" | awk -F"/" '{print $NF}')
+                local file=$(echo "${package_file}" | $X_AWK -F"/" '{print $NF}')
                 [ "${file}" = "p.sh" ] && continue
 
                 local name=$(basename "${file}" .sh)
@@ -90,7 +92,7 @@ function bdoc_main() {
         done
 
         # Make api.rst file.
-        cat << END > "${docd}/api.rst"
+        $X_CAT << END > "${docd}/api.rst"
 API
 ===
 
