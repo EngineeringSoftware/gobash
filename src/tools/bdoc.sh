@@ -54,11 +54,9 @@ END
                 [[ "${fun}" = "_"* ]] && continue
                 echo ".. py:function:: ${fun}"
                 echo
-                echo $(sys_function_doc "${pathf}" "${fun}")
+                sys_function_doc "${pathf}" "${fun}" || \
+                        { ctx_w $ctx "cannot get doc for ${fun}"; return $EC; }
                 echo
-                # TODO: add return and types.
-                #:return: ...
-                #:rtype: ...
         done
 }
 
