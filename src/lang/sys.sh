@@ -20,7 +20,10 @@ readonly SYS_SUFFIX="-dev"
 # Functions.
 
 function sys_version() {
-        # Version.
+        # Return gobash version.
+        # 
+        # :return: gobash version.
+        # :rtype: string
         local ctx; is_ctx "${1}" && ctx="${1}" && shift
         [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
         shift 0 || { ctx_wn $ctx; return $EC; }
@@ -30,6 +33,9 @@ function sys_version() {
 
 function sys_repo_path() {
         # Root dir for this repo.
+        # 
+        # :return: root directory for this repository.
+        # :rtype: string
         local ctx; is_ctx "${1}" && ctx="${1}" && shift
         [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
         shift 0 || { ctx_wn $ctx; return $EC; }
@@ -39,6 +45,9 @@ function sys_repo_path() {
 
 function sys_stack_trace() {
         # Print stack trace.
+        # 
+        # :return: stack trace.
+        # :rtype: strings
         local ctx; is_ctx "${1}" && ctx="${1}" && shift
         [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
         shift 0 || { ctx_wn $ctx; return $EC; }
