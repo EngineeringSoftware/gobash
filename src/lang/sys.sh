@@ -2,7 +2,7 @@
 #
 # https://github.com/EngineeringSoftware/gobash/blob/main/LICENSE
 #
-# Util functions closer to the system.
+# Util functions related to the system.
 
 if [ -n "${SYS_MOD:-}" ]; then return 0; fi
 readonly SYS_MOD=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
@@ -32,9 +32,9 @@ function sys_version() {
 }
 
 function sys_repo_path() {
-        # Root dir for this repo.
+        # Return the root dir for this repository.
         # 
-        # :return: root directory for this repository.
+        # :return: Root directory for this repository.
         # :rtype: string
         local ctx; is_ctx "${1}" && ctx="${1}" && shift
         [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
@@ -46,7 +46,7 @@ function sys_repo_path() {
 function sys_stack_trace() {
         # Print stack trace.
         # 
-        # :return: stack trace.
+        # :return: Stack trace.
         # :rtype: strings
         local ctx; is_ctx "${1}" && ctx="${1}" && shift
         [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
@@ -63,6 +63,10 @@ function sys_stack_trace() {
 
 function sys_is_on_stack() {
         # Check if the function name is on stack.
+        # 
+        # :param name: Name of a function.
+        # :return: true/0 if function is on stack; false/1 otherwise
+        # :rtype: bool
         local ctx; is_ctx "${1}" && ctx="${1}" && shift
         [ $# -ne 1 ] && { ctx_wn $ctx; return $EC; }
         local -r name="${1}"
@@ -73,6 +77,9 @@ function sys_is_on_stack() {
 
 function sys_bash_files() {
         # List all files in this library that start with #!/bin/bash.
+        # 
+        # :return: List of files in this library.
+        # :rtype: strings
         local ctx; is_ctx "${1}" && ctx="${1}" && shift
         [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
         shift 0 || { ctx_wn $ctx; return $EC; }
@@ -87,6 +94,9 @@ function sys_bash_files() {
 
 function sys_functions() {
         # List all functions in this library (excluding test files).
+        # 
+        # :return: List of functions in this library.
+        # :rtype: strings
         local ctx; is_ctx "${1}" && ctx="${1}" && shift
         [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
         shift 0 || { ctx_wn $ctx; return $EC; }
@@ -98,6 +108,10 @@ function sys_functions() {
 
 function sys_functions_in_file() {
         # List all functions in the given file.
+        # 
+        # :param pathf: Path to a file.
+        # :return: List of functions in the file.
+        # :rtype: strings
         local ctx; is_ctx "${1}" && ctx="${1}" && shift
         [ $# -ne 1 ] && { ctx_wn $ctx; return $EC; }
         local -r pathf="${1}"
@@ -110,6 +124,11 @@ function sys_functions_in_file() {
 
 function sys_function_doc_lines() {
         # Compute number of doc lines for the given function.
+        # 
+        # :param pathf: Path to a file.
+        # :param func: Function name.
+        # :return: Number of doc lines for the function in the file.
+        # :rtype: int
         local ctx; is_ctx "${1}" && ctx="${1}" && shift
         [ $# -ne 2 ] && { ctx_wn $ctx; return $EC; }
         local -r pathf="${1}"
@@ -132,6 +151,11 @@ function sys_function_doc_lines() {
 
 function sys_function_doc() {
         # Extract documentation for the given function.
+        # 
+        # :param pathf: Path to a file.
+        # :param func: Function name.
+        # :return: Documentation for the function in the file.
+        # :rtype: strings
         local ctx; is_ctx "${1}" && ctx="${1}" && shift
         [ $# -ne 2 ] && { ctx_wn $ctx; return $EC; }
         local -r pathf="${1}"
@@ -151,6 +175,9 @@ function sys_function_doc() {
 
 function sys_line_num() {
         # Return line number from which this func was called.
+        # 
+        # :return: Line number from which this function was called.
+        # :rtype: int
         local ctx; is_ctx "${1}" && ctx="${1}" && shift
         [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
         shift 0 || { ctx_wn $ctx; return $EC; }
@@ -161,6 +188,9 @@ function sys_line_num() {
 function sys_line_prev() {
         # Return content of the line before the one from which this
         # function is invoked.
+        # 
+        # :return: Line before the one from which this function is invoked.
+        # :rtype: string
         local ctx; is_ctx "${1}" && ctx="${1}" && shift
         [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
         shift 0 || { ctx_wn $ctx; return $EC; }
@@ -175,6 +205,9 @@ function sys_line_prev() {
 function sys_line_next() {
         # Return content of the line after the one from which this
         # function is invoked.
+        # 
+        # :return: Line after the one from which this function is invoked.
+        # :rtype: string
         local ctx; is_ctx "${1}" && ctx="${1}" && shift
         [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
         shift 0 || { ctx_wn $ctx; return $EC; }
@@ -188,6 +221,9 @@ function sys_line_next() {
 
 function sys_has_connection() {
         # Return 0 if there is connection to the web; 1 otherwise.
+        # 
+        # :return: true/0 if there is connection to the web; false/1 otherwise.
+        # :rtype: bool
         local ctx; is_ctx "${1}" && ctx="${1}" && shift
         [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
         shift 0 || { ctx_wn $ctx; return $EC; }

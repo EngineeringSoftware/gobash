@@ -77,23 +77,28 @@ function test_sys_function_doc_lines() {
 
         val=$(sys_function_doc_lines "${script}" "sys_version") || \
                 assert_fail
-        assert_eq 1 "${val}"
+        assert_eq 4 "${val}"
 
         val=$(sys_function_doc_lines "${script}" "sys_line_prev") || \
                 assert_fail
-        assert_eq 2 "${val}"
+        assert_eq 5 "${val}"
 }
 readonly -f test_sys_function_doc_lines
 
 function test_sys_function_doc() {
         local -r script="$(sys_repo_path)/src/lang/sys.sh"
-        local val
+        local actual
 
-        val=$(sys_function_doc "${script}" "sys_version") || \
+        actual=$(sys_function_doc "${script}" "sys_version") || \
                 assert_fail
-        assert_eq "Version." "${val}"
 
-        val=$(sys_function_doc "${script}" "sys_line_prev") || \
+        local expected="Return gobash version.
+
+:return: gobash version.
+:rtype: string"
+        assert_eq "${expected}" "${actual}"
+
+        actual=$(sys_function_doc "${script}" "sys_line_prev") || \
                 assert_fail
 }
 readonly -f test_sys_function_doc
