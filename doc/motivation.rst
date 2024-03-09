@@ -10,13 +10,14 @@ of the scripting has moved over to Python (and a few other languages)
 due to availability of (standard) libraries and testing support.
 However, seeing `import subprocess; subprocess.run(["ls", "-l"])` or
 similar code in Python, and then using replacements for `awk`, `sed`,
-`grep`, `git` commands (and awkwardly processing their outputs) never
-looks very exciting.
+`grep`, `git` commands (and awkwardly processing their outputs)
+suggests that developers may use bash more if it had better libraries
+and testing support.
 
 Key motivation points:
 
 * Provide a "standard" library for bash
-* Provide missing language features (but do not design new language or change interpreters)
+* Provide missing language features (without designing a new language or changing interpreters)
 * Enable using the same set of functions across various operating systems
 * Enable using different interpreters (and their versions) by hiding details behind APIs
 

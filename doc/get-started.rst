@@ -29,8 +29,8 @@ Clone the gobash repository:
 
     git clone git@github.com:EngineeringSoftware/gobash
 
-Alternatively, you can avoid cloning the repo and directly source the
-library in your bash script:
+Alternatively, you can avoid cloning the repo and directly `source`
+the library in your bash script:
 
 .. code-block:: bash
 
@@ -107,8 +107,8 @@ In the following example (`point.sh`), we introduce a `struct` for a
 Test Example
 ------------
 
-This example illustrate a way to write tests using a testing package.
-The tests can be executed with the gobash tool.
+This example illustrates a way to write tests using gobash's testing
+package.  The tests can be executed with the gobash tool.
 
 We will extend the previous example to add tests (`point_test.sh`) for
 the function `point_add`.
@@ -134,7 +134,7 @@ Tests can be run with the following command:
 
     ./gobash test --paths point_test.sh --verbose
 
-The output of this execution will be along these lines:
+The output of this execution will look like this:
 
 .. code-block:: bash
 
@@ -151,7 +151,7 @@ There are a number of other examples that illustrate gobash in the
 `examples directory
 <https://github.com/EngineeringSoftware/gobash/tree/main/examples/README.md>`_.
 If you like learning by examples, that is the best place to go next.
-If you prefer to read higher level doc, then check
+If you prefer to read higher level documentation, then check
 :doc:`language`.
 
 .. toctree::
