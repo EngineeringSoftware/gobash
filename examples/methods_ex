@@ -20,12 +20,12 @@ function Request_curl() {
         # The first argument of each method is an instance on which
         # the method was invoked (think of it as `this` or
         # `self`). Subsequent arguments (if any) are given to the
-        # method at the invocation time.
+        # method at invocation time.
         local -r req="${1}"
         shift 1
 
-        # Body of the method can be anything.
-        # Exit code from this method will be propagated to the caller.        
+        # The method body can be anything.
+        # The exit code from this method will be propagated to the caller.        
         curl "$($req url)" 2>&1
 }
 

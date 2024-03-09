@@ -15,8 +15,8 @@ function Circle() {
 
         make_ $FUNCNAME \
               "r" "${r}"
-        # We do not need to return this explicitly (because the
-        # default output is the result of the latest command, but
+        # We do not need to return explicitly (because the
+        # default output is the result of the last command, but
         # being explicit is good in some cases).
         # return $?
 }

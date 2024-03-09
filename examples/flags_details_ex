@@ -19,8 +19,8 @@ function check_arguments() {
         fi
 }
 
-# The following function is some random computation to illustrate the
-# way code for parsing can be connected to other/existing code.
+# The following function is some random computation to illustrate how
+# code for parsing can be connected to other/existing code.
 function compute_loc() {
         local -r url="${1}"
         shift 1

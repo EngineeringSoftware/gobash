@@ -8,14 +8,14 @@ readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 
 function main() {
-        # This function illustrates the way we create and use
+        # This function illustrates how we create and use
         # WaitGroup. However, this example does not really need
         # WaitGroup as we wait for all sub processes; we can simply
         # use wait command at the end of the function to wait for
-        # everything we spawned. The value of this example is to
-        # illustrate the way to create a WaitGroup, and processes to
+        # every process that we spawned. The value of this example is to
+        # illustrate how to create a WaitGroup, processes to
         # it, and wait (which would be a nice approach if one has to
-        # wait only for a selected subset of them).
+        # wait only for a subset of processes).
 
         local -r wg=$(WaitGroup)
 

@@ -13,7 +13,7 @@ function main() {
         local menu=$(TextMenu "Pick your favorite color." "$lst")
 
         local res=$(UIResult)
-        # Ask a user to pick an option.
+        # Ask a user to select an option.
         $menu show "${res}"
 
         # Result keeps the selected value.

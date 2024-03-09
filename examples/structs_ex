@@ -6,7 +6,7 @@ readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 . ${DIR}/../gobash
 
 
-# `struct` and `constructor` are one. In any future example, we will
+# `struct` and `constructor` are synonyms. In future examples, we will
 # only use `struct` in text (but we really mean both at once).
 function Request() {
         # Normal function arguments in bash.
@@ -17,10 +17,10 @@ function Request() {
         # functions. `make_` allocates an instance. The first
         # argument is the struct name (think of it as a type). struct
         # name can be anything, but we will always use $FUNCNAME
-        # (which is Request in this example). Name is important when
+        # (which is `Request` in this example). Name is important when
         # associating methods with a struct (and we love
-        # $FUNCNAME). The arguments that follow are pairs of a field
-        # name and value.
+        # $FUNCNAME). The arguments that follow are the name and value
+        # of a field.
         make_ $FUNCNAME \
               "url" "${url}"
 }
