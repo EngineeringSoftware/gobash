@@ -6,7 +6,7 @@
 # In summary, it is valuable to always check context at the end of the
 # execution (even if you do not create your own context, but you rely
 # on the global context). Of course, you can combine this with your
-# regular debugging using -e (which we know is limited) and -x.
+# regular debugging, using -e (which is limited) and -x.
 
 readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 . ${DIR}/../gobash

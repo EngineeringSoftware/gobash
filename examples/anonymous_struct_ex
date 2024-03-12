@@ -7,7 +7,7 @@ readonly DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 
 # Anonymous structs are created using `amake_` function; this function
-# is the same as `make_`, but does not accept `struct` name.
+# is the same as `make_`, but does not accept the `struct` name.
 p=$(amake_ "x" 3 "y" 5)
 $p x
 # Output: 3
@@ -21,7 +21,7 @@ function demo() {
         $a to_string
 }
 demo
-# Output (different for you depending on time and random number):
+# Output (will differ for you, depending on current time and a random number):
 # {
 #   "date": "Mon 14 Aug 2023 10:22:29 AM CDT",
 #   "rand": "32674"

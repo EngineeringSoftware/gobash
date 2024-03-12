@@ -26,4 +26,4 @@ $flags $ctx parse "$data" "$@" || \
 $data to_string
 
 # Use data.
-echo "Values that you provides are x=$($data x) and z=$($data z)"
+echo "The values that you provided are x=$($data x) and z=$($data z)"

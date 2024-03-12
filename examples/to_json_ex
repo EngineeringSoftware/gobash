@@ -17,8 +17,8 @@ function Person() {
 p=$(Person "Jessy" 10)
 $p to_json
 
-# Although one can override the implementation of `to_json`, such
-# changes are not recommended.
+# Although one can override the implementation of `to_json`, doing
+# so is not recommended.
 
 # Output of this script:
 # {
