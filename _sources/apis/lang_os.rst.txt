@@ -1,0 +1,37 @@
+lang/os.sh
+==========
+
+OS functions.
+
+.. py:function:: os_arch
+
+   Return OS architecture.
+
+.. py:function:: os_get_pid
+
+   Return this process id.
+
+.. py:function:: os_kill
+
+   Kills the given process.
+
+.. py:function:: os_mktemp
+
+   Make a temporary file.
+
+.. py:function:: os_mktemp_dir
+
+   Make a temporary directory.
+
+.. py:function:: os_mktemp_file
+
+   Make a temporary file.
+
+.. py:function:: os_name
+
+   Return OS name. If OS is not known, return "$OS_UNKNOWN".
+
+.. py:function:: os_remake_dir
+
+   Remake (delete and create) a directory.
+

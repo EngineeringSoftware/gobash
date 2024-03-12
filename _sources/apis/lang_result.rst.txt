@@ -1,0 +1,17 @@
+lang/result.sh
+==============
+
+Utility for collecting results from a function invocation.
+
+.. py:function:: Result
+
+   Result.
+
+.. py:function:: Result_has_value
+
+   True if value is set.
+
+.. py:function:: Result_to_string
+
+   String representation of the result.
+

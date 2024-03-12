@@ -1,0 +1,41 @@
+container/ring.sh
+=================
+
+Operations on circural lists.
+
+.. py:function:: container_Ring
+
+   Construct a ring.
+
+.. py:function:: container_Ring_do
+
+   Call the given function on each element of the ring.
+
+.. py:function:: container_Ring_init
+
+   Return the next ring element.
+
+.. py:function:: container_Ring_len
+
+   Return length of the ring.
+
+.. py:function:: container_Ring_link
+
+   Connect ring r with ring s.
+
+.. py:function:: container_Ring_move
+
+   Move n % len(r) elements backward or forward.
+
+.. py:function:: container_Ring_next
+
+   Return the next ring element.
+
+.. py:function:: container_Ring_prev
+
+   Return the previous ring element.
+
+.. py:function:: container_Ring_unlink
+
+   Unlike elements.
+

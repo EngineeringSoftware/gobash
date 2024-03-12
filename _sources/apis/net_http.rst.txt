@@ -1,0 +1,33 @@
+net/http.sh
+===========
+
+http related structs and functions.
+
+.. py:function:: Http
+
+   Http.
+
+.. py:function:: Http_handle_func
+
+   Handle the given function for the given path.
+
+.. py:function:: Http_kill_and_wait
+
+   Kill the background process and wait to be done.
+
+.. py:function:: Http_listen_and_serve
+
+   Listen and serve requests (starts one background process).
+
+.. py:function:: Http_listen_and_serve_and_wait
+
+   Listen, server, and wait for the process.
+
+.. py:function:: Http_wait
+
+   Wait for the server to complete work.
+
+.. py:function:: http_enabled
+
+   Return true/0 if this module is enabled; otherwise false/1.
+

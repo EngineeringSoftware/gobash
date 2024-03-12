@@ -1,0 +1,30 @@
+util/map.sh
+===========
+
+Map collection.
+
+.. py:function:: Map
+
+   Map collection.
+
+.. py:function:: Map_get
+
+   Get (value, 0) for the key. Return (null, 1) if key is not
+   available.
+
+.. py:function:: Map_inc
+
+   Increment value for the given key.
+
+.. py:function:: Map_keys
+
+   Return list of keys in the same order as in the map.
+
+.. py:function:: Map_len
+
+   Size of the map.
+
+.. py:function:: Map_put
+
+   Add key, value pair into the map.
+

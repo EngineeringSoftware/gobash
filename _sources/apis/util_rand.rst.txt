@@ -1,0 +1,17 @@
+util/rand.sh
+============
+
+Random value generators.
+
+.. py:function:: rand_int
+
+   Generate random int.
+
+.. py:function:: rand_intn
+
+   Generate random int up to (but excluding) the given value.
+
+.. py:function:: rand_string
+
+   Generate random string up to the given length.
+

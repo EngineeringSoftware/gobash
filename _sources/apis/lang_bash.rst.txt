@@ -1,0 +1,29 @@
+lang/bash.sh
+============
+
+API for some bash variables.
+
+.. py:function:: bash_version_arch
+
+   Return bash architecture string.
+
+.. py:function:: bash_version_build
+
+   Return bash build number.
+
+.. py:function:: bash_version_major
+
+   Return bash major number.
+
+.. py:function:: bash_version_minor
+
+   Return bash minor number.
+
+.. py:function:: bash_version_patch
+
+   Return bash patch number.
+
+.. py:function:: bash_version_release
+
+   Return bash release string.
+

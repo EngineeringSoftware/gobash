@@ -1,0 +1,33 @@
+net/response.sh
+===============
+
+Response related structs and functions.
+
+.. py:function:: Response
+
+   Response to http request.
+
+.. py:function:: Response_to_string
+
+   String version of the response.
+
+.. py:function:: Response_write
+
+   Buffer the string into the response.
+
+.. py:function:: response_make_bad_request
+
+   Create a response for 400.
+
+.. py:function:: response_make_internal_server_error
+
+   Create a response for 500.
+
+.. py:function:: response_make_not_found
+
+   Create a response for 404.
+
+.. py:function:: response_make_ok
+
+   Create a response for 200.
+
