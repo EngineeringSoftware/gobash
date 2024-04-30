@@ -159,14 +159,12 @@ method that computes its total area.
 
             make_ $FUNCNAME \
                 "r" "${r}"
-            return $?
     }
 
     function Circle_area() {
-            local -r obj="${1}"
+            local -r c="${1}"
 
-            echo "$MATH_PI * $($obj r) * $($obj r)" | bc
-            return 0
+            echo "$MATH_PI * $($c r) * $($c r)" | bc
     }
 
 Invoking a method is similar to other programming languages. Below, we
@@ -214,8 +212,8 @@ only the name of the person.
 .. code-block:: bash
 
     function Person_to_string() {
-        local -r obj="${1}"
-        echo "I am $($obj name)."
+            local -r p="${1}"
+            echo "I am $($p name)."
     }
     p=$(Person "Jessy" 10)
     $p to_string
