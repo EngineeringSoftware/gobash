@@ -79,7 +79,6 @@ function TextSpinner() {
 
         make_ $ctx \
               "${FUNCNAME}" \
-              "ix" "0" \
               "pid" "${NULL}"
 }
 
