@@ -14,7 +14,9 @@ readonly UTIL_PACKAGE=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 . ${UTIL_PACKAGE}/math.sh
 . ${UTIL_PACKAGE}/rand.sh
 . ${UTIL_PACKAGE}/strings.sh
+. ${UTIL_PACKAGE}/char.sh
 . ${UTIL_PACKAGE}/regexp.sh
 . ${UTIL_PACKAGE}/flags.sh
 . ${UTIL_PACKAGE}/complex.sh
 . ${UTIL_PACKAGE}/user.sh
+. ${UTIL_PACKAGE}/binary.sh
