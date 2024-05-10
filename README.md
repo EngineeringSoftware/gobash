@@ -23,6 +23,19 @@ page](/examples/README.md).  A quick demo of the very basic concepts
 using a toy example is available [here](/doc/gobash.gif).
 
 
+## Key Features
+
+We focused on a design that enables the following key features
+(discussed in more detail at gobash.org):
+
+* **Programming language features** - `gobash` enables (via functions and files) defining `structs` and `methods` and instantiating "objects", e.g., [example](/examples/methods_ex)
+* **Arguments and return values** - `gobash` supports passing "objects" as arguments to functions and returning them as "out" arguments, e.g., [example](/examples/result_ex)
+* **Collections** - `gobash` (using `structs`) provides a flexible collections: `List`s and `Map`s (thus avoiding built-in structures when they are not sufficiently flexible or they are not available in old versions), e.g., [example](/examples/list_ex)
+* **Command line flag parsing** - `gobash` introduces a set of functions for parsing command line flags (similar to those in other programming languages), e.g., [example](/examples/flags_ex)
+* **Testing** - `gobash` comes with a testing package, e.g., [example](/examples/playground/test_function_ex)
+* **API** - `gobash` provides a set of functions to support common tasks and abstractions, such as strings, `Mutex`, `Chan`, e.g., [example](/examples/binary_trees_ex)
+
+
 ## A Quick Example
 
 ```bash
@@ -47,18 +60,6 @@ $lst to_string
 #   "5"
 # ]
 ```
-
-## Key Features
-
-We focused on a design that enables the following key features
-(discussed in more detail at gobash.org):
-
-* **Programming language features** - `gobash` enables (via functions and files) defining `structs` and `methods` and instantiating "objects", e.g., [example](/examples/methods_ex)
-* **Arguments and return values** - `gobash` supports passing "objects" as arguments to functions and returning them as "out" arguments, e.g., [example](/examples/result_ex)
-* **Collections** - `gobash` (using `structs`) provides a flexible collections: `List`s and `Map`s (thus avoiding built-in structures when they are not sufficiently flexible or they are not available in old versions), e.g., [example](/examples/list_ex)
-* **Command line flag parsing** - `gobash` introduces a set of functions for parsing command line flags (similar to those in other programming languages), e.g., [example](/examples/flags_ex)
-* **Testing** - `gobash` comes with a testing package, e.g., [example](/examples/playground/test_function_ex)
-* **API** - `gobash` provides a set of functions to support common tasks and abstractions, such as strings, `Mutex`, `Chan`, e.g., [example](/examples/binary_trees_ex)
 
 
 ## Dependencies
