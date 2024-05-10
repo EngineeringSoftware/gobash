@@ -23,6 +23,31 @@ page](/examples/README.md).  A quick demo of the very basic concepts
 using a toy example is available [here](/doc/gobash.gif).
 
 
+## A Quick Example
+
+```bash
+#!/bin/bash
+
+# Import the library.
+source /dev/stdin <<< "$(curl https://raw.githubusercontent.com/EngineeringSoftware/gobash/master/hsabog 2>/dev/null)"
+
+# Create a communication channel.
+ch=$(Chan)
+# Send a message (blocking call) in a sub process.
+( lst=$(List 2 3 5); $ch send "$lst" ) &
+
+# Receive the message (blocking call) in the main process.
+lst=$($ch recv)
+
+$lst to_string
+# Output:
+# [
+#   "2",
+#   "3",
+#   "5"
+# ]
+```
+
 ## Key Features
 
 We focused on a design that enables the following key features
