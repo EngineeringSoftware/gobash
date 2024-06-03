@@ -222,3 +222,24 @@ function test_math_ceil() {
         assert_eq 0 $(math_ceil "-0.8")
 }
 readonly -f test_math_ceil
+
+function test_math_fib() {
+        local res
+
+        res=$(math_fib 13)
+        [ "${res}" -ne 233 ] && \
+                assert_fail "13 incorrect"
+
+        res=$(math_fib 23)
+        [ "${res}" -ne 28657 ] && \
+                assert_fail "23 incorrect"
+
+        math_fib -10 && \
+                assert_fail "negative is not allowed"
+
+        math_fib "abc" && \
+                assert_fail "has to fail with non int"
+
+        return 0
+}
+readonly -f test_math_fib

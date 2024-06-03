@@ -289,3 +289,26 @@ function math_ceil() {
         res=$(bc -l <<< "scale=0; ( ${val} + 1 ) / 1")
         echo "${res}"
 }
+
+function math_fib() {
+        # Return fibonacci for the given `n`.
+        local ctx; is_ctx "${1}" && ctx="${1}" && shift
+        [ $# -ne 1 ] && { ctx_wn $ctx; return $EC; }
+        local n="${1}"
+        shift 1 || { ctx_wn $ctx; return $EC; }
+
+        [ -z "${n}" ] && { ctx_w $ctx "no n"; return $EC; }
+        ! is_uint "${n}" && { ctx_w $ctx "not an int"; return $EC; }
+
+        local f0=0
+        local f1=1
+
+        local res=0
+        for (( i=1; i<${n}; i++ )); do
+                res=$(( ${f0} + ${f1} ))
+                f0=${f1}
+                f1=${res}
+        done
+
+        echo "${res}"
+}

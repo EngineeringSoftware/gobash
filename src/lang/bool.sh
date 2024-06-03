@@ -137,6 +137,20 @@ function is_int() {
         [ "${val}" = "${res}" ]
 }
 
+function is_uint() {
+        # True if the given value is an unsigned int (bc).
+        local ctx; is_ctx "${1}" && ctx="${1}" && shift
+        [ $# -ne 1 ] && { ctx_wn $ctx; return $EC; }
+        local -r val="${1}"
+        shift 1 || { ctx_wn $ctx; return $EC; }
+
+        ! is_int "${val}" && return $FALSE
+
+        [[ "${val:0:1}" == "-" ]] && return $FALSE
+
+        return $TRUE
+}
+
 function is_float() {
         # True if the given value can be a float (bc).
         local ctx; is_ctx "${1}" && ctx="${1}" && shift

@@ -179,6 +179,23 @@ function test_is_int() {
 }
 readonly -f test_is_int
 
+function test_is_uint() {
+        is_uint 10 || \
+                return $EC
+
+        is_uint abc && \
+                return $EC
+
+        is_uint 10.2 && \
+                return $EC
+
+        is_uint -10 && \
+                return $EC
+
+        return 0
+}
+readonly -f test_is_uint
+
 function test_is_float() {
         is_float 1.2 || \
                 return $EC
