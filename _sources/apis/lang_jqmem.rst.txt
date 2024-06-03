@@ -1,0 +1,17 @@
+lang/jqmem.sh
+=============
+
+Util functions to manipulate json files.
+
+.. py:function:: json_get
+
+   Get a field.
+
+.. py:function:: json_has
+
+   Return true if it has a field.
+
+.. py:function:: json_set
+
+   Set a field.
+

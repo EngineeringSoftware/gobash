@@ -1,0 +1,81 @@
+util/math.sh
+============
+
+Math util functions.
+
+.. py:function:: math_calc
+
+   Compute given math expression.
+
+.. py:function:: math_ceil
+
+   Return ceil of a number.
+
+.. py:function:: math_cos
+
+   Return cos(x).
+
+.. py:function:: math_enabled
+
+   Return true if this module is enabled.
+
+.. py:function:: math_fib
+
+   Return fibonacci for the given `n`.
+
+.. py:function:: math_floor
+
+   Return floor of a number.
+
+.. py:function:: math_ge
+
+   Return true if x >= y.
+
+.. py:function:: math_gt
+
+   Return true if x > y.
+
+.. py:function:: math_le
+
+   Return true if x <= y.
+
+.. py:function:: math_log
+
+   Natural logarithm of the given number.
+
+.. py:function:: math_lt
+
+   Return true if x < y.
+
+.. py:function:: math_max
+
+   Return max of two numbers (ints only).
+
+.. py:function:: math_min
+
+   Return min of two numbers (ints only).
+
+.. py:function:: math_n_percent_n
+
+   Compute one number as a percent of another number.
+
+.. py:function:: math_non_zero
+
+   Return non-zero value if one is non-zero.
+
+.. py:function:: math_percent_of
+
+   Computer x percent of the given number.
+
+.. py:function:: math_pow
+
+   Return pow(x, y).
+
+.. py:function:: math_sin
+
+   Return sin(x).
+
+.. py:function:: math_sqrt
+
+   Return sqrt(x).
+

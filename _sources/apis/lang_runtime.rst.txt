@@ -1,0 +1,13 @@
+lang/runtime.sh
+===============
+
+Runtime functions.
+
+.. py:function:: runtime_num_cpu
+
+   Return the number of logical CPUs.
+
+.. py:function:: runtime_num_physical_cpu
+
+   Return the number of physical CPUs.
+

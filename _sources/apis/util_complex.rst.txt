@@ -1,0 +1,37 @@
+util/complex.sh
+===============
+
+Complex number functions.
+
+.. py:function:: Complex
+
+   Complex numbers.
+
+.. py:function:: Complex_conjugate
+
+   Return a new number whose value is the conjugate of c.
+
+.. py:function:: Complex_eq
+
+   Return true if the given numbers are equal.
+
+.. py:function:: Complex_minus
+
+   Return a new number that is a difference.
+
+.. py:function:: Complex_plus
+
+   Return a new number that is a sum of two numbers.
+
+.. py:function:: Complex_scale
+
+   Return a new number whose value is (c * alpha)
+
+.. py:function:: Complex_times
+
+   Return a new number whose value is (c * c2)
+
+.. py:function:: Complex_to_string
+
+   Return string representation of this complex number.
+

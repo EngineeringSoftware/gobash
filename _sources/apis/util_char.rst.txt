@@ -1,0 +1,9 @@
+util/char.sh
+============
+
+Util char functions.
+
+.. py:function:: char_alphabet
+
+   Print alphabet on a single line.
+

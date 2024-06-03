@@ -1,0 +1,99 @@
+lang/unsafe.sh
+==============
+
+Low level object manipulation.
+
+.. py:function:: unsafe_clone
+
+   Shallow clone.
+
+.. py:function:: unsafe_copy
+
+   Copy content of src to dst without changing dst name.
+
+.. py:function:: unsafe_flds
+
+   Return a list of fields of the given object.
+
+.. py:function:: unsafe_from_json
+
+   Create an object from a json file.
+
+.. py:function:: unsafe_gc
+
+   Clean. Should be used carefully.
+
+.. py:function:: unsafe_get_fld
+
+   Get a field for object/uid.
+
+.. py:function:: unsafe_has_fld
+
+   Return true if the given object/uid has the given field.
+
+.. py:function:: unsafe_is_instanceof
+
+   Return true if object is instance of the given type.
+
+.. py:function:: unsafe_is_object
+
+   Return true if it is a valid object.
+
+.. py:function:: unsafe_keys
+
+   Return a list of keys in the same order as in the map.
+
+.. py:function:: unsafe_len
+
+   Get (length, 0) of the underlying object/uid. If error,
+   return (_, $EC).
+
+.. py:function:: unsafe_list_add
+
+   Add an element into a list and return (_, 0). If error,
+   return (_, $EC).
+
+.. py:function:: unsafe_list_clear
+
+   Clean a list and return (_, 0). If error, return (_, $EC).
+
+.. py:function:: unsafe_list_delete
+
+   Delete an element and return (_, 0). If element not present,
+   return (_, 1). If error, return (_, $EC).
+
+.. py:function:: unsafe_list_eq
+
+   Return (_, 0) if two lists are the same (comparing elements
+   as references). Return (_, 1) if they are diff. Return (_,
+   $EC) if there is an error.
+
+.. py:function:: unsafe_list_get
+
+   Get an element from a list (val, 0). If error, return (_,
+   $EC).
+
+.. py:function:: unsafe_list_make
+
+   Make a list and return (uid, 0). If error, return (_, $EC).
+
+.. py:function:: unsafe_object_make
+
+   Return new object (uid, 0). If error, return (_, $EC).
+
+.. py:function:: unsafe_set_fld
+
+   Set a field for object/uid.
+
+.. py:function:: unsafe_to_json
+
+   Output json representation of the object.
+
+.. py:function:: unsafe_to_string
+
+   Output string representation of the object.
+
+.. py:function:: unsafe_zero
+
+   Zero value for the given type.
+

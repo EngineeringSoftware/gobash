@@ -1,0 +1,49 @@
+lang/core.sh
+============
+
+Core constants, variables, and functions.
+
+.. py:function:: core_mktemp_file
+
+   Make a temporary file.
+
+.. py:function:: core_obj_dir
+
+   Dir for gobash files.
+
+.. py:function:: core_tmp_dir
+
+   Temporary directory.
+
+.. py:function:: ctx_clear
+
+   Clear context.
+
+.. py:function:: ctx_make
+
+   Make a context.
+
+.. py:function:: ctx_show
+
+   Print context.
+
+.. py:function:: ctx_stack
+
+   Print stack trace.
+
+.. py:function:: ctx_w
+
+   Record a message.
+
+.. py:function:: ctx_wa
+
+   Record error with an argument.
+
+.. py:function:: ctx_wn
+
+   Record error with number of arguments.
+
+.. py:function:: is_ctx
+
+   Check if it is a valid context.
+

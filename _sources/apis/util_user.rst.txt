@@ -1,0 +1,38 @@
+util/user.sh
+============
+
+User info access.
+
+.. py:function:: User
+
+   User struct.
+
+.. py:function:: UserGroup
+
+   Group struct.
+
+.. py:function:: User_group_ids
+
+   Return (list, 0) of group ids for this user. If error,
+   return (_, $EC).
+
+.. py:function:: user_current
+
+   Get info for the current user.
+
+.. py:function:: user_group_lookup
+
+   Find group by name.
+
+.. py:function:: user_group_lookup_id
+
+   Find group by gid.
+
+.. py:function:: user_lookup
+
+   Get user info for the given username.
+
+.. py:function:: user_lookup_id
+
+   Get user info for the given uid.
+

@@ -1,0 +1,21 @@
+sync/chan.sh
+============
+
+Communication channel related structs and functions.
+
+.. py:function:: Chan
+
+   Channel.
+
+.. py:function:: Chan_close
+
+   Close the channel.
+
+.. py:function:: Chan_recv
+
+   Receive a value.
+
+.. py:function:: Chan_send
+
+   Send a value.
+

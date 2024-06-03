@@ -1,0 +1,13 @@
+tools/bdoc.sh
+=============
+
+Document generation tool.
+
+.. py:function:: bdoc_enabled
+
+   Check if this module is enabled.
+
+.. py:function:: bdoc_main
+
+   Generate documentation for gobash in the Sphinx format.
+

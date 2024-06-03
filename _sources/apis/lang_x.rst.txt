@@ -1,0 +1,46 @@
+lang/x.sh
+=========
+
+gobash dependencies.
+
+.. py:function:: x_awk_version
+
+   Print awk version.
+
+.. py:function:: x_bash_version
+
+   Print bash version.
+
+.. py:function:: x_bc_version
+
+   Print bc version
+
+.. py:function:: x_config
+
+   Print system configuration.
+
+.. py:function:: x_cut_version
+
+   Print cut version.
+
+.. py:function:: x_enabled
+
+   Check if this module is enabled (which is the case if all
+   dependencies are available).
+
+.. py:function:: x_grep_version
+
+   Print grep version.
+
+.. py:function:: x_jq_version
+
+   Print jq version.
+
+.. py:function:: x_ps_version
+
+   Print ps version.
+
+.. py:function:: x_sed_version
+
+   Print sed version.
+

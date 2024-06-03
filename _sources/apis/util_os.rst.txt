@@ -1,0 +1,26 @@
+util/os.sh
+==========
+
+OS util functions.
+
+.. py:function:: os_loop_n
+
+   Run the given command (with arguments) in a loop n time.
+
+.. py:function:: os_loop_secs
+
+   Run the given command in a loop until time expires.
+
+.. py:function:: os_stat
+
+   Return info describing a file.
+
+.. py:function:: os_timeout
+
+   Run the given command (with arguments) up to timeout. A
+   duration of 0 disables timeout.
+
+.. py:function:: os_wait
+
+   Wait for the given process to complete or timeout.
+

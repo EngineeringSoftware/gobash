@@ -1,0 +1,9 @@
+net/handler.sh
+==============
+
+Handler related functions.
+
+.. py:function:: Handler
+
+   Handler of http requests.
+

@@ -1,0 +1,33 @@
+util/flags.sh
+=============
+
+Support for parsing command line flags.
+
+.. py:function:: Args
+
+   Data for keeping map of argument names and values.
+
+.. py:function:: Flag
+
+   Command line flag.
+
+.. py:function:: Flags
+
+   Command line flags.
+
+.. py:function:: Flags_add
+
+   Add a flag.
+
+.. py:function:: Flags_help
+
+   Print help message.
+
+.. py:function:: Flags_parse
+
+   Parse command line flags.
+
+.. py:function:: Flags_to_string
+
+   Print flags in human readable format.
+

@@ -1,0 +1,33 @@
+sync/atomic_int.sh
+==================
+
+Atomic int related structs and functions.
+
+.. py:function:: AtomicInt
+
+   AtomicInt.
+
+.. py:function:: AtomicInt_add
+
+   Add to the value.
+
+.. py:function:: AtomicInt_compare_and_swap
+
+   Compare and swap.
+
+.. py:function:: AtomicInt_inc
+
+   Increment.
+
+.. py:function:: AtomicInt_load
+
+   Load value.
+
+.. py:function:: AtomicInt_store
+
+   Store value.
+
+.. py:function:: AtomicInt_swap
+
+   Swap values (store new and return old).
+
