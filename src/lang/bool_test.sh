@@ -194,6 +194,7 @@ function test_is_uint() {
 
         return 0
 }
+readonly -f test_is_uint
 
 function test_is_float() {
         is_float 1.2 || \
