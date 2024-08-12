@@ -42,7 +42,7 @@ We focused on a design that enables the following key features
 #!/bin/bash
 
 # Import the library.
-source /dev/stdin <<< "$(curl https://raw.githubusercontent.com/EngineeringSoftware/gobash/master/hsabog 2>/dev/null)"
+source /dev/stdin <<< "$(curl https://raw.githubusercontent.com/EngineeringSoftware/gobash/main/hsabog 2>/dev/null)"
 
 # Create a communication channel.
 ch=$(Chan)
