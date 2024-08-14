@@ -13,6 +13,17 @@ readonly RAND_MOD=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 # ----------
 # Functions.
 
+function rand_bool() {
+        # Generate random bool.
+        local ctx; is_ctx "${1}" && ctx="${1}" && shift
+        [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
+        shift 0 || { ctx_wn $ctx; return $EC; }
+
+        # No arguments to check.
+
+        echo $(( ${RANDOM} % 2 ))
+}
+
 function rand_int() {
         # Generate random int.
         local ctx; is_ctx "${1}" && ctx="${1}" && shift
