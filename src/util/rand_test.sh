@@ -15,6 +15,16 @@ readonly RAND_TEST_MOD=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 # ----------
 # Functions.
 
+function test_rand_bool() {
+        local val
+        val=$(rand_bool) || \
+                assert_fail
+
+        is_bool "${val}" || \
+                assert_fail
+}
+readonly -f test_rand_bool
+
 function test_rand_int() {
         local val
         val=$(rand_int) || \
