@@ -25,6 +25,24 @@ function test_rand_bool() {
 }
 readonly -f test_rand_bool
 
+function test_rand_return() {
+        [ rand_return ] || return 0
+}
+readonly -f test_rand_return
+
+function test_rand_args() {
+        local val
+        val=$(rand_args "one" "two")
+
+        [ "${val}" = "one" -o "${val}" = "two" ] || \
+                assert_fail
+
+        rand_args && assert_fail
+
+        return 0
+}
+readonly -f test_rand_args
+
 function test_rand_int() {
         local val
         val=$(rand_int) || \
