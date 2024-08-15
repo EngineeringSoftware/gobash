@@ -24,6 +24,32 @@ function rand_bool() {
         echo $(( ${RANDOM} % 2 ))
 }
 
+function rand_return() {
+        # Return (`return`) randomly 0 or 1. This can be convenient to
+        # use in if statements.
+        local ctx; is_ctx "${1}" && ctx="${1}" && shift
+        [ $# -ne 0 ] && { ctx_wn $ctx; return $EC; }
+        shift 0 || { ctx_wn $ctx; return $EC; }
+
+        # No arguments to check.
+
+        [ $(rand_bool) = 1 ]
+}
+
+function rand_args() {
+        # Return random argument given to this function.
+        local ctx; is_ctx "${1}" && ctx="${1}" && shift
+        [ $# -eq 0 ] && { ctx_wn $ctx; return $EC; }
+        shift 0 || { ctx_wn $ctx; return $EC; }
+
+        # No arguments to check.
+
+        local vals=( $@ )
+        local len=${#vals[@]}
+        local ix=$(( $RANDOM % len ))
+        echo "${vals[${ix}]}"
+}
+
 function rand_int() {
         # Generate random int.
         local ctx; is_ctx "${1}" && ctx="${1}" && shift
