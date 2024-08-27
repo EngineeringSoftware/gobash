@@ -4,7 +4,7 @@ gobash documentation
 
 gobash, a self-proclaimed standard bash library, is a set of bash
 functions that improve programming experience in bash (by providing
-collections, languages features, APIs, testing package, command line
+collections, structs, methods, APIs, testing package, command line
 flag parsing, etc.) without modifying the shell interpreter(s). It
 works with any bash version (on Linux and Mac). Parts of the API match
 those in Go.

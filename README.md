@@ -7,7 +7,7 @@
 [![lint](https://github.com/EngineeringSoftware/gobash/actions/workflows/lint.yml/badge.svg)](https://github.com/EngineeringSoftware/gobash/actions/workflows/lint.yml)
 
 `gobash` is a set of functions that improve programming experience in
-`bash` (by providing collections, languages features, APIs, testing
+`bash` (by providing collections, structs, methods, APIs, testing
 package, command line flag parsing, etc.)  without modifying the shell
 interpreter(s).  It works with any bash version (on Linux and Mac).
 Parts of the API are matching those in Go.
