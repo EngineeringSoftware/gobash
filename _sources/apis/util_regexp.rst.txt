@@ -1,0 +1,37 @@
+util/regexp.sh
+==============
+
+Util for regular expression.
+
+.. py:function:: RegExp
+
+   Regular expression.
+
+.. py:function:: RegExp_find_string
+
+   Return a string of the leftmost match; empty otherwise.
+
+.. py:function:: RegExp_find_string_index
+
+   Return list with two elements (start and end loc of string).
+
+.. py:function:: RegExp_find_string_submatch
+
+   Match and group matches.
+
+.. py:function:: RegExp_match_string
+
+   Return true if string matches this regexp.
+
+.. py:function:: RegExp_to_string
+
+   Original regular expression string.
+
+.. py:function:: regexp_compile
+
+   Save regular expression.
+
+.. py:function:: regexp_match_string
+
+   Return true if string contains any match for re.
+

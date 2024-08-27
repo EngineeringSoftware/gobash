@@ -1,0 +1,82 @@
+lang/assert.sh
+==============
+
+Util assert functions.
+
+.. py:function:: assert_bw
+
+   Exit if the first arg is not between the next two exclusive
+   (ints).
+
+.. py:function:: assert_dir_exists
+
+   Exit if directory does not exist.
+
+.. py:function:: assert_ec
+
+   Exit if the value is not an error as defined by this lib.
+
+.. py:function:: assert_eq
+
+   Check that two values are equal (lexical); exit if not true.
+
+.. py:function:: assert_exe_exists
+
+   Exit if the executable does not exit.
+
+.. py:function:: assert_fail
+
+   Fail (exit) with the given message.
+
+.. py:function:: assert_false
+
+   Exit if the given value is not false.
+
+.. py:function:: assert_file_exists
+
+   Exit if file does not exit.
+
+.. py:function:: assert_function_exists
+
+   Exit if the given name is not a function.
+
+.. py:function:: assert_ge
+
+   Exit if the first arg is less than the second (ints).
+
+.. py:function:: assert_gt
+
+   Exit if the first arg is less or equal to the second (ints).
+
+.. py:function:: assert_has_prefix
+
+   Exit if the value does ont have the given prefix.
+
+.. py:function:: assert_lt
+
+   Exit if the first arg is greater or equal to second (ints).
+
+.. py:function:: assert_ne
+
+   Check that two values are not equal (lexical); exit if yes.
+
+.. py:function:: assert_nz
+
+   Check that the given value is not zero; exit if not true.
+
+.. py:function:: assert_port_free
+
+   Exit if the given port is not free.
+
+.. py:function:: assert_user
+
+   Exit if the given name does not match the current user.
+
+.. py:function:: assert_user_starts_with
+
+   Exit if the given name is not a prefix of the current user.
+
+.. py:function:: assert_ze
+
+   Check that the given value is zero; exit if not true.
+

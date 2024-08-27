@@ -1,0 +1,41 @@
+testing/bunit_result.sh
+=======================
+
+Test result related structs and functions.
+
+.. py:function:: BUnitResult
+
+   Result of a test run.
+
+.. py:function:: BUnitResult_add
+
+   Add a test result.
+
+.. py:function:: BUnitResult_duration
+
+   Duration of the total test run.
+
+.. py:function:: BUnitResult_exit_status
+
+   Overall exit status.
+
+.. py:function:: BUnitResult_failed
+
+   Failed number of tests.
+
+.. py:function:: BUnitResult_to_junitxml
+
+   Generate junitxml format for the result.
+
+.. py:function:: BUnitResult_to_junitxml_echo
+
+   Generate junitxml format for the result.
+
+.. py:function:: BUnitResult_to_string
+
+   String version of the result.
+
+.. py:function:: BUnitResult_total
+
+   Total number of tests.
+

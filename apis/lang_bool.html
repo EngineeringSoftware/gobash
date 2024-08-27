@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>lang/bool.sh &#8212; gobash  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="lang/x.sh" href="lang_x.html" />
+    <link rel="prev" title="lang/log.sh" href="lang_log.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="lang-bool-sh">
+<h1>lang/bool.sh<a class="headerlink" href="#lang-bool-sh" title="Link to this heading">¶</a></h1>
+<p>Util functions for checking values/system.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="has_fld">
+<span class="sig-name descname"><span class="pre">has_fld</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#has_fld" title="Link to this definition">¶</a></dt>
+<dd><p>True if the object has the given field.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="is_bash3">
+<span class="sig-name descname"><span class="pre">is_bash3</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#is_bash3" title="Link to this definition">¶</a></dt>
+<dd><p>True if this function is invoked by bash 3.x process.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="is_bash4">
+<span class="sig-name descname"><span class="pre">is_bash4</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#is_bash4" title="Link to this definition">¶</a></dt>
+<dd><p>True if this function is invoked by bash 4.x process.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="is_bash5">
+<span class="sig-name descname"><span class="pre">is_bash5</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#is_bash5" title="Link to this definition">¶</a></dt>
+<dd><p>True if this function is invoked by bash 5.x process.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="is_bool">
+<span class="sig-name descname"><span class="pre">is_bool</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#is_bool" title="Link to this definition">¶</a></dt>
+<dd><p>True if the given value can be a bool.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="is_ec">
+<span class="sig-name descname"><span class="pre">is_ec</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#is_ec" title="Link to this definition">¶</a></dt>
+<dd><p>True if the value is an error (as def in this library).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="is_empty">
+<span class="sig-name descname"><span class="pre">is_empty</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#is_empty" title="Link to this definition">¶</a></dt>
+<dd><p>True if an empty string.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="is_eq">
+<span class="sig-name descname"><span class="pre">is_eq</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#is_eq" title="Link to this definition">¶</a></dt>
+<dd><p>True if values are equal (lexical).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="is_exe">
+<span class="sig-name descname"><span class="pre">is_exe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#is_exe" title="Link to this definition">¶</a></dt>
+<dd><p>True if the given argument corresponds to an executable.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="is_false">
+<span class="sig-name descname"><span class="pre">is_false</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#is_false" title="Link to this definition">¶</a></dt>
+<dd><p>True if value is considered false in this library.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="is_file">
+<span class="sig-name descname"><span class="pre">is_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#is_file" title="Link to this definition">¶</a></dt>
+<dd><p>True if it is a valid file.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="is_float">
+<span class="sig-name descname"><span class="pre">is_float</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#is_float" title="Link to this definition">¶</a></dt>
+<dd><p>True if the given value can be a float (bc).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="is_function">
+<span class="sig-name descname"><span class="pre">is_function</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#is_function" title="Link to this definition">¶</a></dt>
+<dd><p>True if the given name corresponds to a function.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="is_gt">
+<span class="sig-name descname"><span class="pre">is_gt</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#is_gt" title="Link to this definition">¶</a></dt>
+<dd><p>True if one value is greater than another (ints only).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="is_instanceof">
+<span class="sig-name descname"><span class="pre">is_instanceof</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#is_instanceof" title="Link to this definition">¶</a></dt>
+<dd><p>True if the object is instance of the given struct.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="is_int">
+<span class="sig-name descname"><span class="pre">is_int</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#is_int" title="Link to this definition">¶</a></dt>
+<dd><p>True if the given value can be parsed as an int (bc).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="is_linux">
+<span class="sig-name descname"><span class="pre">is_linux</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#is_linux" title="Link to this definition">¶</a></dt>
+<dd><p>Return true/0 if linux.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="is_mac">
+<span class="sig-name descname"><span class="pre">is_mac</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#is_mac" title="Link to this definition">¶</a></dt>
+<dd><p>Return true/0 if mac.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="is_ne">
+<span class="sig-name descname"><span class="pre">is_ne</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#is_ne" title="Link to this definition">¶</a></dt>
+<dd><p>True if values are not equal (lexical).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="is_null">
+<span class="sig-name descname"><span class="pre">is_null</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#is_null" title="Link to this definition">¶</a></dt>
+<dd><p>True if the value is null.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="is_object">
+<span class="sig-name descname"><span class="pre">is_object</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#is_object" title="Link to this definition">¶</a></dt>
+<dd><p>True if the given argument is a valid object.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="is_set">
+<span class="sig-name descname"><span class="pre">is_set</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#is_set" title="Link to this definition">¶</a></dt>
+<dd><p>True if the value is set.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="is_string">
+<span class="sig-name descname"><span class="pre">is_string</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#is_string" title="Link to this definition">¶</a></dt>
+<dd><p>True if the given value can be a string.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="is_true">
+<span class="sig-name descname"><span class="pre">is_true</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#is_true" title="Link to this definition">¶</a></dt>
+<dd><p>True if value is considered true in this library.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="is_uint">
+<span class="sig-name descname"><span class="pre">is_uint</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#is_uint" title="Link to this definition">¶</a></dt>
+<dd><p>True if the given value is an unsigned int (bc).</p>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">gobash</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../motivation.html">Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get-started.html">Get Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../language.html">Language Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../collections.html">Collections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process-communication.html">Inter-process Communication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../interactive-mode.html">Interactive Mode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testing.html">Testing Package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command-line-flags.html">Command Line Flags</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../next.html">Next</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="testing_bunit.html">testing/bunit.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing_testt.html">testing/testt.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing_bunit_result.html">testing/bunit_result.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="external_git_github.html">external/git/github.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="net_http.html">net/http.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="net_response.html">net/response.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="net_handler.html">net/handler.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="net_request.html">net/request.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sync_chan.html">sync/chan.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sync_wait_group.html">sync/wait_group.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sync_atomic_int.html">sync/atomic_int.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sync_mutex.html">sync/mutex.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lang_result.html">lang/result.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lang_log.html">lang/log.sh</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">lang/bool.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lang_x.html">lang/x.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lang_unsafe.html">lang/unsafe.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lang_assert.html">lang/assert.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lang_sys.html">lang/sys.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lang_pipe.html">lang/pipe.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lang_runtime.html">lang/runtime.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lang_os.html">lang/os.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lang_jqmem.html">lang/jqmem.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lang_int.html">lang/int.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lang_core.html">lang/core.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lang_make.html">lang/make.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lang_bash.html">lang/bash.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database_sql.html">database/sql.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ui_ui.html">ui/ui.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ui_textui.html">ui/textui.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ui_whiptail.html">ui/whiptail.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_rand.html">util/rand.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_user.html">util/user.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_complex.html">util/complex.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_flags.html">util/flags.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_list.html">util/list.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_fileinfo.html">util/fileinfo.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_os.html">util/os.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_binary.html">util/binary.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_math.html">util/math.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_regexp.html">util/regexp.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_set.html">util/set.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_time.html">util/time.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_filepath.html">util/filepath.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_map.html">util/map.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_char.html">util/char.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_strings.html">util/strings.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_file.html">util/file.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools_bdoc.html">tools/bdoc.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools_blint.html">tools/blint.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="container_ring.html">container/ring.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="container_list.html">container/list.sh</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API</a><ul>
+      <li>Previous: <a href="lang_log.html" title="previous chapter">lang/log.sh</a></li>
+      <li>Next: <a href="lang_x.html" title="next chapter">lang/x.sh</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Milos Gligoric.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/apis/lang_bool.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

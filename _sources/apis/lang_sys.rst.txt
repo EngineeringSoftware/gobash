@@ -1,0 +1,108 @@
+lang/sys.sh
+===========
+
+Util functions related to the system.
+
+.. py:function:: sys_bash_files
+
+   List all files in this library that start with #!/bin/bash.
+   
+   :return: List of files in this library.
+   :rtype: strings
+
+.. py:function:: sys_function_doc
+
+   Extract documentation for the given function.
+   
+   :param pathf: Path to a file.
+   :param func: Function name.
+   :return: Documentation for the function in the file.
+   :rtype: strings
+
+.. py:function:: sys_function_doc_lines
+
+   Compute number of doc lines for the given function.
+   
+   :param pathf: Path to a file.
+   :param func: Function name.
+   :return: Number of doc lines for the function in the file.
+   :rtype: int
+
+.. py:function:: sys_functions
+
+   List all functions in this library (excluding test files).
+   
+   :return: List of functions in this library.
+   :rtype: strings
+
+.. py:function:: sys_functions_in_file
+
+   List all functions in the given file.
+   
+   :param pathf: Path to a file.
+   :return: List of functions in the file.
+   :rtype: strings
+
+.. py:function:: sys_gc
+
+   Clean things allocated by this library instance.
+
+.. py:function:: sys_has_connection
+
+   Return 0 if there is connection to the web; 1 otherwise.
+   
+   :return: true/0 if there is connection to the web; false/1 otherwise.
+   :rtype: bool
+
+.. py:function:: sys_is_on_stack
+
+   Check if the function name is on stack.
+   
+   :param name: Name of a function.
+   :return: true/0 if function is on stack; false/1 otherwise
+   :rtype: bool
+
+.. py:function:: sys_line_next
+
+   Return content of the line after the one from which this
+   function is invoked.
+   
+   :return: Line after the one from which this function is invoked.
+   :rtype: string
+
+.. py:function:: sys_line_num
+
+   Return line number from which this func was called.
+   
+   :return: Line number from which this function was called.
+   :rtype: int
+
+.. py:function:: sys_line_prev
+
+   Return content of the line before the one from which this
+   function is invoked.
+   
+   :return: Line before the one from which this function is invoked.
+   :rtype: string
+
+.. py:function:: sys_repo_path
+
+   Return the root dir for this repository.
+   
+   :return: Root directory for this repository.
+   :rtype: string
+
+.. py:function:: sys_stack_trace
+
+   Print stack trace.
+   
+   :return: Stack trace.
+   :rtype: strings
+
+.. py:function:: sys_version
+
+   Return gobash version.
+   
+   :return: gobash version.
+   :rtype: string
+

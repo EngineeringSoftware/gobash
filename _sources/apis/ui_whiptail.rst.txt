@@ -1,0 +1,53 @@
+ui/whiptail.sh
+==============
+
+whiptail API support.
+
+.. py:function:: WTChecklist
+
+   whiptail checklist.
+
+.. py:function:: WTChecklist_show
+
+   Show the box and store the checked value into the result.
+
+.. py:function:: WTInputBox
+
+   whiptail input box.
+
+.. py:function:: WTInputBox_show
+
+   Show the box and store the input into the result.
+
+.. py:function:: WTMenu
+
+   whiptail menu.
+
+.. py:function:: WTMenu_show
+
+   Show the box and store selected option into the result.
+
+.. py:function:: WTMsgBox
+
+   whiptail message box.
+
+.. py:function:: WTMsgBox_show
+
+   Show the box.
+
+.. py:function:: WTRadiolist
+
+   whiptail radiolist.
+
+.. py:function:: WTRadiolist_show
+
+   Show the box store the selected option into the result.
+
+.. py:function:: whiptail_doc
+
+   Module doc.
+
+.. py:function:: whiptail_enabled
+
+   Check if this module is enabled.
+

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Motivation &#8212; gobash  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Design" href="design.html" />
+    <link rel="prev" title="gobash documentation" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="motivation">
+<h1>Motivation<a class="headerlink" href="#motivation" title="Link to this heading">¶</a></h1>
+<p>bash is a nice scripting language (especially considering its age).
+Close integration of interpreters with operating systems and a ton of
+available binaries on these systems (e.g., <cite>awk</cite>, <cite>sed</cite>, <cite>jq</cite>) make it
+a great choice for quick and concise scripting.  In recent years, some
+of the scripting has moved over to Python (and a few other languages)
+due to availability of (standard) libraries and testing support.
+However, seeing <cite>import subprocess; subprocess.run([“ls”, “-l”])</cite> or
+similar code in Python, and then using replacements for <cite>awk</cite>, <cite>sed</cite>,
+<cite>grep</cite>, <cite>git</cite> commands (and awkwardly processing their outputs)
+suggests that developers may use bash more if it had better libraries
+and testing support.</p>
+<p>Key motivation points:</p>
+<ul class="simple">
+<li><p>Provide a “standard” library for bash</p></li>
+<li><p>Provide missing language features (without designing a new language or changing interpreters)</p></li>
+<li><p>Enable using the same set of functions across various operating systems</p></li>
+<li><p>Enable using different interpreters (and their versions) by hiding details behind APIs</p></li>
+</ul>
+<p>Finally, in recent years, we had a feeling that programming in bash
+can be similar to programming in Go (e.g., an easy way to run things
+in parallel <cite>()&amp;</cite> vs. <cite>go</cite>, dealing with errors via exit codes,
+keeping API naming alike). Definitely not saying you should program in
+gobash instead of Go, but if you do end up writing a few lines in
+<cite>bash</cite> then they could look similar or give a similar feel like those
+you write in Go.</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">gobash</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Motivation</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="get-started.html">Get Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="language.html">Language Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collections.html">Collections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="process-communication.html">Inter-process Communication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interactive-mode.html">Interactive Mode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">Testing Package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command-line-flags.html">Command Line Flags</a></li>
+<li class="toctree-l1"><a class="reference internal" href="next.html">Next</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">gobash documentation</a></li>
+      <li>Next: <a href="design.html" title="next chapter">Design</a></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Milos Gligoric.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/motivation.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

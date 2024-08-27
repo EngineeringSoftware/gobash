@@ -1,0 +1,17 @@
+ui/ui.sh
+========
+
+Util for carrying UI results.
+
+.. py:function:: UIResult
+
+   UI result.
+
+.. py:function:: UIResult_is_cancelled
+
+   Return true if it was cancelled.
+
+.. py:function:: UIResult_val
+
+   Get the value.
+

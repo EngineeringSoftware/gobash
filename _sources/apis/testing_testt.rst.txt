@@ -1,0 +1,59 @@
+testing/testt.sh
+================
+
+Test object (one object given as the first argument to test.)
+
+.. py:function:: TestT
+
+   Test object (one object given as an argument to each test).
+
+.. py:function:: TestT_duration
+
+   Return duration of the test (ms).
+
+.. py:function:: TestT_fail
+
+   Mark the test as failing and continue the execution.
+
+.. py:function:: TestT_fail_now
+
+   Mark the test as failing and exit 1 (which will not stop any
+   sub process that was started).
+
+.. py:function:: TestT_failed
+
+   Check if test failed.
+
+.. py:function:: TestT_file
+
+   Return test script name.
+
+.. py:function:: TestT_msg
+
+   Return message stored in this object.
+
+.. py:function:: TestT_name
+
+   Return test name.
+
+.. py:function:: TestT_skip
+
+   Skip the test (and store the message).
+
+.. py:function:: TestT_skip_now
+
+   Skip the test and stop its execution by calling exit 0
+   (which will not stop any sub process that was started).
+
+.. py:function:: TestT_skipped
+
+   Check if test is skipped.
+
+.. py:function:: TestT_timeout
+
+   Mark the test as timeout.
+
+.. py:function:: TestT_to_string
+
+   String representation of this test.
+

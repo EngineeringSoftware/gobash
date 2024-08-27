@@ -1,0 +1,73 @@
+external/git/github.sh
+======================
+
+GitHub util functions.
+
+.. py:function:: github_branch_info
+
+   Fetch branch info (and print in json format).
+
+.. py:function:: github_branch_latest_sha
+
+   Extract latest sha from branch info.
+
+.. py:function:: github_branches
+
+   Fetch branches (and print in json format).
+
+.. py:function:: github_commit_info
+
+   Return commit info for the given SHA.
+
+.. py:function:: github_commits
+
+   Fetch commits from the given SHA.
+
+.. py:function:: github_create_pr
+
+   https://stackoverflow.com/questions/56027634/creating-a-pull-request-using-the-api-of-github
+
+.. py:function:: github_enabled
+
+   Check if this module is enabled.
+
+.. py:function:: github_id_to_sha
+
+   Extract SHA for the given run id.
+
+.. py:function:: github_is_outcome
+
+   Return if the action name resulted in the given outcome.
+
+.. py:function:: github_jobs
+
+   Fetch jobs for the given RUN-ID.
+
+.. py:function:: github_pr_add_comment
+
+   Add a comment to a PR.
+
+.. py:function:: github_pr_assign_reviewer
+
+   Assign a reviewer to a PR.
+
+.. py:function:: github_pr_commits
+
+   Fetch commits for the given PR (and print in json format).
+
+.. py:function:: github_prs
+
+   Fetch PRs (and print in json format).
+
+.. py:function:: github_runs
+
+   Fetch action runs (and print in json format).
+
+.. py:function:: github_tag_latest
+
+   Extract latest tag.
+
+.. py:function:: github_tags
+
+   Fetch tags (and print in json format).
+

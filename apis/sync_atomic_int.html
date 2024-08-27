@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>sync/atomic_int.sh &#8212; gobash  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="sync/mutex.sh" href="sync_mutex.html" />
+    <link rel="prev" title="sync/wait_group.sh" href="sync_wait_group.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="sync-atomic-int-sh">
+<h1>sync/atomic_int.sh<a class="headerlink" href="#sync-atomic-int-sh" title="Link to this heading">¶</a></h1>
+<p>Atomic int related structs and functions.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="AtomicInt">
+<span class="sig-name descname"><span class="pre">AtomicInt</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AtomicInt" title="Link to this definition">¶</a></dt>
+<dd><p>AtomicInt.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="AtomicInt_add">
+<span class="sig-name descname"><span class="pre">AtomicInt_add</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AtomicInt_add" title="Link to this definition">¶</a></dt>
+<dd><p>Add to the value.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="AtomicInt_compare_and_swap">
+<span class="sig-name descname"><span class="pre">AtomicInt_compare_and_swap</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AtomicInt_compare_and_swap" title="Link to this definition">¶</a></dt>
+<dd><p>Compare and swap.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="AtomicInt_inc">
+<span class="sig-name descname"><span class="pre">AtomicInt_inc</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AtomicInt_inc" title="Link to this definition">¶</a></dt>
+<dd><p>Increment.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="AtomicInt_load">
+<span class="sig-name descname"><span class="pre">AtomicInt_load</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AtomicInt_load" title="Link to this definition">¶</a></dt>
+<dd><p>Load value.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="AtomicInt_store">
+<span class="sig-name descname"><span class="pre">AtomicInt_store</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AtomicInt_store" title="Link to this definition">¶</a></dt>
+<dd><p>Store value.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="AtomicInt_swap">
+<span class="sig-name descname"><span class="pre">AtomicInt_swap</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AtomicInt_swap" title="Link to this definition">¶</a></dt>
+<dd><p>Swap values (store new and return old).</p>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">gobash</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../motivation.html">Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get-started.html">Get Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../language.html">Language Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../collections.html">Collections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../process-communication.html">Inter-process Communication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../interactive-mode.html">Interactive Mode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testing.html">Testing Package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command-line-flags.html">Command Line Flags</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../next.html">Next</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="testing_bunit.html">testing/bunit.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing_testt.html">testing/testt.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing_bunit_result.html">testing/bunit_result.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="external_git_github.html">external/git/github.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="net_http.html">net/http.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="net_response.html">net/response.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="net_handler.html">net/handler.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="net_request.html">net/request.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sync_chan.html">sync/chan.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sync_wait_group.html">sync/wait_group.sh</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">sync/atomic_int.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sync_mutex.html">sync/mutex.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lang_result.html">lang/result.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lang_log.html">lang/log.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lang_bool.html">lang/bool.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lang_x.html">lang/x.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lang_unsafe.html">lang/unsafe.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lang_assert.html">lang/assert.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lang_sys.html">lang/sys.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lang_pipe.html">lang/pipe.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lang_runtime.html">lang/runtime.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lang_os.html">lang/os.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lang_jqmem.html">lang/jqmem.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lang_int.html">lang/int.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lang_core.html">lang/core.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lang_make.html">lang/make.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lang_bash.html">lang/bash.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database_sql.html">database/sql.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ui_ui.html">ui/ui.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ui_textui.html">ui/textui.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ui_whiptail.html">ui/whiptail.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_rand.html">util/rand.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_user.html">util/user.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_complex.html">util/complex.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_flags.html">util/flags.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_list.html">util/list.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_fileinfo.html">util/fileinfo.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_os.html">util/os.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_binary.html">util/binary.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_math.html">util/math.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_regexp.html">util/regexp.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_set.html">util/set.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_time.html">util/time.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_filepath.html">util/filepath.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_map.html">util/map.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_char.html">util/char.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_strings.html">util/strings.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util_file.html">util/file.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools_bdoc.html">tools/bdoc.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools_blint.html">tools/blint.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="container_ring.html">container/ring.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="container_list.html">container/list.sh</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API</a><ul>
+      <li>Previous: <a href="sync_wait_group.html" title="previous chapter">sync/wait_group.sh</a></li>
+      <li>Next: <a href="sync_mutex.html" title="next chapter">sync/mutex.sh</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Milos Gligoric.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/apis/sync_atomic_int.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

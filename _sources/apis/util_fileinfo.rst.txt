@@ -1,0 +1,33 @@
+util/fileinfo.sh
+================
+
+FileInfo.
+
+.. py:function:: FileInfo
+
+   FileInfo struct.
+
+.. py:function:: FileInfo_is_dir
+
+   Return true if directory.
+
+.. py:function:: FileInfo_mod_time
+
+   Modification time.
+
+.. py:function:: FileInfo_mode
+
+   Mode bits for the file.
+
+.. py:function:: FileInfo_name
+
+   Basename of the file.
+
+.. py:function:: FileInfo_size
+
+   Length in bytes (unknown for non-regular files).
+
+.. py:function:: FileInfo_to_string
+
+   String format.
+

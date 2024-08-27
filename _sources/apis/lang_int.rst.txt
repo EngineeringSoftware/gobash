@@ -1,0 +1,37 @@
+lang/int.sh
+===========
+
+Int related structs and functions.
+
+.. py:function:: Int
+
+   An integer.
+
+.. py:function:: Int_dec
+
+   Decrement value.
+
+.. py:function:: Int_eq
+
+   Return true if equal to other.
+
+.. py:function:: Int_ge
+
+   Return true if greater or equal to other.
+
+.. py:function:: Int_gt
+
+   Return true if greater or equal to other.
+
+.. py:function:: Int_inc
+
+   Increment value.
+
+.. py:function:: Int_le
+
+   Return true if less than or equal to other.
+
+.. py:function:: Int_lt
+
+   Return true if less than other.
+

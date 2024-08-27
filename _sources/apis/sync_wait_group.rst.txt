@@ -1,0 +1,25 @@
+sync/wait_group.sh
+==================
+
+WaitGroup supports waiting selectively on a group of processes.
+
+.. py:function:: WaitGroup
+
+   WaitGroup.
+
+.. py:function:: WaitGroup_add
+
+   Add a process id to the wait group.
+
+.. py:function:: WaitGroup_len
+
+   Number of process in the group.
+
+.. py:function:: WaitGroup_to_string
+
+   String representation of this group.
+
+.. py:function:: WaitGroup_wait
+
+   Wait until processes finish.
+

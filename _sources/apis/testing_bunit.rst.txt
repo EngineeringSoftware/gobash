@@ -1,0 +1,21 @@
+testing/bunit.sh
+================
+
+xUnit runner tool for bash.
+
+.. py:function:: bunit_doc
+
+   Module doc.
+
+.. py:function:: bunit_enabled
+
+   Return true if this module is enabled.
+
+.. py:function:: bunit_main
+
+   Main entry into the tool.
+
+.. py:function:: bunit_test_functions
+
+   Return test function names in the given file.
+

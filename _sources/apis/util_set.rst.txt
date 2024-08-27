@@ -1,0 +1,26 @@
+util/set.sh
+===========
+
+Set collection.
+
+.. py:function:: Set
+
+   Set collection.
+
+.. py:function:: Set_add
+
+   Add an element to the set.
+
+.. py:function:: Set_clear
+
+   Remove all elements from the set. Return (, 0) if
+   successful; (, $EC) otherwise.
+
+.. py:function:: Set_contains
+
+   Return true if the given value is in the set.
+
+.. py:function:: Set_len
+
+   Size of the set.
+

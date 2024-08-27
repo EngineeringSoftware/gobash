@@ -1,0 +1,21 @@
+tools/blint.sh
+==============
+
+Lint tool.
+
+.. py:function:: BLintResult
+
+   Lint result.
+
+.. py:function:: BLintResult_has_failing
+
+   Return true if there is any failing case.
+
+.. py:function:: BLintResult_inc_failing
+
+   Increment number of failing cases.
+
+.. py:function:: blint_main
+
+   Linter entry point.
+

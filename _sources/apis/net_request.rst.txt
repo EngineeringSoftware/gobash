@@ -1,0 +1,13 @@
+net/request.sh
+==============
+
+Request related structs and functions.
+
+.. py:function:: Request
+
+   Http request.
+
+.. py:function:: request_parse
+
+   Parse http request.
+

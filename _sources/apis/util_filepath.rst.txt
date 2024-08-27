@@ -1,0 +1,24 @@
+util/filepath.sh
+================
+
+Util functions to manipulate file paths.
+
+.. py:function:: filepath_base
+
+   Return the last element on the path. If path is an empty
+   string, the output is ".".
+
+.. py:function:: filepath_dir
+
+   Return all but the last element on path. Trailing / (one or
+   more) are ignored. If the path is empty, return ".".
+
+.. py:function:: filepath_ext
+
+   Return the extension, i.e., text after the final dot on the
+   last element of the path. It is empty if there is no dot.
+
+.. py:function:: filepath_is_abs
+
+   Return true if the path is absolute; otherwise false.
+

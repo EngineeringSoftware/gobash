@@ -1,0 +1,81 @@
+container/list.sh
+=================
+
+Doubly linked list.
+
+.. py:function:: container_Element
+
+   Construct an element of a list.
+
+.. py:function:: container_Element_next
+
+   Get the next element.
+
+.. py:function:: container_Element_prev
+
+   Get the previous element.
+
+.. py:function:: container_List
+
+   Construct a doubly linked list.
+
+.. py:function:: container_List_back
+
+   Return element at the back.
+
+.. py:function:: container_List_front
+
+   Return element at the front.
+
+.. py:function:: container_List_init
+
+   Init a list.
+
+.. py:function:: container_List_insert_after
+
+   Insert a value after the marker element.
+
+.. py:function:: container_List_insert_before
+
+   Insert a value before the marker element.
+
+.. py:function:: container_List_len
+
+   Return length of a list.
+
+.. py:function:: container_List_move_after
+
+   Move element after the given marker.
+
+.. py:function:: container_List_move_before
+
+   Move element before the given marker.
+
+.. py:function:: container_List_move_to_back
+
+   Move element to the back of the list.
+
+.. py:function:: container_List_move_to_front
+
+   Move element to the front of the list.
+
+.. py:function:: container_List_push_back
+
+   Push a value to the back of this list.
+
+.. py:function:: container_List_push_back_list
+
+   Push one list at the end of another.
+
+.. py:function:: container_List_push_front
+
+   Push a value to the front of this list.
+
+.. py:function:: container_List_push_front_list
+
+   Push one list to the front of another.
+
+.. py:function:: container_List_remove
+
+   Remove the given element from this list.
+

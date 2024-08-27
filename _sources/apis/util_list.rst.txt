@@ -1,0 +1,82 @@
+util/list.sh
+============
+
+List collection.
+
+.. py:function:: List
+
+   List collection.
+
+.. py:function:: List_add
+
+   Add an element to the list.
+
+.. py:function:: List_all_match
+
+   Return true if all elements satisfy the predicate.
+
+.. py:function:: List_any_match
+
+   Return true if any element satisfies the predicate.
+
+.. py:function:: List_clear
+
+   Empty the list.
+
+.. py:function:: List_contains
+
+   Return true if the list contains the given value.
+
+.. py:function:: List_delete
+
+   Delete an element at the index.
+
+.. py:function:: List_eq
+
+   Return true if two lists are the same (using references).
+
+.. py:function:: List_filter
+
+   Create a list by filtering this list using the predicate.
+
+.. py:function:: List_first
+
+   Return (the first element, 0); (_, $EC) if none exists.
+
+.. py:function:: List_get
+
+   Get an element at the index.
+
+.. py:function:: List_is_empty
+
+   Return true if the list is empty.
+
+.. py:function:: List_last
+
+   Return (the last element, 0); (_, $EC) if none exists.
+
+.. py:function:: List_len
+
+   Return (length of the list, 0). If there is an error, return
+   (_, $EC).
+
+.. py:function:: List_map
+
+   Apply mapper to each element in the list.
+
+.. py:function:: List_min
+
+   Find min value (ints only).
+
+.. py:function:: List_reduce
+
+   Reduce elements in the list with the given binary operator.
+
+.. py:function:: List_second
+
+   Return (the second element, 0); (_, $EC) if none exists.
+
+.. py:function:: List_sum
+
+   Sum all the elements (ints only).
+

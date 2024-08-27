@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Language Features &#8212; gobash  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Collections" href="collections.html" />
+    <link rel="prev" title="Get Started" href="get-started.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="language-features">
+<h1>Language Features<a class="headerlink" href="#language-features" title="Link to this heading">¶</a></h1>
+<p>gobash introduces several programming language constructs via bash
+functions and wrapping existing binaries (e.g., <code class="docutils literal notranslate"><span class="pre">jq</span></code>).  It does not
+modify bash itself.</p>
+<p>As a result of the gobash design, you can introduce it step by step,
+as you do not need to modify any of the existing code you have.</p>
+<section id="basic-terminology">
+<h2>Basic Terminology<a class="headerlink" href="#basic-terminology" title="Link to this heading">¶</a></h2>
+<p>A <cite>package</cite> corresponds to a single directory and a <cite>module</cite>
+corresponds to a single <code class="docutils literal notranslate"><span class="pre">.sh</span></code> file.</p>
+<p>Thus, we define a <cite>program</cite> as a set of packages with one or more
+modules each.</p>
+</section>
+<section id="reserved-words">
+<h2>Reserved Words<a class="headerlink" href="#reserved-words" title="Link to this heading">¶</a></h2>
+<p>gobash is a set of functions and a few global variables.</p>
+<p>There are several <cite>keywords</cite>, which means a set of functions that a
+user should avoid redefining. Below is the current list of keywords;
+to get the list of all functions in gobash you can run <code class="docutils literal notranslate"><span class="pre">./gobash</span> <span class="pre">func</span>
+<span class="pre">sys_functions</span></code> (or use <code class="docutils literal notranslate"><span class="pre">grep</span></code> over the repository).</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make_<span class="w"> </span><span class="c1"># allocates an object (and introduces a struct at the same time)</span>
+amake_<span class="w"> </span><span class="c1"># allocates an object (which is an instance of an anonymous struct)</span>
+</pre></div>
+</div>
+<p>gobash also uses several (readonly) global variables that a user
+should be aware of:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>EC<span class="w"> </span><span class="c1"># error code returned from library functions if something goes wrong</span>
+NULL<span class="w"> </span><span class="c1"># null value to be used to set non-primitive fields</span>
+TRUE<span class="w"> </span><span class="c1"># true boolean value</span>
+FALSE<span class="w"> </span><span class="c1"># false boolean value</span>
+
+BOOL<span class="w"> </span><span class="c1"># boolean type used in some APIs</span>
+INT<span class="w"> </span><span class="c1"># int type used in some APIs</span>
+FLOAT<span class="w"> </span><span class="c1"># float type used in some APIs</span>
+STRING<span class="w"> </span><span class="c1"># string type used in some APIs</span>
+</pre></div>
+</div>
+<p>Finally, gobash uses the file descriptor <code class="docutils literal notranslate"><span class="pre">3</span></code> in some functions.</p>
+</section>
+<section id="structs">
+<h2>Structs<a class="headerlink" href="#structs" title="Link to this heading">¶</a></h2>
+<p>Similar to structs/records in other programming languages, you can
+create complex data types with gobash. Unlike in other languages, in
+gobash you only need to implement a <cite>constructor</cite>.  The name of the
+constructor is automatically the name of the <cite>struct</cite> as well.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span>Person<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span>make_<span class="w"> </span><span class="nv">$FUNCNAME</span><span class="w"> </span><span class="se">\</span>
+<span class="w">              </span><span class="s2">&quot;name&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">              </span><span class="s2">&quot;age&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$2</span><span class="s2">&quot;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>You can think of the <code class="docutils literal notranslate"><span class="pre">Person</span></code> function as both defining a struct and
+providing a constructor (although it is more the latter). Note that
+the constructor function can perform any other work, e.g., check the
+validity of arguments.</p>
+<p>The first argument to <code class="docutils literal notranslate"><span class="pre">make_</span></code> provides the name of the struct. While
+one can play with generating these names (or replacing with some other
+structs), in the most common scenarios, the first argument we set to
+be the name of the constructor (i.e., <code class="docutils literal notranslate"><span class="pre">$FUNCNAME</span></code>).</p>
+</section>
+<section id="objects">
+<h2>Objects<a class="headerlink" href="#objects" title="Link to this heading">¶</a></h2>
+<p>Once a struct is defined, it can be used to create objects and set/get
+the fields.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">p</span><span class="o">=</span><span class="k">$(</span>Person<span class="w"> </span><span class="s2">&quot;Jessy&quot;</span><span class="w"> </span><span class="m">10</span><span class="k">)</span>
+<span class="nv">$p</span><span class="w"> </span>age<span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="c1"># set the field value</span>
+<span class="nv">$p</span><span class="w"> </span>age<span class="w"> </span><span class="c1"># get the field value</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When an object is passed to a function as an argument, it has to
+be quoted.</p>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span>person_print<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="nb">local</span><span class="w"> </span>-r<span class="w"> </span><span class="nv">p</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">        </span><span class="nv">$p</span><span class="w"> </span>to_string
+<span class="o">}</span>
+
+person_print<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$p</span><span class="s2">&quot;</span><span class="w"> </span><span class="c1"># valid</span>
+<span class="c1"># person_print $p # not valid</span>
+</pre></div>
+</div>
+</section>
+<section id="anonymous-structs">
+<h2>Anonymous Structs<a class="headerlink" href="#anonymous-structs" title="Link to this heading">¶</a></h2>
+<p>It is sometimes convenient to create an anonymous struct to carry
+several values to a function or group some relevant data within a
+single function.  Anonymous structs are a good choice in that case.</p>
+<p>In the example below, we create an anonymous struct that keeps values
+for a 2D point.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+.<span class="w"> </span>gobash/gobash
+
+<span class="k">function</span><span class="w"> </span>print<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="nb">local</span><span class="w"> </span>-r<span class="w"> </span><span class="nv">p</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">        </span><span class="nv">$p</span><span class="w"> </span>to_string
+<span class="o">}</span>
+
+<span class="k">function</span><span class="w"> </span>make_and_print<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="c1"># the line below creates an instance of anonymous struct</span>
+<span class="w">        </span><span class="nb">local</span><span class="w"> </span>-r<span class="w"> </span><span class="nv">p</span><span class="o">=</span><span class="k">$(</span>amake_<span class="w"> </span><span class="s2">&quot;x&quot;</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="s2">&quot;y&quot;</span><span class="w"> </span><span class="m">5</span><span class="k">)</span>
+<span class="w">        </span>print<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$p</span><span class="s2">&quot;</span>
+<span class="o">}</span>
+
+make_and_print
+<span class="c1"># Output</span>
+<span class="c1"># {</span>
+<span class="c1">#   &quot;x&quot;: &quot;3&quot;,</span>
+<span class="c1">#   &quot;y&quot;: &quot;5&quot;</span>
+<span class="c1"># }</span>
+</pre></div>
+</div>
+</section>
+<section id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Link to this heading">¶</a></h2>
+<p>Adding a method to a struct is done by implementing a function that is
+prefixed by the struct name followed by <code class="docutils literal notranslate"><span class="pre">_</span></code> followed by the method
+name. For example, if we have a struct <code class="docutils literal notranslate"><span class="pre">Str</span></code>, we can add a method
+<code class="docutils literal notranslate"><span class="pre">compute</span></code> by writing a function <code class="docutils literal notranslate"><span class="pre">Str_compute</span></code>.</p>
+<p>The first argument of each method is the object on which the method is
+called (this is similar to <code class="docutils literal notranslate"><span class="pre">this</span></code> and <code class="docutils literal notranslate"><span class="pre">self</span></code> in other programming
+languages).</p>
+<p>In the example below, we introduce a new struct (<code class="docutils literal notranslate"><span class="pre">Circle</span></code>) and add a
+method that computes its total area.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span>Circle<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="o">[</span><span class="w"> </span><span class="nv">$#</span><span class="w"> </span>-ne<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nv">$EC</span>
+<span class="w">        </span><span class="nb">local</span><span class="w"> </span>-r<span class="w"> </span><span class="nv">r</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="w">        </span>make_<span class="w"> </span><span class="nv">$FUNCNAME</span><span class="w"> </span><span class="se">\</span>
+<span class="w">            </span><span class="s2">&quot;r&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">r</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="o">}</span>
+
+<span class="k">function</span><span class="w"> </span>Circle_area<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="nb">local</span><span class="w"> </span>-r<span class="w"> </span><span class="nv">c</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$MATH_PI</span><span class="s2"> * </span><span class="k">$(</span><span class="nv">$c</span><span class="w"> </span>r<span class="k">)</span><span class="s2"> * </span><span class="k">$(</span><span class="nv">$c</span><span class="w"> </span>r<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>bc
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Invoking a method is similar to other programming languages. Below, we
+create an instance of a <code class="docutils literal notranslate"><span class="pre">Circle</span></code> and compute the total area.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">c</span><span class="o">=</span><span class="k">$(</span>Circle<span class="w"> </span><span class="m">20</span><span class="k">)</span>
+<span class="nv">$c</span><span class="w"> </span>area
+</pre></div>
+</div>
+</section>
+<section id="to-string">
+<h2>To String<a class="headerlink" href="#to-string" title="Link to this heading">¶</a></h2>
+<p>gobash provides a default <code class="docutils literal notranslate"><span class="pre">to_string</span></code> method for each struct. The
+default implementation outputs the object in the json format. One can
+decide to override the default behavior by implementing <code class="docutils literal notranslate"><span class="pre">to_string</span></code>
+method for a specific struct.</p>
+<p>The example below shows the default <code class="docutils literal notranslate"><span class="pre">to_string</span></code> output for the
+<code class="docutils literal notranslate"><span class="pre">Person</span></code> struct (introduced earlier in this document) and then
+implements a more specific <code class="docutils literal notranslate"><span class="pre">to_string</span></code> method.</p>
+<p>In the snippet below, we construct one object and use the default
+<code class="docutils literal notranslate"><span class="pre">to_string</span></code> method.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">p</span><span class="o">=</span><span class="k">$(</span>Person<span class="w"> </span><span class="s2">&quot;Jessy&quot;</span><span class="w"> </span><span class="m">10</span><span class="k">)</span>
+<span class="nv">$p</span><span class="w"> </span>to_string
+</pre></div>
+</div>
+<p>As a result we get output in the json format, which can be convenient
+for further processing (e.g., using <code class="docutils literal notranslate"><span class="pre">jq</span></code>).</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Jessy&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;age&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;10&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In the snippet below, we implement a <code class="docutils literal notranslate"><span class="pre">to_string</span></code> method for the
+<code class="docutils literal notranslate"><span class="pre">Person</span></code> struct. Specifically, we output a simple string that prints
+only the name of the person.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span>Person_to_string<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="nb">local</span><span class="w"> </span>-r<span class="w"> </span><span class="nv">p</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;I am </span><span class="k">$(</span><span class="nv">$p</span><span class="w"> </span>name<span class="k">)</span><span class="s2">.&quot;</span>
+<span class="o">}</span>
+<span class="nv">p</span><span class="o">=</span><span class="k">$(</span>Person<span class="w"> </span><span class="s2">&quot;Jessy&quot;</span><span class="w"> </span><span class="m">10</span><span class="k">)</span>
+<span class="nv">$p</span><span class="w"> </span>to_string
+<span class="c1"># Output</span>
+<span class="c1"># I am Jessy.</span>
+</pre></div>
+</div>
+</section>
+<section id="return-value">
+<h2>Return Value<a class="headerlink" href="#return-value" title="Link to this heading">¶</a></h2>
+<p>This section is about returning data from a function to its caller.
+(The next section talks about error handling and the <code class="docutils literal notranslate"><span class="pre">return</span></code>
+statement.)</p>
+<p>gobash uses primarily three approaches to return data from a function.</p>
+<p>First, simple functions use <code class="docutils literal notranslate"><span class="pre">echo</span></code> to return desired value or an
+object. In the next code snippet, we return a point that has values of
+coordinates double of the given point.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+.<span class="w"> </span>gobash/gobash
+
+<span class="k">function</span><span class="w"> </span>Point<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span>make_<span class="w"> </span><span class="nv">$FUNCNAME</span><span class="w"> </span><span class="se">\</span>
+<span class="w">              </span><span class="s2">&quot;x&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">              </span><span class="s2">&quot;y&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$2</span><span class="s2">&quot;</span>
+<span class="o">}</span>
+
+<span class="k">function</span><span class="w"> </span>point_double<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="nb">local</span><span class="w"> </span>-r<span class="w"> </span><span class="nv">p</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="w">        </span><span class="nb">local</span><span class="w"> </span><span class="nv">x</span><span class="o">=</span><span class="k">$((</span><span class="w"> </span><span class="k">$(</span><span class="nv">$p</span><span class="w"> </span>x<span class="k">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">$(</span><span class="nv">$p</span><span class="w"> </span>x<span class="k">)</span><span class="w"> </span><span class="k">))</span>
+<span class="w">        </span><span class="nb">local</span><span class="w"> </span><span class="nv">y</span><span class="o">=</span><span class="k">$((</span><span class="w"> </span><span class="k">$(</span><span class="nv">$p</span><span class="w"> </span>y<span class="k">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">$(</span><span class="nv">$p</span><span class="w"> </span>y<span class="k">)</span><span class="w"> </span><span class="k">))</span>
+<span class="w">        </span><span class="nb">local</span><span class="w"> </span>-r<span class="w"> </span><span class="nv">d</span><span class="o">=</span><span class="k">$(</span>Point<span class="w"> </span><span class="si">${</span><span class="nv">x</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">y</span><span class="si">}</span><span class="k">)</span>
+
+<span class="w">        </span><span class="c1"># Return newly created point. Do not forget that you need quotes.</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$d</span><span class="s2">&quot;</span>
+<span class="o">}</span>
+
+<span class="nv">p</span><span class="o">=</span><span class="k">$(</span>Point<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">4</span><span class="k">)</span>
+<span class="nv">d</span><span class="o">=</span><span class="k">$(</span>point_double<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$p</span><span class="s2">&quot;</span><span class="k">)</span>
+<span class="nv">$d</span><span class="w"> </span>to_string
+</pre></div>
+</div>
+<p>Second, we use “out” argument that is populated inside the function
+body. In the next code snippet, we write the same function as above,
+but this time we pass the object, which we set inside the body.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+.<span class="w"> </span>gobash/gobash
+
+<span class="k">function</span><span class="w"> </span>Point<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span>make_<span class="w"> </span><span class="nv">$FUNCNAME</span><span class="w"> </span><span class="se">\</span>
+<span class="w">              </span><span class="s2">&quot;x&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">              </span><span class="s2">&quot;y&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$2</span><span class="s2">&quot;</span>
+<span class="o">}</span>
+
+<span class="k">function</span><span class="w"> </span>point_double<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="c1"># We prefer to have out arguments first.</span>
+<span class="w">        </span><span class="nb">local</span><span class="w"> </span>-r<span class="w"> </span><span class="nv">d</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">        </span><span class="nb">local</span><span class="w"> </span>-r<span class="w"> </span><span class="nv">p</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">2</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="w">        </span><span class="nb">local</span><span class="w"> </span><span class="nv">x</span><span class="o">=</span><span class="k">$((</span><span class="w"> </span><span class="k">$(</span><span class="nv">$p</span><span class="w"> </span>x<span class="k">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">$(</span><span class="nv">$p</span><span class="w"> </span>x<span class="k">)</span><span class="w"> </span><span class="k">))</span>
+<span class="w">        </span><span class="nb">local</span><span class="w"> </span><span class="nv">y</span><span class="o">=</span><span class="k">$((</span><span class="w"> </span><span class="k">$(</span><span class="nv">$p</span><span class="w"> </span>y<span class="k">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">$(</span><span class="nv">$p</span><span class="w"> </span>y<span class="k">)</span><span class="w"> </span><span class="k">))</span>
+<span class="w">        </span><span class="nv">$d</span><span class="w"> </span>x<span class="w"> </span><span class="si">${</span><span class="nv">x</span><span class="si">}</span>
+<span class="w">        </span><span class="nv">$d</span><span class="w"> </span>y<span class="w"> </span><span class="si">${</span><span class="nv">y</span><span class="si">}</span>
+<span class="o">}</span>
+
+<span class="nv">p</span><span class="o">=</span><span class="k">$(</span>Point<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">4</span><span class="k">)</span>
+<span class="nv">d</span><span class="o">=</span><span class="k">$(</span>Point<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="k">)</span>
+point_double<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$d</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$p</span><span class="s2">&quot;</span>
+<span class="nv">$d</span><span class="w"> </span>to_string
+</pre></div>
+</div>
+<p>Third, we use an instance of the <code class="docutils literal notranslate"><span class="pre">Result</span></code> struct as an out argument,
+which can carry a value (<code class="docutils literal notranslate"><span class="pre">val</span></code>). Basically, this is a specialized
+form of the second case.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+.<span class="w"> </span>gobash/gobash
+
+<span class="k">function</span><span class="w"> </span>Point<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span>make_<span class="w"> </span><span class="nv">$FUNCNAME</span><span class="w"> </span><span class="se">\</span>
+<span class="w">              </span><span class="s2">&quot;x&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">              </span><span class="s2">&quot;y&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$2</span><span class="s2">&quot;</span>
+<span class="o">}</span>
+
+<span class="k">function</span><span class="w"> </span>point_double<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="nb">local</span><span class="w"> </span>-r<span class="w"> </span><span class="nv">res</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">        </span><span class="nb">local</span><span class="w"> </span>-r<span class="w"> </span><span class="nv">p</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">2</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="w">        </span><span class="nb">local</span><span class="w"> </span><span class="nv">x</span><span class="o">=</span><span class="k">$((</span><span class="w"> </span><span class="k">$(</span><span class="nv">$p</span><span class="w"> </span>x<span class="k">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">$(</span><span class="nv">$p</span><span class="w"> </span>x<span class="k">)</span><span class="w"> </span><span class="k">))</span>
+<span class="w">        </span><span class="nb">local</span><span class="w"> </span><span class="nv">y</span><span class="o">=</span><span class="k">$((</span><span class="w"> </span><span class="k">$(</span><span class="nv">$p</span><span class="w"> </span>y<span class="k">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">$(</span><span class="nv">$p</span><span class="w"> </span>y<span class="k">)</span><span class="w"> </span><span class="k">))</span>
+<span class="w">        </span><span class="nb">local</span><span class="w"> </span>-r<span class="w"> </span><span class="nv">d</span><span class="o">=</span><span class="k">$(</span>Point<span class="w"> </span><span class="si">${</span><span class="nv">x</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">y</span><span class="si">}</span><span class="k">)</span>
+<span class="w">        </span><span class="nv">$res</span><span class="w"> </span>val<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$d</span><span class="s2">&quot;</span>
+<span class="o">}</span>
+
+<span class="nv">p</span><span class="o">=</span><span class="k">$(</span>Point<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">4</span><span class="k">)</span>
+<span class="nv">res</span><span class="o">=</span><span class="k">$(</span>Result<span class="k">)</span>
+point_double<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$res</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$p</span><span class="s2">&quot;</span>
+<span class="k">$(</span><span class="nv">$res</span><span class="w"> </span>val<span class="k">)</span><span class="w"> </span>to_string
+</pre></div>
+</div>
+</section>
+<section id="error-handling">
+<h2>Error Handling<a class="headerlink" href="#error-handling" title="Link to this heading">¶</a></h2>
+<p>Each function should return exit code: zero if the execution went well
+and non-zero if there was an issue detected. (While <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">$?</span></code> in
+many cases at the end of a function is not needed, we sometimes use
+them explicitly.) gobash uses <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">$EC</span></code> for indicating an issue
+inside functions from the library. Any function invocation should
+ideally check for errors. An example below shows a basic case of
+checking argument types and returning and error in case of an
+incorrect type.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span>Point<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="nb">local</span><span class="w"> </span>-r<span class="w"> </span><span class="nv">x</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">        </span><span class="nb">local</span><span class="w"> </span>-r<span class="w"> </span><span class="nv">y</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">2</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="w">        </span>!<span class="w"> </span>is_int<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">x</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nv">$EC</span>
+<span class="w">        </span>!<span class="w"> </span>is_int<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">y</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nv">$EC</span>
+
+<span class="w">        </span>make_<span class="w"> </span><span class="nv">$FUNCNAME</span><span class="w"> </span><span class="se">\</span>
+<span class="w">              </span><span class="s2">&quot;x&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">x</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">              </span><span class="s2">&quot;y&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">y</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Now a caller can check for an error.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">p</span><span class="o">=</span><span class="k">$(</span>Point<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">4</span><span class="k">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;error&quot;</span>
+</pre></div>
+</div>
+<p>One exception to the rule above (when it comes to zero/non-zero
+values) is that functions that return boolean values return <code class="docutils literal notranslate"><span class="pre">$TRUE</span></code>
+(0) and <code class="docutils literal notranslate"><span class="pre">$FALSE</span></code> (1). Check the function in <a class="reference external" href="https://github.com/EngineeringSoftware/gobash/blob/main/src/lang/bool.sh">bool.sh</a>.</p>
+<p>Sometimes a more descriptive error message is more appropriate. In
+those cases, we use <cite>context</cite> arguments.  A context argument is used
+to store and carry information about errors and stacktrace (at the
+time of an error).  Each function in gobash accepts context (<code class="docutils literal notranslate"><span class="pre">ctx</span></code>)
+as the first argument; if one is not given, then the global context is
+used to store errors and stacktraces. In the example below, we use the
+global context. (We provide more examples with context in the examples
+directory.)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+.<span class="w"> </span>gobash/gobash
+
+<span class="k">function</span><span class="w"> </span>Point<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span>make_<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$FUNCNAME</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">              </span><span class="s2">&quot;x&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">              </span><span class="s2">&quot;y&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$2</span><span class="s2">&quot;</span>
+<span class="o">}</span>
+
+<span class="k">function</span><span class="w"> </span>point_double<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="nb">local</span><span class="w"> </span>-r<span class="w"> </span><span class="nv">p</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="w">        </span>is_null<span class="w"> </span><span class="k">$(</span><span class="nv">$p</span><span class="w"> </span>x<span class="k">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>ctx_w<span class="w"> </span><span class="s2">&quot;&#39;x&#39; is incorrect&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nv">$EC</span>
+<span class="w">        </span>is_null<span class="w"> </span><span class="k">$(</span><span class="nv">$p</span><span class="w"> </span>y<span class="k">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>ctx_w<span class="w"> </span><span class="s2">&quot;&#39;y&#39; is incorrect&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nv">$EC</span>
+
+<span class="w">        </span><span class="nb">local</span><span class="w"> </span><span class="nv">x</span><span class="o">=</span><span class="k">$((</span><span class="w"> </span><span class="k">$(</span><span class="nv">$p</span><span class="w"> </span>x<span class="k">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">$(</span><span class="nv">$p</span><span class="w"> </span>x<span class="k">)</span><span class="w"> </span><span class="k">))</span>
+<span class="w">        </span><span class="nb">local</span><span class="w"> </span><span class="nv">y</span><span class="o">=</span><span class="k">$((</span><span class="w"> </span><span class="k">$(</span><span class="nv">$p</span><span class="w"> </span>y<span class="k">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">$(</span><span class="nv">$p</span><span class="w"> </span>y<span class="k">)</span><span class="w"> </span><span class="k">))</span>
+<span class="w">        </span><span class="nb">local</span><span class="w"> </span>-r<span class="w"> </span><span class="nv">d</span><span class="o">=</span><span class="k">$(</span>Point<span class="w"> </span><span class="si">${</span><span class="nv">x</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">y</span><span class="si">}</span><span class="k">)</span>
+<span class="w">        </span><span class="nv">$res</span><span class="w"> </span>val<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$d</span><span class="s2">&quot;</span>
+<span class="o">}</span>
+
+ctx_clear<span class="w"> </span><span class="c1"># clear the global context (as it is stored across runs)</span>
+<span class="nv">p</span><span class="o">=</span><span class="k">$(</span>Point<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">10</span><span class="k">)</span>
+<span class="nv">$p</span><span class="w"> </span>x<span class="w"> </span><span class="nv">$NULL</span>
+point_double<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$p</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="se">\</span>
+<span class="w">        </span><span class="o">{</span><span class="w"> </span>ctx_show<span class="p">;</span><span class="w"> </span>ctx_stack<span class="p">;</span><span class="w"> </span><span class="o">}</span><span class="w"> </span><span class="c1"># show the error and stacktrace.</span>
+</pre></div>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">gobash</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="motivation.html">Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="get-started.html">Get Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Language Features</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#basic-terminology">Basic Terminology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reserved-words">Reserved Words</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#structs">Structs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#objects">Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#anonymous-structs">Anonymous Structs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#to-string">To String</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#return-value">Return Value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#error-handling">Error Handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="collections.html">Collections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="process-communication.html">Inter-process Communication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interactive-mode.html">Interactive Mode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">Testing Package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command-line-flags.html">Command Line Flags</a></li>
+<li class="toctree-l1"><a class="reference internal" href="next.html">Next</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="get-started.html" title="previous chapter">Get Started</a></li>
+      <li>Next: <a href="collections.html" title="next chapter">Collections</a></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Milos Gligoric.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/language.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

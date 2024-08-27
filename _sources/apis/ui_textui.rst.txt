@@ -1,0 +1,54 @@
+ui/textui.sh
+============
+
+UI Text support (e.g., text menus).
+
+.. py:function:: TextMenu
+
+   Text-based menu.
+
+.. py:function:: TextMenu_show
+
+   Show the menu and return selected value.
+
+.. py:function:: TextProgress
+
+   Text-based progress bar.
+
+.. py:function:: TextProgress_inc
+
+   Increment value by 1.
+
+.. py:function:: TextProgress_print
+
+   Start the progress bar (in background).
+
+.. py:function:: TextProgress_set
+
+   Set the new value.
+
+.. py:function:: TextProgress_start
+
+   Start the progress bar (in background).
+
+.. py:function:: TextProgress_stop
+
+   Stop the progress bar. If already stopped, do nothing.
+
+.. py:function:: TextSpinner
+
+   Text-based spinner.
+
+.. py:function:: TextSpinner_start
+
+   Start spinning at regular intervals (should be stopped by
+   invoking stop).
+
+.. py:function:: TextSpinner_stop
+
+   Stop spinning.
+
+.. py:function:: textui_enabled
+
+   Return true if this module is enabled.
+

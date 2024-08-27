@@ -1,0 +1,17 @@
+database/sql.sh
+===============
+
+SQL support (experimental).
+
+.. py:function:: SQLite
+
+   SQL driver.
+
+.. py:function:: SQLite_query
+
+   Query db.
+
+.. py:function:: sql_connect
+
+   Connect to a database using the given driver.
+

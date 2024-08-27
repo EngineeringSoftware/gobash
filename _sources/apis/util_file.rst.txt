@@ -1,0 +1,45 @@
+util/file.sh
+============
+
+File util functions.
+
+.. py:function:: file_append_newline
+
+   Append newline at the end of the file.
+
+.. py:function:: file_at
+
+   Return line at the given index.
+
+.. py:function:: file_enabled
+
+   Check if this module is enabled.
+
+.. py:function:: file_insert_at
+
+   Insert given string at the specified index.
+
+.. py:function:: file_newlines
+
+   Return the number of new lines in the file.
+
+.. py:function:: file_prefix_each_line
+
+   Prefix each line in a file with a string.
+
+.. py:function:: file_remove_at
+
+   Remove a line from the specified index.
+
+.. py:function:: file_remove_empty_lines
+
+   Remove all lines that contain only white spaces.
+
+.. py:function:: file_remove_matching_lines
+
+   Remove all lines that match (sed) pattern.
+
+.. py:function:: file_squeeze_blank_lines
+
+   Remove repeated empty lines.
+

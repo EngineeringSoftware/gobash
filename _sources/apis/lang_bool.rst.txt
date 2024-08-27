@@ -1,0 +1,105 @@
+lang/bool.sh
+============
+
+Util functions for checking values/system.
+
+.. py:function:: has_fld
+
+   True if the object has the given field.
+
+.. py:function:: is_bash3
+
+   True if this function is invoked by bash 3.x process.
+
+.. py:function:: is_bash4
+
+   True if this function is invoked by bash 4.x process.
+
+.. py:function:: is_bash5
+
+   True if this function is invoked by bash 5.x process.
+
+.. py:function:: is_bool
+
+   True if the given value can be a bool.
+
+.. py:function:: is_ec
+
+   True if the value is an error (as def in this library).
+
+.. py:function:: is_empty
+
+   True if an empty string.
+
+.. py:function:: is_eq
+
+   True if values are equal (lexical).
+
+.. py:function:: is_exe
+
+   True if the given argument corresponds to an executable.
+
+.. py:function:: is_false
+
+   True if value is considered false in this library.
+
+.. py:function:: is_file
+
+   True if it is a valid file.
+
+.. py:function:: is_float
+
+   True if the given value can be a float (bc).
+
+.. py:function:: is_function
+
+   True if the given name corresponds to a function.
+
+.. py:function:: is_gt
+
+   True if one value is greater than another (ints only).
+
+.. py:function:: is_instanceof
+
+   True if the object is instance of the given struct.
+
+.. py:function:: is_int
+
+   True if the given value can be parsed as an int (bc).
+
+.. py:function:: is_linux
+
+   Return true/0 if linux.
+
+.. py:function:: is_mac
+
+   Return true/0 if mac.
+
+.. py:function:: is_ne
+
+   True if values are not equal (lexical).
+
+.. py:function:: is_null
+
+   True if the value is null.
+
+.. py:function:: is_object
+
+   True if the given argument is a valid object.
+
+.. py:function:: is_set
+
+   True if the value is set.
+
+.. py:function:: is_string
+
+   True if the given value can be a string.
+
+.. py:function:: is_true
+
+   True if value is considered true in this library.
+
+.. py:function:: is_uint
+
+   True if the given value is an unsigned int (bc).
+

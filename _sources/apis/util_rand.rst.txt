@@ -1,0 +1,30 @@
+util/rand.sh
+============
+
+Random value generators.
+
+.. py:function:: rand_args
+
+   Return random argument given to this function.
+
+.. py:function:: rand_bool
+
+   Generate random bool.
+
+.. py:function:: rand_int
+
+   Generate random int.
+
+.. py:function:: rand_intn
+
+   Generate random int up to (but excluding) the given value.
+
+.. py:function:: rand_return
+
+   Return (`return`) randomly 0 or 1. This can be convenient to
+   use in if statements.
+
+.. py:function:: rand_string
+
+   Generate random string up to the given length.
+

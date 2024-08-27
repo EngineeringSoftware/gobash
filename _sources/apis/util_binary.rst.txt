@@ -1,0 +1,13 @@
+util/binary.sh
+==============
+
+Util functions to manipulate binary numbers.
+
+.. py:function:: binary_b2d
+
+   From binary to decimal.
+
+.. py:function:: binary_d2b
+
+   From decimal to binary.
+

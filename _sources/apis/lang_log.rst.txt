@@ -1,0 +1,25 @@
+lang/log.sh
+===========
+
+Log functions.
+
+.. py:function:: log_e
+
+   Log error.
+
+.. py:function:: log_i
+
+   Log info.
+
+.. py:function:: log_output
+
+   Return current output.
+
+.. py:function:: log_set_output
+
+   Set output (either $LOG_STDOUT or filename).
+
+.. py:function:: log_w
+
+   Log warning.
+

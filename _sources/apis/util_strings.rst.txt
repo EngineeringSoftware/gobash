@@ -1,0 +1,101 @@
+util/strings.sh
+===============
+
+Util string functions.
+
+.. py:function:: strings_cap
+
+   Captilize the given string.
+
+.. py:function:: strings_count
+
+   Number of substrings in the given string.
+
+.. py:function:: strings_escape_slash
+
+   Return string with escaped slash chars.
+
+.. py:function:: strings_has
+
+   Return true if the str has the given substring.
+
+.. py:function:: strings_has_prefix
+
+   Return true if str starts with prefix.
+
+.. py:function:: strings_has_suffix
+
+   Return true if str has suffix.
+
+.. py:function:: strings_index_of
+
+   Return index of the first sep instance or -1 if not present.
+
+.. py:function:: strings_join
+
+   Join strings using the given separator.
+
+.. py:function:: strings_len
+
+   Length of the given string.
+
+.. py:function:: strings_lstrip
+
+   Return string without leading white chars.
+
+.. py:function:: strings_pcap
+
+   Capitlize the given string (can be used in pipes).
+
+.. py:function:: strings_remove_at
+
+   Return the given string without chart at the given index.
+
+.. py:function:: strings_remove_char
+
+   Remove c from the string.
+
+.. py:function:: strings_remove_prefix
+
+   Return a string by removing prefix from str.
+
+.. py:function:: strings_remove_spaces
+
+   Remove all spaces from the given string.
+
+.. py:function:: strings_repeat
+
+   Creat a string by repeating c char n times.
+
+.. py:function:: strings_rev
+
+   Reverse the given string.
+
+.. py:function:: strings_rstrip
+
+   Return string without trailing white chars.
+
+.. py:function:: strings_single_space
+
+   Return string where multiple spaces are merged into one.
+
+.. py:function:: strings_strip
+
+   Return string without leading and trailing white chars.
+
+.. py:function:: strings_sub
+
+   Return a substring between given indexes.
+
+.. py:function:: strings_swap_case
+
+   Return copy of the given string and swap case letters.
+
+.. py:function:: strings_to_lower
+
+   Return copy of the given string with all lower case letters.
+
+.. py:function:: strings_to_upper
+
+   Return copy of the given string with all upper case letters.
+

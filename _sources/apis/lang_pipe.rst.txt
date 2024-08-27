@@ -1,0 +1,21 @@
+lang/pipe.sh
+============
+
+Named pipe wrapper.
+
+.. py:function:: Pipe
+
+   Named pipe.
+
+.. py:function:: Pipe_close
+
+   Close.
+
+.. py:function:: Pipe_recv
+
+   Receive.
+
+.. py:function:: Pipe_send
+
+   Send.
+

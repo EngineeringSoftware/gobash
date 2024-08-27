@@ -1,0 +1,17 @@
+sync/mutex.sh
+=============
+
+Mutex related structs and functions.
+
+.. py:function:: Mutex
+
+   Mutex.
+
+.. py:function:: Mutex_lock
+
+   Lock.
+
+.. py:function:: Mutex_unlock
+
+   Unlock.
+
