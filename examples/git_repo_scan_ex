@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# todo-counter.sh — count TODO/FIXME notes in a Git repository
+
+# must run inside a git repo
+git rev-parse --is-inside-work-tree >/dev/null 2>&1 || {
+  echo "Not a git repository!" >&2
+  exit 1
+}
+
+# search for TODO or FIXME in tracked files
+git ls-files | xargs grep -nEH "TODO|FIXME" 2>/dev/null | tee todo-matches.txt | \
+awk -F: '{ count[$1]++ } END { for (f in count) printf "%6d  %s\n", count[f], f }' | sort -nr | head -n 10
